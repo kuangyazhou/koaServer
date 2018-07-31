@@ -1,10 +1,10 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import { BrowserRouter as Router, Route, Link } from "react-router-dom";
+import { BrowserRouter as Router } from "react-router-dom";
 // import "./index.css";
 // import registerServiceWorker from "./registerServiceWorker";
 import { routeConfig } from "./router";
-import 'antd/dist/antd.css';
+import "antd/dist/antd.css";
 
 ReactDOM.render(
     <Router>
@@ -12,12 +12,3 @@ ReactDOM.render(
     </Router>,
     document.getElementById("root")
 );
-
-// {
-//   "plugins": [
-//       [
-//           "import",
-//           { "libraryName": "antd", "libraryDirectory": "es", "style": "css" }
-//       ]
-//   ]
-// }
