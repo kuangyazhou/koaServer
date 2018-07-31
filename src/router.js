@@ -1,8 +1,8 @@
 import React from "react";
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
-import Page1 from "./commponents/page1";
-import Page2 from "./commponents/page2";
-import Page3 from "./commponents/page3";
+import Page1 from "./pages/page1";
+import Page2 from "./pages/page2";  
+import Page3 from "./pages/page3";
 
 const routes = [
     {
