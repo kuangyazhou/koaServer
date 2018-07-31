@@ -12,3 +12,12 @@ ReactDOM.render(
     </Router>,
     document.getElementById("root")
 );
+
+// {
+//   "plugins": [
+//       [
+//           "import",
+//           { "libraryName": "antd", "libraryDirectory": "es", "style": "css" }
+//       ]
+//   ]
+// }

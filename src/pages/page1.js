@@ -9,7 +9,7 @@ export default class Page1 extends React.Component {
             <div>
                 <Header></Header>
                 <h1>this is the page1</h1>
-                <div></div>
+                <div />
                 <div>
                     <DatePicker />
                 </div>
