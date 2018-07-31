@@ -4,6 +4,7 @@ import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 // import "./index.css";
 // import registerServiceWorker from "./registerServiceWorker";
 import { routeConfig } from "./router";
+import 'antd/dist/antd.css';
 
 ReactDOM.render(
     <Router>
