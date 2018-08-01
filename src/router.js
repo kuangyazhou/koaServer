@@ -3,7 +3,8 @@ import { Route } from "react-router-dom";
 import Home from "@/pages/home";
 import WordPress from "@/pages/wordpress";
 import Life from "@/pages/life";
-import Culture from "@/pages/culture"
+import Culture from "@/pages/culture";
+import Page2 from "@/pages/page2";
 
 const routes = [
     {
@@ -21,6 +22,10 @@ const routes = [
     {
         path: "/culture",
         component: Culture
+    },
+    {
+        path: "/page2",
+        component: Page2
     }
 ];
 
