@@ -1,8 +1,9 @@
 import React from "react";
 import { Route } from "react-router-dom";
 import Home from "@/pages/home";
-import Page2 from "@/pages/page2";
-import Page3 from "@/pages/page3";
+import WordPress from "@/pages/wordpress";
+import Life from "@/pages/life";
+import Culture from "@/pages/culture"
 
 const routes = [
     {
@@ -10,12 +11,16 @@ const routes = [
         component: Home
     },
     {
-        path: "/page2",
-        component: Page2
+        path: "/wordpress",
+        component: WordPress
     },
     {
-        path: "/page3",
-        component: Page3
+        path: "/life",
+        component: Life
+    },
+    {
+        path: "/culture",
+        component: Culture
     }
 ];
 

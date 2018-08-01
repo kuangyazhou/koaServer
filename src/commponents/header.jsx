@@ -1,14 +1,17 @@
-import '../style/header.less';
+import '@/style/header.less';
 import React, { Component } from "react";
-import { Menu, Icon } from "antd";
+import { Row, Col, Menu, Icon } from "antd";
 
 const SubMenu = Menu.SubMenu;
 const MenuItemGroup = Menu.ItemGroup;
 
 export default class Header extends Component {
-    state = {
-        current: "home"
-    };
+    constructor(props) {
+        super(props);
+        this.state = {
+            current: props.current || 'home'
+        }
+    }
     handleClick = e => {
         console.log("click ", e);
         this.setState({
@@ -18,49 +21,62 @@ export default class Header extends Component {
     render() {
         return (
             <header className="header">
-                <Menu
-                    onClick={this.handleClick}
-                    selectedKeys={[this.state.current]}
-                    mode="horizontal"
-                >
-                    <Menu.Item key="home">
-                        <Icon type="home"/>首页
-                    </Menu.Item>
-                    <Menu.Item key="app">
-                        <Icon type="calendar" />技术交流
-                    </Menu.Item>
-                    <Menu.Item key="life">
-                        <Icon type="instagram" />生活
-                    </Menu.Item>
-                    <Menu.Item key="culture">
-                        <Icon type="appstore" />文化
-                    </Menu.Item>
-                    <SubMenu
-                        title={
-                            <span>
-                                <Icon type="setting" />Navigation Three -Submenu
-                            </span>
-                        }
+            <Row>
+                <Col span={4}>
+                    <a href="/" className="logo">
+                        <img src={require('../images/logo.png')} alt="logo"/>
+                        <span>新闻首页</span>
+                    </a>
+                </Col>
+                <Col span={16}>
+                    <Menu
+                        onClick={this.handleClick}
+                        selectedKeys={[this.state.current]}
+                        mode="horizontal"
                     >
-                        <MenuItemGroup title="Item 1">
-                            <Menu.Item key="setting:1">Option 1</Menu.Item>
-                            <Menu.Item key="setting:2">Option 2</Menu.Item>
-                        </MenuItemGroup>
-                        <MenuItemGroup title="Item 2">
-                            <Menu.Item key="setting:3">Option 3</Menu.Item>
-                            <Menu.Item key="setting:4">Option 4</Menu.Item>
-                        </MenuItemGroup>
-                    </SubMenu>
-                    <Menu.Item key="alipay">
-                        <a
-                            href="https://ant.design"
-                            target="_blank"
-                            rel="noopener noreferrer"
+                        <Menu.Item key="home">
+                            <a href="/">
+                                <Icon type="home"/>首页
+                            </a>
+                        </Menu.Item>
+                        <Menu.Item key="wordpress">
+                            <a href="/wordpress">
+                                <Icon type="team" />技术交流
+                            </a>
+                        </Menu.Item>
+                        <Menu.Item key="life">
+                            <a href="/life">
+                                <Icon type="instagram" />生活
+                            </a>
+                        </Menu.Item>
+                        <Menu.Item key="culture">
+                            <a href="/culture">
+                                <Icon type="book" />文化
+                            </a>
+                        </Menu.Item>
+                        <SubMenu
+                            title={
+                                <span>
+                                    <Icon type="setting" />Navigation Three -Submenu
+                                </span>
+                            }
                         >
-                            Navigation Four - Link
-                        </a>
-                    </Menu.Item>
-                </Menu>
+                            <MenuItemGroup title="Item 1">
+                                <Menu.Item key="setting:1">Option 1</Menu.Item>
+                                <Menu.Item key="setting:2">Option 2</Menu.Item>
+                            </MenuItemGroup>
+                            <MenuItemGroup title="Item 2">
+                                <Menu.Item key="setting:3">Option 3</Menu.Item>
+                                <Menu.Item key="setting:4">Option 4</Menu.Item>
+                            </MenuItemGroup>
+                        </SubMenu>
+                    </Menu>
+                </Col>
+                <Col span={2}></Col>
+                <Col span={2}></Col>
+            </Row>
+                
+                
             </header>
         );
     }

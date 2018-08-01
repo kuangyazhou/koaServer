@@ -1,6 +1,6 @@
 import React, {Component} from "react";
 
-import "../style/pages/page2.less";
+import "@/style/pages/page2.less";
 
 export default class Page2 extends Component {
     render() {
