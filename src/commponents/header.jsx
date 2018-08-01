@@ -1,5 +1,4 @@
 import '@/style/header.less';
-import logo from '../images/logo.png';
 import React, { Component } from "react";
 import { Row, Col, Menu, Icon } from "antd";
 
@@ -25,7 +24,7 @@ export default class Header extends Component {
             <Row>
                 <Col span={4}>
                     <a href="/" className="logo">
-                        <img src={logo} alt="logo"/>
+                        <img src={require('../images/logo.png')} alt="logo"/>
                         <span>新闻首页</span>
                     </a>
                 </Col>
