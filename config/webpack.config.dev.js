@@ -159,12 +159,15 @@ module.exports = {
           // in development "style" loader enables hot editing of CSS.
           {
             test: /\.css$/,
+            exclude: [/node_modules/],
             use: [
               require.resolve('style-loader'),
               {
                 loader: require.resolve('css-loader'),
                 options: {
                   importLoaders: 1,
+                  // modules: true,
+                  // localIdentName: "[name]__[local]--[hash:base64:5]"
                 },
               },
               {
@@ -190,13 +193,68 @@ module.exports = {
             ],
           },
           {
+            test: /\.css$/i,
+            exclude: [/src/],
+            use: [
+              {
+                  loader: "style-loader"
+              },
+              {
+                  loader: "css-loader",
+                  options: {
+                      importLoaders: 1
+                      // modules: true,
+                      // localIdentName: "[name]__[local]--[hash:base64:5]"
+                  }
+              }
+          ]
+          },
+          // {
+          //   test: /\.less$/,
+          //   include: [/src/],
+          //   use: [
+          //   require.resolve('style-loader'),
+          //   {
+          //           loader: require.resolve('css-loader'),
+          //           options: {
+          //                   modules: true,
+          //                   localIndexName:"[name]__[local]___[hash:base64:5]"
+          //           },
+          //   },
+          //   {
+          //           loader: require.resolve('less-loader'), // compiles Less to CSS
+          //   },
+          //   ],
+          // },
+          {
             test: /\.less$/,
+            exclude: [/src/],
+            use: [
+                    require.resolve('style-loader'),
+                    {
+                            loader: require.resolve('css-loader'),
+                            options: {
+                                importLoaders: 1
+                                    // modules: true,
+                                    // localIndexName:"[name]__[local]___[hash:base64:5]"
+                            },
+                    },
+                    {
+                            loader: require.resolve('less-loader'), // compiles Less to CSS
+                    },
+            ],
+        },
+          {
+            test: /\.less$/,
+            include: [/src/],
             use: [
               require.resolve('style-loader'),
               require.resolve('css-loader'),
               {
                 loader: require.resolve('postcss-loader'),
                 options: {
+                  modules: true,
+                  localIndexName:"[name]__[local]___[hash:base64:5]",
                   ident: 'postcss', // https://webpack.js.org/guides/migrating/#complex-options              
                   plugins: () => [
                     require('postcss-flexbugs-fixes'),
@@ -216,6 +274,8 @@ module.exports = {
                 loader: require.resolve('less-loader'),
                 options: {
                   //modifyVars: { "@primary-color": "#1DA57A" },
+                  modules: true,
+                  localIndexName:"[name]__[local]___[hash:base64:5]",
                 },
               },
             ],
