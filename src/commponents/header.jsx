@@ -1,3 +1,4 @@
+import '../style/header.less';
 import React, { Component } from "react";
 import { Menu, Icon } from "antd";
 
@@ -6,7 +7,7 @@ const MenuItemGroup = Menu.ItemGroup;
 
 export default class Header extends Component {
     state = {
-        current: "mail"
+        current: "home"
     };
     handleClick = e => {
         console.log("click ", e);
@@ -22,17 +23,22 @@ export default class Header extends Component {
                     selectedKeys={[this.state.current]}
                     mode="horizontal"
                 >
-                    <Menu.Item key="mail">
-                        <Icon type="mail" />Navigation One
+                    <Menu.Item key="home">
+                        <Icon type="home"/>首页
                     </Menu.Item>
-                    <Menu.Item key="app" disabled>
-                        <Icon type="appstore" />Navigation Two
+                    <Menu.Item key="app">
+                        <Icon type="calendar" />技术交流
+                    </Menu.Item>
+                    <Menu.Item key="life">
+                        <Icon type="instagram" />生活
+                    </Menu.Item>
+                    <Menu.Item key="culture">
+                        <Icon type="appstore" />文化
                     </Menu.Item>
                     <SubMenu
                         title={
                             <span>
-                                <Icon type="setting" />Navigation Three -
-                                Submenu
+                                <Icon type="setting" />Navigation Three -Submenu
                             </span>
                         }
                     >
