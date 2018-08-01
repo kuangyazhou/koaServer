@@ -1,5 +1,6 @@
-import Page1 from "./page1";
-import Page2 from "./page2";
-import Page3 from "./page3";
+import Home from "@/pages/home";
+import WordPress from "@/pages/wordpress";
+import Life from "@/pages/life";
+import Culture from "@/pages/culture";
 
-export default { Page1, Page2, Page3 };
+export default { Home, WordPress, Life, Culture};
