@@ -1,9 +1,9 @@
 import React from "react";
-import {  Route } from "react-router-dom";
+import { Route } from "react-router-dom";
 // BrowserRouter as Router
-import Page1 from "./pages/page1";
-import Page2 from "./pages/page2";
-import Page3 from "./pages/page3";
+import Page1 from "@/pages/page1";
+import Page2 from "@/pages/page2";
+import Page3 from "@/pages/page3";
 
 const routes = [
     {
