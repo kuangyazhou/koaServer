@@ -29,6 +29,7 @@ service.interceptors.response.use(response => {
     //         "更新token"
     //     );
     // }
+    return response.data;
 });
 
 export default service;
