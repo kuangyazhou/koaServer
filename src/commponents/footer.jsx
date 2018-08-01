@@ -1,12 +1,14 @@
+import '@/style/footer.less';
 import React, { Component } from "react";
-import { Button } from "antd";
 export default class Footer extends Component {
     render() {
         return (
-            <div>
-                <Button>footer</Button>
-                <h2>footer text</h2>
-            </div>
+            <footer>
+                <div className="footer">
+                    <p>Copyright &copy; 2018 <a href="/">blog news</a> </p>
+                    <p>footer text</p>
+                </div>
+            </footer>
         );
     }
 }
