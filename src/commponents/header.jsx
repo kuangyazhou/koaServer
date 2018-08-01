@@ -41,17 +41,17 @@ export default class Header extends Component {
                         </Menu.Item>
                         <Menu.Item key="wordpress">
                             <a href="/wordpress">
-                                <Icon type="team" />技术交流
+                                <Icon type="team"/>技术交流
                             </a>
                         </Menu.Item>
                         <Menu.Item key="life">
                             <a href="/life">
-                                <Icon type="instagram" />生活
+                                <Icon type="instagram"/>生活
                             </a>
                         </Menu.Item>
                         <Menu.Item key="culture">
                             <a href="/culture">
-                                <Icon type="book" />文化
+                                <Icon type="book"/>文化
                             </a>
                         </Menu.Item>
                         <SubMenu
