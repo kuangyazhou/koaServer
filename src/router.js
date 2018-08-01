@@ -1,14 +1,13 @@
 import React from "react";
 import { Route } from "react-router-dom";
-// BrowserRouter as Router
-import Page1 from "@/pages/page1";
+import Home from "@/pages/home";
 import Page2 from "@/pages/page2";
 import Page3 from "@/pages/page3";
 
 const routes = [
     {
         path: "/",
-        component: Page1
+        component: Home
     },
     {
         path: "/page2",

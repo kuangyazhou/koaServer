@@ -1,8 +1,8 @@
-import React from "react";
+import React, {Component} from "react";
 
-import "./page2.less";
+import "../style/pages/page2.less";
 
-export default class Page1 extends React.Component {
+export default class Page2 extends Component {
     render() {
         return (
             <div>
