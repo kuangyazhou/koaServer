@@ -66,7 +66,7 @@ class SignUp extends Component{
                             </Button>
                             <p>
                                 点击"注册"即表示愿意遵守Blog<br/>
-                                <a href="">用户协议</a>和<a href="">隐私政策</a>
+                                <a href="">用户协议 </a>和<a href=""> 隐私政策</a>
                             </p>
                             </FormItem>
                         </Form>
