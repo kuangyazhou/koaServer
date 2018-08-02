@@ -15,7 +15,16 @@ body, div, span, header, footer, nav, section, aside, article, ul, dl, dt, dd, l
         outline: none;
     }
   }
-  
+
+  a {
+    cursor: pointer;
+    background-color: transparent;
+  }
+
+  img {
+    border-style: none;
+  }
+
   /*定义滚动条高宽及背景 高宽分别对应横竖滚动条的尺寸*/
   ::-webkit-scrollbar
   {
@@ -95,8 +104,27 @@ body, div, span, header, footer, nav, section, aside, article, ul, dl, dt, dd, l
   }
 
   .content{
-    width: 1200px;
+    width: 960px;
     margin: 0 auto;
+  }
+
+  .btn{
+    display: inline-block;
+    margin-bottom: 0;
+    font-weight: 400;
+    text-align: center;
+    vertical-align: middle;
+    -ms-touch-action: manipulation;
+    touch-action: manipulation;
+    cursor: pointer;
+    background-image: none;
+    border: 1px solid transparent;
+    white-space: nowrap;
+    padding: 6px 12px;
+    font-size: 14px;
+    line-height: 1.42857;
+    border-radius: 4px;
+    user-select: none;
   }
 
   .paddingTop{
