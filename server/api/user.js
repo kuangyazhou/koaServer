@@ -1,6 +1,37 @@
 // const mongoose = require("mongoose");
 const USER = require("../models/user");
+const USERSCHEMA = require("../models/userschema");
 const userMysql = require("../mysql/query");
+
+exports.login = async (ctx, next) => {
+    const { name, password } = ctx.query;
+    // ctx.body = name + password + "fuck the king";
+    const result = await USERSCHEMA.find({ username: name });
+    console.log(result);
+    if (result.length == 0) {
+        // if (!result || result.length == 0) {
+        ctx.body = {
+            status: "1",
+            data: [],
+            msg: "用户名不存在"
+        };
+        // next();
+        return;
+    }
+    if (result && result[0].password === password) {
+        ctx.body = {
+            status: "0",
+            // data: result
+            data: []
+        };
+    } else {
+        ctx.body = {
+            status: "-1",
+            data: [],
+            msg: "用户名或者密码错误"
+        };
+    }
+};
 
 exports.user = async ctx => {
     await ctx.render("index", {
@@ -53,10 +84,10 @@ exports.insert = async ctx => {
     };
 };
 
-exports.del=async ctx=>{
-  const data = await userMysql.del();
+exports.del = async ctx => {
+    const data = await userMysql.del();
     ctx.body = {
         status: "0",
         data: data
     };
-}
+};

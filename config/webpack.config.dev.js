@@ -166,8 +166,8 @@ module.exports = {
                 loader: require.resolve('css-loader'),
                 options: {
                   importLoaders: 1,
-                  // modules: true,
-                  // localIdentName: "[name]__[local]--[hash:base64:5]"
+                  modules: true,
+                  localIdentName: "[name]__[local]--[hash:base64:5]"
                 },
               },
               {
@@ -202,7 +202,7 @@ module.exports = {
               {
                   loader: "css-loader",
                   options: {
-                      importLoaders: 1
+                      importLoaders: 1,
                       // modules: true,
                       // localIdentName: "[name]__[local]--[hash:base64:5]"
                   }
@@ -230,18 +230,18 @@ module.exports = {
             test: /\.less$/,
             exclude: [/src/],
             use: [
-                    require.resolve('style-loader'),
-                    {
-                            loader: require.resolve('css-loader'),
-                            options: {
-                                importLoaders: 1
-                                    // modules: true,
-                                    // localIndexName:"[name]__[local]___[hash:base64:5]"
-                            },
-                    },
-                    {
-                            loader: require.resolve('less-loader'), // compiles Less to CSS
-                    },
+              require.resolve('style-loader'),
+                 {
+                  loader: require.resolve('css-loader'),
+                  options: {
+                    importLoaders: 1,
+                    modules: true,
+                    localIndexName:"[name]__[local]___[hash:base64:5]"
+                  },
+                  },
+                  {
+                    loader: require.resolve('less-loader'), // compiles Less to CSS
+                  },
             ],
         },
           {

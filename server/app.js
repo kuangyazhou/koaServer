@@ -13,8 +13,11 @@ const users = require('./routes/users')
 onerror(app)
 
 // middlewares
+// app.use(bodyparser({
+//   enableTypes:['json', 'form', 'text']
+// }))
 app.use(bodyparser({
-  enableTypes:['json', 'form', 'text']
+  formLimit: '1mb'
 }))
 app.use(json())
 app.use(logger())
