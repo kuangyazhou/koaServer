@@ -1,6 +1,6 @@
 import '@/style/sign.less'
 import React, {Component} from 'react';
-import { Form, Icon, Input, Button, Checkbox } from 'antd';
+import { Form, Icon, Input, Button } from 'antd';
 
 const FormItem = Form.Item;
 

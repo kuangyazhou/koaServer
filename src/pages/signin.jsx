@@ -1,5 +1,6 @@
 import '@/style/sign.less'
 import React, {Component} from 'react';
+import request from '@/utils/axios'
 import { Form, Icon, Input, Button, Checkbox } from 'antd';
 
 const FormItem = Form.Item;
@@ -11,13 +12,18 @@ class SignIn extends Component{
             token: null
         }
     }
+    
     handleSubmit = (e) => {
         e.preventDefault();
-        this.props.form.validateFields((err, values) => {
-          if (!err) {
-            console.log('Received values of form: ', values);
-          }
-        });
+        let fetchOptions = {
+            method: 'GET'
+        };
+        // let formData = this.props.form.getFieldDecorator();
+        // request('api/users/login?name='+formData.userName+'password='+formData.password, fetchOptions)
+        //     .then(response => response.json())
+        //     .then(json => {
+        //         this.componentDidMount();
+        //     })
     }
 
     render() {
@@ -43,7 +49,7 @@ class SignIn extends Component{
                             {getFieldDecorator('userName', {
                                 rules: [{ required: true, message: '请输入用户名!' }],
                             })(
-                                <Input prefix={<Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder="用户名" />
+                                <Input prefix={<Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} />} type="userName" placeholder="用户名" />
                             )}
                             </FormItem>
                             <FormItem>
