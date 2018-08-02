@@ -34,13 +34,6 @@ export default class Page2 extends Component {
             .catch(error => {
                 console.log(error);
             });
-        // axios.get("http://localhost:3001/api/mysql")
-        //     .then(res => {
-        //         console.log(res.data);
-        //     })
-        //     .catch(error => {
-        //         console.log(error);
-        //     });
     }
     render() {
         return (
