@@ -85,6 +85,7 @@ pre {
 */
 
 a {
+  cursor: pointer;
   background-color: transparent;
 }
 
