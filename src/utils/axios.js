@@ -3,7 +3,7 @@ import axios from "axios";
 
 const service = axios.create({
     // baseURL: process.env.BASE_API,
-    baseURL: "http://localhost:3001",
+    baseURL: "http://172.22.188.232:2333",
     timeout: 10000
 });
 
