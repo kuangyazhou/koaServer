@@ -36,7 +36,7 @@ export default class Page2 extends Component {
         //         console.log(error);
         //     });
         request
-            .post("/api/users/login", data)
+            .get("/api/users/login", { params: data })
             .then(res => {
                 console.log(res);
             })

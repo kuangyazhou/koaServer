@@ -7,7 +7,7 @@ exports.login = async (ctx, next) => {
     const { name, password } = ctx.query;
     // ctx.body = name + password + "fuck the king";
     const result = await USERSCHEMA.find({ username: name });
-    console.log(result);
+    console.log(name, password, result);
     if (result.length == 0) {
         // if (!result || result.length == 0) {
         ctx.body = {
