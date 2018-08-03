@@ -15,23 +15,18 @@ class SignIn extends Component{
     
     handleSubmit = (e) => {
         e.preventDefault();
-        let formData = this.props.form.getFieldsValue();
-        console.log(formData);
-        request
-            .get("/api/users/login?name="+formData.name+"&password="+formData.password)
-            .then(res => {
-                console.log(res);
-            })
-            .catch(error => {
-                console.log(error);
-            });
-        // request.post("/api/users/login", formData)
-        //     .then(res => {
-        //         console.log(res);
-        //     })
-        //     .catch(error => {
-        //         console.log(error);
-        //     });
+        this.props.form.validateFields((err, values) => {
+            if (!err) {
+                request.get("/api/users/login", {params: values})
+                    .then(res => {
+                        console.log(res);
+                    })
+                    .catch(error => {
+                        console.log(error);
+                    });
+
+            }
+        })
     }
 
     render() {

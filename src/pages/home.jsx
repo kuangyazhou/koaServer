@@ -31,10 +31,7 @@ export default class Home extends Component {
                 <Header current="home"/>
                 <div className="content">
                     <Row>
-                        <Col span={4}>
-                            <Sider/>
-                        </Col>
-                        <Col span={20}>
+                        <Col span={19}>
                             <List
                                 itemLayout="vertical"
                                 size="large"
@@ -61,6 +58,10 @@ export default class Home extends Component {
                                 </List.Item>
                                 )}
                             />
+                        </Col>
+                        <Col span={1}></Col>
+                        <Col span={4}>
+                            <Sider/>
                         </Col>
                     </Row>
                 </div>

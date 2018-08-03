@@ -6,59 +6,62 @@ import request from '@/utils/axios';
 const FormItem = Form.Item;
 
 class SignUp extends Component{
-    constructor(props) {
-        super(props);
+    constructor() {
+        super();
         this.state = {
             token: null
         }
     }
     handleSubmit = (e) => {
         e.preventDefault();
-        let formData = this.props.form.getFieldsValue();
-        request.get("api/users/register?name="+formData.name+"&tel="+formData.tel+"&password="+formData.password)
-            .then(res => {
-                if (res.status === 0) {
-                    window.location.href = '/signin';
-                }
-            })
-            .catch(error => {
-                console.log(error);
-            });
+        this.props.form.validateFields((err, values) => {
+            if (!err) {
+                request.get("api/users/register", {params: values})
+                    .then(res => {
+                        if (res.status === 0) {
+                            window.location.href = '/signin';
+                        }
+                    })
+                    .catch(error => {
+                        console.log(error);
+                    });
+            }
+        })
     }
     checkName = (rule, value, callback) => {
         const nameReg = /^[a-zA-Z0-9_\u4e00-\u9fa5]{5,}$/;
-        if (value.length !== 0) {
+        if (value) {
             if (!nameReg.test(value)){
                 callback("请输入汉字，字母，数字或下划线至少5个");
             } else {
                 callback();
             } 
         } else {
-           callback();
+           callback("请输入用户名");
         }
     }
     checkTel = (rule, value, callback) => {
         const telReg = /^1[0-9]{10}$/;
-        if (value.length !== 0) {
+        if (value) {
             if (!telReg.test(value)){
                 callback("请输入11位手机号码");
             } else {
                 callback();
             } 
         } else {
-           callback();
+           callback("请输入手机号");
         }
     }
     checkPassword = (rule, value, callback) => {
         const passwordReg = /^[a-zA-Z0-9_]{5,}$/;
-        if (value.length !== 0) {
+        if (value) {
             if ( !passwordReg.test(value)){
-                callback("请输入字母，数字或下划线至少5个");
+                callback("请输入字母，数字或下划线至少5位的密码");
             } else {
                 callback();
             }
         } else {
-           callback();
+           callback("请输入密码");
         }
     }
     render() {
@@ -82,26 +85,23 @@ class SignUp extends Component{
                         <Form onSubmit={this.handleSubmit} className="login-form">
                             <FormItem>
                             {getFieldDecorator('name', {
-                                rules: [{ required: true, whitespace: true, message: '请输入用户名', validator: this.checkName},],
-                                validateFirst: true,
+                                rules: [{ required: true, whitespace: true, validator: this.checkName},],
                                 validateTrigger: 'onBlur',
                             })(
-                                <Input prefix={<Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} />} type="name" placeholder="用户名" />
+                                <Input prefix={<Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} />} type="text" placeholder="用户名" />
                             )}
                             </FormItem>
                             <FormItem>
                             {getFieldDecorator('tel', {
-                                rules: [{ required: true, whitespace: true, message: '请输入手机号', validator: this.checkTel},],
-                                validateFirst: true,
+                                rules: [{ required: true, whitespace: true, validator: this.checkTel},],
                                 validateTrigger: 'onBlur',
                             })(
-                                <Input prefix={<Icon type="mobile" style={{ color: 'rgba(0,0,0,.25)' }}/>} type="tel" placeholder="手机号" />
+                                <Input prefix={<Icon type="mobile" style={{ color: 'rgba(0,0,0,.25)' }}/>}placeholder="手机号" />
                             )}
                             </FormItem>
                             <FormItem>
                             {getFieldDecorator('password', {
-                                rules: [{ required: true, whitespace: true, message: '请设置密码', validator: this.checkPassword},],
-                                validateFirst: true,
+                                rules: [{ required: true, whitespace: true, validator: this.checkPassword},],
                                 validateTrigger: 'onBlur',
                             })(
                                 <Input prefix={<Icon type="lock" style={{ color: 'rgba(0,0,0,.25)' }} />} type="password" placeholder="设置密码" />
