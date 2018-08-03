@@ -3,6 +3,11 @@ const USER = require("../models/user");
 const USERSCHEMA = require("../models/userschema");
 const userMysql = require("../mysql/query");
 
+/**
+ *  分红列表
+ * @param name password
+ * @returns {Promise}
+ */
 exports.login = async (ctx, next) => {
     const { name, password } = ctx.query;
     // ctx.body = name + password + "fuck the king";
@@ -34,8 +39,28 @@ exports.login = async (ctx, next) => {
 };
 
 exports.register = async ctx => {
-    const { name, password } = ctx.query;
-    result = await USERSCHEMA.insert({ username: name, password: password });
+    const { name, password, tel } = ctx.query;
+    const find = await USERSCHEMA.find({ username: name });
+    console.log(name, password, find);
+    if (find.length == 0) {
+        const result = await USERSCHEMA.create({
+            username: name,
+            password: password,
+            tel: tel
+        });
+        console.log(result);
+        ctx.body = {
+            status: "0",
+            data: [],
+            msg: "注册成功"
+        };
+    } else {
+        ctx.body = {
+            status: "2",
+            data: [],
+            msg: "用户名已存在"
+        };
+    }
 };
 
 exports.user = async ctx => {
