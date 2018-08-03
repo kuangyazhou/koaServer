@@ -15,15 +15,23 @@ class SignIn extends Component{
     
     handleSubmit = (e) => {
         e.preventDefault();
-        let fetchOptions = {
-            method: 'GET'
-        };
-        // let formData = this.props.form.getFieldDecorator();
-        // request('api/users/login?name='+formData.userName+'password='+formData.password, fetchOptions)
-        //     .then(response => response.json())
-        //     .then(json => {
-        //         this.componentDidMount();
+        let formData = this.props.form.getFieldsValue();
+        console.log(formData);
+        request
+            .get("/api/users/login?name="+formData.name+"&password="+formData.password)
+            .then(res => {
+                console.log(res);
+            })
+            .catch(error => {
+                console.log(error);
+            });
+        // request.post("/api/users/login", formData)
+        //     .then(res => {
+        //         console.log(res);
         //     })
+        //     .catch(error => {
+        //         console.log(error);
+        //     });
     }
 
     render() {
@@ -46,15 +54,17 @@ class SignIn extends Component{
                     <div className="sign-in-container">
                         <Form onSubmit={this.handleSubmit} className="login-form">
                             <FormItem>
-                            {getFieldDecorator('userName', {
+                            {getFieldDecorator('name', {
                                 rules: [{ required: true, message: '请输入用户名!' }],
+                                validateTrigger: 'onBlur',
                             })(
-                                <Input prefix={<Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} />} type="userName" placeholder="用户名" />
+                                <Input prefix={<Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} />} type="name" placeholder="用户名" />
                             )}
                             </FormItem>
                             <FormItem>
                             {getFieldDecorator('password', {
                                 rules: [{ required: true, message: '请输入密码!' }],
+                                validateTrigger: 'onBlur',
                             })(
                                 <Input prefix={<Icon type="lock" style={{ color: 'rgba(0,0,0,.25)' }} />} type="password" placeholder="密码" />
                             )}
