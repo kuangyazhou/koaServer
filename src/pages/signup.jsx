@@ -1,6 +1,7 @@
 import '@/style/sign.less'
 import React, {Component} from 'react';
 import { Form, Icon, Input, Button } from 'antd';
+import request from '@/utils/axios';
 
 const FormItem = Form.Item;
 
@@ -13,11 +14,52 @@ class SignUp extends Component{
     }
     handleSubmit = (e) => {
         e.preventDefault();
-        this.props.form.validateFields((err, values) => {
-          if (!err) {
-            console.log('Received values of form: ', values);
-          }
-        });
+        let formData = this.props.form.getFieldsValue();
+        request.get("api/users/register?name="+formData.name+"&tel="+formData.tel+"&password="+formData.password)
+            .then(res => {
+                if (res.status === 0) {
+                    window.location.href = '/signin';
+                }
+            })
+            .catch(error => {
+                console.log(error);
+            });
+    }
+    checkName = (rule, value, callback) => {
+        const nameReg = /^[a-zA-Z0-9_\u4e00-\u9fa5]{5,}$/;
+        if (value.length !== 0) {
+            if (!nameReg.test(value)){
+                callback("请输入汉字，字母，数字或下划线至少5个");
+            } else {
+                callback();
+            } 
+        } else {
+           callback();
+        }
+    }
+    checkTel = (rule, value, callback) => {
+        const telReg = /^1[0-9]{10}$/;
+        if (value.length !== 0) {
+            if (!telReg.test(value)){
+                callback("请输入11位手机号码");
+            } else {
+                callback();
+            } 
+        } else {
+           callback();
+        }
+    }
+    checkPassword = (rule, value, callback) => {
+        const passwordReg = /^[a-zA-Z0-9_]{5,}$/;
+        if (value.length !== 0) {
+            if ( !passwordReg.test(value)){
+                callback("请输入字母，数字或下划线至少5个");
+            } else {
+                callback();
+            }
+        } else {
+           callback();
+        }
     }
     render() {
         const { getFieldDecorator } = this.props.form;
@@ -39,22 +81,28 @@ class SignUp extends Component{
                     <div className="sign-in-container">
                         <Form onSubmit={this.handleSubmit} className="login-form">
                             <FormItem>
-                            {getFieldDecorator('userName', {
-                                rules: [{ required: true, message: '请输入用户名!' }],
+                            {getFieldDecorator('name', {
+                                rules: [{ required: true, whitespace: true, message: '请输入用户名', validator: this.checkName},],
+                                validateFirst: true,
+                                validateTrigger: 'onBlur',
                             })(
-                                <Input prefix={<Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder="用户名" />
+                                <Input prefix={<Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} />} type="name" placeholder="用户名" />
                             )}
                             </FormItem>
                             <FormItem>
-                            {getFieldDecorator('telNum', {
-                                rules: [{ required: true, message: '请输入手机号!' }],
+                            {getFieldDecorator('tel', {
+                                rules: [{ required: true, whitespace: true, message: '请输入手机号', validator: this.checkTel},],
+                                validateFirst: true,
+                                validateTrigger: 'onBlur',
                             })(
-                                <Input prefix={<Icon type="mobile" style={{ color: 'rgba(0,0,0,.25)' }}/>} placeholder="手机号" />
+                                <Input prefix={<Icon type="mobile" style={{ color: 'rgba(0,0,0,.25)' }}/>} type="tel" placeholder="手机号" />
                             )}
                             </FormItem>
                             <FormItem>
                             {getFieldDecorator('password', {
-                                rules: [{ required: true, message: '请设置密码!' }],
+                                rules: [{ required: true, whitespace: true, message: '请设置密码', validator: this.checkPassword},],
+                                validateFirst: true,
+                                validateTrigger: 'onBlur',
                             })(
                                 <Input prefix={<Icon type="lock" style={{ color: 'rgba(0,0,0,.25)' }} />} type="password" placeholder="设置密码" />
                             )}

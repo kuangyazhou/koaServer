@@ -2,8 +2,6 @@ import React, { Component } from "react";
 
 import request from "@/utils/axios";
 
-import axios from "axios";
-
 import "../style/pages/page2.less";
 import "@/style/pages/test.less";
 
@@ -11,7 +9,7 @@ export default class Page2 extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            data: []
+            // data: []
         };
     }
     componentDidMount() {
@@ -36,10 +34,7 @@ export default class Page2 extends Component {
         //         console.log(error);
         //     });
         request
-            .post("/api/users/login", {
-                name: "admin",
-                password: "123456"
-            })
+            .post("/api/users/login", data)
             .then(res => {
                 console.log(res);
             })
