@@ -33,6 +33,11 @@ exports.login = async (ctx, next) => {
     }
 };
 
+exports.register = async ctx => {
+    const { name, password } = ctx.query;
+    result = await USERSCHEMA.insert({ username: name, password: password });
+};
+
 exports.user = async ctx => {
     await ctx.render("index", {
         title: "Hello Koa 2!"
@@ -70,6 +75,7 @@ exports.userDB = async ctx => {
 
 exports.mysql = async ctx => {
     const data = await userMysql.getUser();
+    console.log(data);
     ctx.body = {
         status: "0",
         data: data
