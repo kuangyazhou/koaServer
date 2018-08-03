@@ -27,6 +27,7 @@ export default class Page2 extends Component {
         };
         // axios
         // axios
+        // request
         //     .post("/api/users/login", data)
         //     .then(res => {
         //         console.log(res);
