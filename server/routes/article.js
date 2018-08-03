@@ -15,3 +15,5 @@ router.get("/artInfo", article.artById);
 router.get("/artDel", article.artDel);
 
 router.get("/comment", article.comment);
+
+module.exports = router;

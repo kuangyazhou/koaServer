@@ -18,7 +18,7 @@ const articleSchema = new Schema(
             }
         ]
     },
-    { collation: "article", versionKey: false }
+    { collection: "article", versionKey: false }
 );
 
 module.exports = mongoose.model("articleSchema", articleSchema);

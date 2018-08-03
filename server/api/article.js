@@ -49,15 +49,28 @@ exports.artDel = async (ctx, next) => {
 
 exports.comment = async (ctx, next) => {
     const { id, author, content } = ctx.query;
-    const art = await ARTICLESCHEMA.find({ id: id });
-    const res = await art.comments.add({
-        author: author,
-        content: content
-    });
+    // const art = await ARTICLESCHEMA.find({ id: id });
+    // const res = await art.comments.add({
+    //     author: author,
+    //     content: content
+    // });
+    const result = await ARTICLESCHEMA.update(
+        { id: id },
+        {
+            $push: {
+                comments: [
+                    {
+                        author: author,
+                        content: content
+                    }
+                ]
+            }
+        }
+    );
     // res.......
-    ctx.body={
-      status:'0',
-      data:[],
-      msg:'评论成功'
-    }
+    ctx.body = {
+        status: "0",
+        data: [],
+        msg: "评论成功"
+    };
 };
