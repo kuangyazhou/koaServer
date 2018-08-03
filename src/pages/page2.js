@@ -36,10 +36,7 @@ export default class Page2 extends Component {
         //         console.log(error);
         //     });
         request
-            .post("/api/users/login", {
-                name: "admin",
-                password: "123456"
-            })
+            .post("/api/users/login", data)
             .then(res => {
                 console.log(res);
             })
