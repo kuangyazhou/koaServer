@@ -6,9 +6,9 @@ export default class Footer extends Component {
             <footer>
                 <div className="footer">
                     <p>
-                        Copyright &copy; 2018 <a href="/">blog news</a>{" "}
+                        Copyright &copy; 2018 <a href="/">blog news</a>
                     </p>
-                    <p>footer text</p>
+                    <span>footer text</span>
                 </div>
             </footer>
         );

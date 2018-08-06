@@ -24,9 +24,11 @@ body, div, span, header, footer, nav, section, aside, article, ul, dl, dt, dd, l
   img {
     border-style: none;
   }
+
   *, :after, :before {
     box-sizing: border-box;
   }
+  
   /*定义滚动条高宽及背景 高宽分别对应横竖滚动条的尺寸*/
   ::-webkit-scrollbar
   {
@@ -63,74 +65,9 @@ body, div, span, header, footer, nav, section, aside, article, ul, dl, dt, dd, l
     background-color: #F5F5F5;
   }
   
-  
-  .clear:after{
-    content: '';
-    display: block;
-    clear: both;
-  }
-  
-  .clear{
-    zoom:1;
-  }
-  
-  .back_img{
-    background-repeat: no-repeat;
-    background-size: 100% 100%;
-  }
-  
-  .margin{
-    margin: 0 auto;
-  }
-  
-  .left{
-    float: left;
-  }
-  
-  .right{
-    float: right;
-  }
-  
-  .hide{
-    display: none;
-  }
-  
-  .show{
-    display: block;
-  }
-  
-  .ellipsis{
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-  }
-
   .content{
     width: 960px;
     margin: 0 auto;
-  }
-
-  .btn{
-    display: inline-block;
-    margin-bottom: 0;
-    font-weight: 400;
-    text-align: center;
-    vertical-align: middle;
-    -ms-touch-action: manipulation;
-    touch-action: manipulation;
-    cursor: pointer;
-    background-image: none;
-    border: 1px solid transparent;
-    white-space: nowrap;
-    padding: 6px 12px;
-    font-size: 14px;
-    line-height: 1.42857;
-    border-radius: 4px;
-    user-select: none;
-  }
-
-  .paddingTop{
-    padding-top: 1.95rem;
   }
   
   @keyframes backOpacity{

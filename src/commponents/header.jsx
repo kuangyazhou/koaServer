@@ -8,7 +8,10 @@ export default class Header extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            current: props.current || 'home'
+            current: props.current || 'home',
+            hasLogined: false,
+            name: '',
+            userId: ''
         }
     }
     handleClick = e => {
@@ -17,17 +20,44 @@ export default class Header extends Component {
             current: e.key
         });
     };
+    componentDidMount() {
+        if (localStorage.userId === '') {
+			this.setState({hasLogined: false});
+		} else {
+			this.setState({name: localStorage.name, userId: localStorage.userId});
+			this.setState({hasLogined: true});
+		}
+    }
+    logout() {
+        this.setState({hasLogined: false});
+		localStorage.userId = '';
+    }
     render() {
+        const userShow = this.state.hasLogined
+			?<div className="sign-container">
+				<a type="primary" href="/mine" target="_blank">{this.state.name}个人中心</a>
+				&nbsp;&nbsp;&nbsp;
+				<Button type="ghost" htmlType="button" onClick={this.logout.bind(this)}>退出</Button>
+                <a href="/writer" className="btn write-btn">写文章</a>
+			</div>
+			:<div className="sign-container">
+                <a className="btn log-in" href="/signin">
+                    登录
+                </a>
+                <a  className="btn sign-up" href="/signup">
+                    <Button type="ghost">注册</Button>
+                </a>
+                <a href="/writer" className="btn write-btn">写文章</a>
+            </div>;
         return (
             <header className="header">
                 <Row>
-                    <Col span={4}>
+                    <Col span={3}>
                         <a href="/" className="logo">
                             <img src={require('../images/logo.png')} alt="logo"/>
-                            <span>新闻首页</span>
                         </a>
                     </Col>
-                    <Col span={4}>
+                    <Col span={5}>
                         <Menu
                             onClick={this.handleClick}
                             selectedKeys={[this.state.current]}
@@ -56,7 +86,7 @@ export default class Header extends Component {
                         </Menu>
                         
                     </Col>
-                    <Col span={12}>
+                    <Col span={10}>
                         <div className="search">
                             <Search
                                 placeholder="搜索"
@@ -65,15 +95,9 @@ export default class Header extends Component {
                             />
                         </div>
                     </Col>
-                    <Col span={4}>
-                        <div className="sign-container">
-                            <a className="btn log-in" href="/signin">
-                                登录
-                            </a>
-                            <a  className="btn sign-up" href="/signup">
-                                <Button type="primary">注册</Button>
-                            </a>
-                        </div>
+                    <Col span={6}>
+                        {userShow}
+                        
                     </Col>
                 </Row>
             </header>

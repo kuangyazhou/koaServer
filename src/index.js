@@ -5,6 +5,7 @@ import { BrowserRouter as Router } from "react-router-dom";
 // import registerServiceWorker from "./registerServiceWorker";
 import { routeConfig } from "@/router";
 import "antd/dist/antd.css";
+import "@/style/common/reset.less";
 
 ReactDOM.render(
     <Router>

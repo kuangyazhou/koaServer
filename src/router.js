@@ -2,7 +2,7 @@ import React from "react";
 import { Route } from "react-router-dom";
 import Home from "@/pages/home";
 import WordPress from "@/pages/wordpress";
-import Life from "@/pages/life";
+import Writer from "@/pages/writer";
 import Culture from "@/pages/culture";
 import SignIn from "@/pages/signin";
 import SignUp from "@/pages/signup";
@@ -26,8 +26,8 @@ const routes = [
         component: WordPress
     },
     {
-        path: "/life",
-        component: Life
+        path: "/writer",
+        component: Writer
     },
     {
         path: "/culture",

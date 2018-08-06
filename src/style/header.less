@@ -1,11 +1,12 @@
-@import './common/reset';
 @import './common/mixin';
 
 .header{
     width: 100%;
     background: @bc;
     border-bottom: 1px solid #e8e8e8;
-    margin-bottom: 10px;
+    position: fixed;
+    top: 0;
+    z-index: 100;
     .ant-row{
         min-width: 768px;
         max-width: 1440px;
@@ -39,7 +40,14 @@
             background: #e8e8e8;
         }
     }
-    .sign-up{
-
+    .write-btn{
+        width: 100px;
+        height: 40px;
+        line-height: 24px;
+        margin: 3px 8px;
+        border-radius: 20px;
+        font-size: 15px;
+        color: #fff;
+        background-color: #ea6f5a;
     }
 }
