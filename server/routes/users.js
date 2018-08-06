@@ -13,7 +13,7 @@ router.post("/bar", function(ctx, next) {
 
 router.post("/login", User.login);
 
-router.get("/login", User.login);
+router.get("/login", User.getlogin);
 
 router.get("/register", User.register);
 

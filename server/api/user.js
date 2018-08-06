@@ -9,8 +9,8 @@ const userMysql = require("../mysql/query");
  * @returns {Promise}
  */
 exports.login = async (ctx, next) => {
-    const { name, password } = ctx.query;
-    // ctx.body = name + password + "fuck the king";
+    // const { name, password } = ctx.query; //get获取参数
+    const { name, password } = ctx.request.body; //post获取参数
     const result = await USERSCHEMA.find({ username: name });
     console.log(name, password, result);
     if (result.length == 0) {
@@ -36,6 +36,36 @@ exports.login = async (ctx, next) => {
             msg: "用户名或者密码错误"
         };
     }
+};
+
+exports.getlogin = async (ctx, next) => {
+  // const { name, password } = ctx.query; //get获取参数
+  const { name, password } = ctx.request.body; //post获取参数
+  const result = await USERSCHEMA.find({ username: name });
+  console.log(name, password, result);
+  if (result.length == 0) {
+      // if (!result || result.length == 0) {
+      ctx.body = {
+          status: "1",
+          data: [],
+          msg: "用户名不存在"
+      };
+      // next();
+      return;
+  }
+  if (result && result[0].password === password) {
+      ctx.body = {
+          status: "0",
+          // data: result
+          data: []
+      };
+  } else {
+      ctx.body = {
+          status: "-1",
+          data: [],
+          msg: "用户名或者密码错误"
+      };
+  }
 };
 
 exports.register = async ctx => {

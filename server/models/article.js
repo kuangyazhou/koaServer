@@ -11,7 +11,8 @@ const articleSchema = new Schema(
         content: String, //内容
         view: Number, //浏览次数
         collect: Number, //收藏次数
-        like: Number, //点赞数
+        like: Number, //点赞数，
+        url: String,
         comments: [
             {
                 author: String, //作者
