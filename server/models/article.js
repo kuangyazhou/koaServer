@@ -10,11 +10,13 @@ const articleSchema = new Schema(
         author: String, //作者
         content: String, //内容
         view: Number, //浏览次数
+        collect: Number, //收藏次数
         like: Number, //点赞数
         comments: [
             {
                 author: String, //作者
-                content: String //内容
+                content: String, //内容
+                time: Date //时间
             }
         ]
     },

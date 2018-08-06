@@ -12,6 +12,8 @@ router.get("/add", article.artAdd);
 
 router.get("/artInfo", article.artById);
 
+router.get("/artUpdate", article.arcUpdate);
+
 router.get("/artDel", article.artDel);
 
 router.get("/comment", article.comment);

@@ -40,13 +40,15 @@ exports.login = async (ctx, next) => {
 
 exports.register = async ctx => {
     const { name, password, tel } = ctx.query;
+    const time = new Date().getTime();
     const find = await USERSCHEMA.find({ username: name });
-    console.log(name, password, find);
+    console.log(name, password, find, time);
     if (find.length == 0) {
         const result = await USERSCHEMA.create({
             username: name,
             password: password,
-            tel: tel
+            tel: tel,
+            time: time
         });
         console.log(result);
         ctx.body = {

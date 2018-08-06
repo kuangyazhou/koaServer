@@ -5,7 +5,8 @@ const userSchema = new Schema(
     {
         username: String,
         password: String,
-        tel: Number
+        tel: Number,
+        time: Date
     },
     {
         collection: "user",
