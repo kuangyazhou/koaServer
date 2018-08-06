@@ -1,11 +1,32 @@
-@import '../common/reset';
 @import '../common/mixin';
 
 .home{
+    margin-top: 58px;
     .content{
-        .main{
-            margin-left: 20px;
-            margin-bottom: 20px;
+        .ant-list{
+            width: 625px;
+        }
+        .demo-infinite-container {
+            width: 625px;
+            height: 300px;
+            margin-top: 10px;
+            border-radius: 4px;
+            overflow: auto;
+        }
+        .demo-loading-container {
+            width: 100%;
+            text-align: center;
+            position: absolute;
+            bottom: 40px;
+        }
+        .list-container{
+            width: 280px;
+            img{
+                width: 100%;
+                min-height: 50px;
+                margin-bottom: 6px;
+                border-radius: 4px;
+            }
         }
     }
 }

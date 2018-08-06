@@ -1,7 +1,7 @@
 import '@/style/sign.less'
 import React, {Component} from 'react';
 import request from '@/utils/axios'
-import { Form, Icon, Input, Button, Checkbox } from 'antd';
+import { Form, Icon, Input, Button, Checkbox, Message, } from 'antd';
 
 const FormItem = Form.Item;
 
@@ -9,29 +9,27 @@ class SignIn extends Component{
     constructor(props) {
         super(props);
         this.state = {
-            token: null
+            token: null,
         }
     }
     
     handleSubmit = (e) => {
         e.preventDefault();
-        let formData = this.props.form.getFieldsValue();
-        console.log(formData);
-        request
-            .get("/api/users/login?name="+formData.name+"&password="+formData.password)
-            .then(res => {
-                console.log(res);
-            })
-            .catch(error => {
-                console.log(error);
-            });
-        // request.post("/api/users/login", formData)
-        //     .then(res => {
-        //         console.log(res);
-        //     })
-        //     .catch(error => {
-        //         console.log(error);
-        //     });
+        this.props.form.validateFields((err, values) => {
+            if (!err) {
+                request.post("/api/users/login", values)
+                    .then(res => {
+                        if (res.status === '0') {
+                            window.location.href = '/';
+                            localStorage.userId = res.data.name;
+                            Message.success("登录成功！");
+                        }
+                    })
+                    .catch(error => {
+                        console.log(error);
+                    });
+            }
+        })
     }
 
     render() {

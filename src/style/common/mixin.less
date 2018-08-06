@@ -64,6 +64,61 @@
   
 }
 
+.clear:after{
+	content: '';
+	display: block;
+	clear: both;
+}
+
+.clear{
+	zoom:1;
+}
+
+.margin{
+	margin: 0 auto;
+}
+
+.left{
+	float: left;
+}
+
+.right{
+	float: right;
+}
+
+.hide{
+	display: none;
+}
+
+.show{
+	display: block;
+}
+
+.ellipsis{
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+
+.btn{
+	display: inline-block;
+	margin-bottom: 0;
+	font-weight: 400;
+	text-align: center;
+	vertical-align: middle;
+	-ms-touch-action: manipulation;
+	touch-action: manipulation;
+	cursor: pointer;
+	background-image: none;
+	border: 1px solid transparent;
+	white-space: nowrap;
+	padding: 6px 12px;
+	font-size: 14px;
+	line-height: 1.42857;
+	border-radius: 4px;
+	user-select: none;
+}
+
 //字体大小、行高、字体
 .font(@size, @line-height, @family: 'Microsoft YaHei') {
   font: @size/@line-height @family;

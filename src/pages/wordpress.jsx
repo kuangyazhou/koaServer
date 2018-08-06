@@ -26,13 +26,13 @@ export default class WordPress extends Component {
                             </Carousel>
                         </Col>
                         <Col span={8}>
-                        <List
-                            header={<div>Header</div>}
-                            footer={<div>Footer</div>}
-                            bordered
-                            dataSource={data}
-                            renderItem={item => (<List.Item>{item}</List.Item>)}
-                        />
+                            <List
+                                header={<div>Header</div>}
+                                footer={<div>Footer</div>}
+                                bordered
+                                dataSource={data}
+                                renderItem={item => (<List.Item>{item}</List.Item>)}
+                            />
                         </Col>
                     </Row>
                     <h2>WordPress home</h2>
