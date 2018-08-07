@@ -21,6 +21,7 @@ export default class Header extends Component {
         });
     };
     componentDidMount() {
+      // console.log(['1','2','3'].map(parseInt));
         if (localStorage.userId === '') {
 			this.setState({hasLogined: false});
 		} else {
