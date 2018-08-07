@@ -22,29 +22,29 @@ export default class Header extends Component {
     };
     componentDidMount() {
         if (localStorage.userId === '') {
-			this.setState({hasLogined: false});
-		} else {
-			this.setState({name: localStorage.name, userId: localStorage.userId});
-			this.setState({hasLogined: true});
-		}
+            this.setState({ hasLogined: false });
+        } else {
+            this.setState({ name: localStorage.name, userId: localStorage.userId });
+            this.setState({ hasLogined: true });
+        }
     }
     logout() {
-        this.setState({hasLogined: false});
-		localStorage.userId = '';
+        this.setState({ hasLogined: false });
+        localStorage.userId = '';
     }
     render() {
         const userShow = this.state.hasLogined
-			?<div className="sign-container">
-				<a type="primary" href="/mine" target="_blank">{this.state.name}个人中心</a>
-				&nbsp;&nbsp;&nbsp;
-				<Button type="ghost" htmlType="button" onClick={this.logout.bind(this)}>退出</Button>
+            ? <div className="sign-container">
+                <a type="primary" href="/mine" target="_blank">{this.state.name}个人中心</a>
+                &nbsp;&nbsp;&nbsp;
+				<Icon type="logout" onClick={this.logout.bind(this)} />退出
                 <a href="/writer" className="btn write-btn">写文章</a>
-			</div>
-			:<div className="sign-container">
+            </div>
+            : <div className="sign-container">
                 <a className="btn log-in" href="/signin">
-                    登录
+                    <Icon type="login" /> 登录
                 </a>
-                <a  className="btn sign-up" href="/signup">
+                <a className="btn sign-up" href="/signup">
                     <Button type="ghost">注册</Button>
                 </a>
                 <a href="/writer" className="btn write-btn">写文章</a>
@@ -54,7 +54,7 @@ export default class Header extends Component {
                 <Row>
                     <Col span={3}>
                         <a href="/" className="logo">
-                            <img src={require('../images/logo.png')} alt="logo"/>
+                            <img src={require('../images/logo.png')} alt="logo" />
                         </a>
                     </Col>
                     <Col span={5}>
@@ -65,12 +65,12 @@ export default class Header extends Component {
                         >
                             <Menu.Item key="home">
                                 <a href="/">
-                                    <Icon type="home"/>首页
+                                    <Icon type="home" />首页
                                 </a>
                             </Menu.Item>
                             <Menu.Item key="wordpress">
                                 <a href="/wordpress">
-                                    <Icon type="team"/>技术交流
+                                    <Icon type="team" />技术交流
                                 </a>
                             </Menu.Item>
                             {/* <Menu.Item key="life">
@@ -84,7 +84,7 @@ export default class Header extends Component {
                                 </a>
                             </Menu.Item> */}
                         </Menu>
-                        
+
                     </Col>
                     <Col span={10}>
                         <div className="search">
@@ -97,7 +97,7 @@ export default class Header extends Component {
                     </Col>
                     <Col span={6}>
                         {userShow}
-                        
+
                     </Col>
                 </Row>
             </header>

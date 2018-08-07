@@ -9,7 +9,7 @@ import "@/style/common/reset.less";
 
 ReactDOM.render(
     <Router>
-        <div style={{ height: "100%" }}>{routeConfig}</div>
+        <div>{routeConfig}</div>
     </Router>,
     document.getElementById("root")
 );
