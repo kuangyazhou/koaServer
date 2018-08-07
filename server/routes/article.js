@@ -18,4 +18,8 @@ router.get("/artDel", article.artDel);
 
 router.get("/comment", article.comment);
 
+router.get("/like", article.likeoperate);
+
+router.get("/collect", article.collectoperate);
+
 module.exports = router;

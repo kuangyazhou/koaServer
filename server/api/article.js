@@ -77,11 +77,6 @@ exports.artDel = async (ctx, next) => {
 exports.comment = async (ctx, next) => {
     const { id, author, content } = ctx.query;
     const time = new Date();
-    // const art = await ARTICLESCHEMA.find({ id: id });
-    // const res = await art.comments.add({
-    //     author: author,
-    //     content: content
-    // });
     const result = await ARTICLESCHEMA.update(
         { _id: id },
         {
@@ -103,6 +98,50 @@ exports.comment = async (ctx, next) => {
             status: "0",
             data: [],
             msg: "评论成功"
+        };
+    }
+};
+
+exports.likeoperate = async (ctx, next) => {
+    const { id, num } = ctx.query;
+    //mongonse 修改器
+    const res = await ARTICLESCHEMA.update(
+        { _id: id },
+        { $inc: { like: num } }
+    );
+    console.log(res);
+    if (num > 0) {
+        ctx.body = {
+            status: "0",
+            data: res,
+            msg: "点赞成功"
+        };
+    } else {
+        ctx.body = {
+            status: "0",
+            data: res,
+            msg: "取消点赞"
+        };
+    }
+};
+
+exports.collectoperate = async (ctx, next) => {
+    const { id, num } = ctx.query;
+    const res = await ARTICLESCHEMA.update(
+        { _id: id },
+        { $inc: { collect: num } }
+    );
+    if (num > 0) {
+        ctx.body = {
+            status: "0",
+            data: res,
+            msg: "收藏成功"
+        };
+    } else {
+        ctx.body = {
+            status: "0",
+            data: res,
+            msg: "取消收藏"
         };
     }
 };
