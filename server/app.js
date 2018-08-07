@@ -22,6 +22,22 @@ app.use(
         formLimit: "1mb"
     })
 );
+// app.use(
+//     cors({
+//         origin: ctx => {
+//             if (ctx.url === "/test") {
+//                 return "*";
+//             } else {
+//                 return "http://localhost:3001";
+//             }
+//         },
+//         exposeHeaders: ["WWW-Authenticate", "Server-Authorization"],
+//         maxAge: 5,
+//         credentials: true,
+//         allowMethods: ["GET", "POST", "DELETE"],
+//         allowHeaders: ["Content-Type", "Authorization", "Accept"]
+//     })
+// );
 app.use(cors());
 app.use(json());
 app.use(logger());

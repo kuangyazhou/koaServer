@@ -22,7 +22,7 @@ export default class Page2 extends Component {
                 console.log(error);
             });
         const data = {
-            name: "admin11111",
+            name: "admin",
             password: "admin"
         };
         // axios
