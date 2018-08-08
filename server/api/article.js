@@ -20,11 +20,26 @@ exports.artAdd = async (ctx, next) => {
 };
 
 exports.artList = async (ctx, next) => {
-    const list = await ARTICLESCHEMA.find().exec();
+    const { page = 1, size = 10 } = ctx.query;
+    if (page < 1 || size < 1) {
+        ctx.body = {
+            status: "-1",
+            data: [],
+            msg: "参数错误"
+        };
+        return;
+    }
+    const total = await ARTICLESCHEMA.count();
+    const list = await ARTICLESCHEMA.find()
+        .skip((page - 1) * Number(size))
+        .limit(Number(size))
+        .exec();
+    console.log(page, size);
     ctx.body = {
         status: "0",
         data: list,
-        msg: ""
+        msg: "",
+        total: total
     };
 };
 
