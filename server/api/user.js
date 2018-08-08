@@ -1,4 +1,6 @@
 // const mongoose = require("mongoose");
+const jwt = require("jsonwebtoken");
+
 const USER = require("../models/user");
 const USERSCHEMA = require("../models/userschema");
 const userMysql = require("../mysql/query");
@@ -12,13 +14,23 @@ exports.login = async (ctx, next) => {
     // const { name, password } = ctx.query; //get获取参数
     const { name, password } = ctx.request.body; //post获取参数
     const result = await USERSCHEMA.find({ username: name });
-    console.log(name, password, result);
+
+    const token = jwt.sign(
+        {
+            name: name,
+            password: password,
+            exp: Math.floor(Date.now() / 1000) + 60 * 60 * 24 * 7
+        },
+        "token"
+    );
+    console.log(name, password, result, token);
     if (result.length == 0) {
         // if (!result || result.length == 0) {
         ctx.body = {
             status: "1",
             data: [],
-            msg: "用户名不存在"
+            msg: "用户名不存在",
+            token:token
         };
         // next();
         return;
@@ -39,33 +51,33 @@ exports.login = async (ctx, next) => {
 };
 
 exports.getlogin = async (ctx, next) => {
-  // const { name, password } = ctx.query; //get获取参数
-  const { name, password } = ctx.request.body; //post获取参数
-  const result = await USERSCHEMA.find({ username: name });
-  console.log(name, password, result);
-  if (result.length == 0) {
-      // if (!result || result.length == 0) {
-      ctx.body = {
-          status: "1",
-          data: [],
-          msg: "用户名不存在"
-      };
-      // next();
-      return;
-  }
-  if (result && result[0].password === password) {
-      ctx.body = {
-          status: "0",
-          // data: result
-          data: []
-      };
-  } else {
-      ctx.body = {
-          status: "-1",
-          data: [],
-          msg: "用户名或者密码错误"
-      };
-  }
+    const { name, password } = ctx.query; //get获取参数
+    // const { name, password } = ctx.request.body; //post获取参数
+    const result = await USERSCHEMA.find({ username: name });
+    console.log(name, password, result);
+    if (result.length == 0) {
+        // if (!result || result.length == 0) {
+        ctx.body = {
+            status: "1",
+            data: [],
+            msg: "用户名不存在"
+        };
+        // next();
+        return;
+    }
+    if (result && result[0].password === password) {
+        ctx.body = {
+            status: "0",
+            // data: result
+            data: [],
+        };
+    } else {
+        ctx.body = {
+            status: "-1",
+            data: [],
+            msg: "用户名或者密码错误"
+        };
+    }
 };
 
 exports.register = async ctx => {

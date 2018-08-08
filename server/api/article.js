@@ -1,4 +1,5 @@
 const ARTICLESCHEMA = require("../models/article");
+const jwt = require("jsonwebtoken");
 
 exports.artAdd = async (ctx, next) => {
     const { id, title, desc, author, content } = ctx.query;
@@ -21,6 +22,8 @@ exports.artAdd = async (ctx, next) => {
 
 exports.artList = async (ctx, next) => {
     const { page = 1, size = 10 } = ctx.query;
+    const { token } = ctx.header;
+    const decodetoken = jwt.verify(token, "token");
     if (page < 1 || size < 1) {
         ctx.body = {
             status: "-1",
@@ -29,12 +32,20 @@ exports.artList = async (ctx, next) => {
         };
         return;
     }
+    if (decodetoken > Math.floor(Date.now() / 1000)) {
+        ctx.body = {
+            status: "-1",
+            data: [],
+            msg: "登录失效"
+        };
+        return;
+    }
     const total = await ARTICLESCHEMA.count();
     const list = await ARTICLESCHEMA.find()
         .skip((page - 1) * Number(size))
         .limit(Number(size))
         .exec();
-    console.log(page, size);
+    console.log(page, size, decodetoken);
     ctx.body = {
         status: "0",
         data: list,
