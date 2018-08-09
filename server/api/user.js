@@ -1,5 +1,6 @@
 // const mongoose = require("mongoose");
 const jwt = require("jsonwebtoken");
+// import jwt from "jsonwebtoken";
 
 const USER = require("../models/user");
 const USERSCHEMA = require("../models/userschema");

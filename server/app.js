@@ -38,7 +38,11 @@ app.use(
 //         allowHeaders: ["Content-Type", "Authorization", "Accept"]
 //     })
 // );
+
+// app.use(jwt({ secret: "token" }.unless({ path: [/^api\login/] })));
 app.use(cors());
+
+// app.use(jwt({ secret: "token" }).unless({ path: [/^api\users\login/] }));
 app.use(json());
 app.use(logger());
 app.use(require("koa-static")(__dirname + "/public"));
