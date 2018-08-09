@@ -1,5 +1,7 @@
-const ARTICLESCHEMA = require("../models/article");
 const jwt = require("jsonwebtoken");
+
+const ARTICLESCHEMA = require("../models/article");
+const { handleErr, handleSuccess } = require("../utils/handle");
 
 exports.artAdd = async (ctx, next) => {
     const { id, title, desc, author, content } = ctx.query;
@@ -23,35 +25,70 @@ exports.artAdd = async (ctx, next) => {
 exports.artList = async (ctx, next) => {
     const { page = 1, size = 10 } = ctx.query;
     const { token } = ctx.header;
-    const decodetoken = jwt.verify(token, "token");
     if (page < 1 || size < 1) {
+        // ctx.body = {
+        //     status: "-1",
+        //     data: [],
+        //     msg: "参数错误"
+        // };
+        handleErr({ msg: "参数错误" });
+    } else {
+        const total = await ARTICLESCHEMA.countDocuments();
+        const list = await ARTICLESCHEMA.find()
+            .skip((page - 1) * Number(size))
+            .limit(Number(size))
+            .exec();
+        console.log(page, size, total);
         ctx.body = {
-            status: "-1",
-            data: [],
-            msg: "参数错误"
+            status: "0",
+            data: list,
+            msg: "",
+            total: total
         };
-        return;
+        // { data: list, ctx: ctx }
+        // handleSuccess({ data: list, ctx: ctx, total: total });
     }
-    if (decodetoken > Math.floor(Date.now() / 1000)) {
-        ctx.body = {
-            status: "-1",
-            data: [],
-            msg: "登录失效"
-        };
-        return;
-    }
-    const total = await ARTICLESCHEMA.count();
-    const list = await ARTICLESCHEMA.find()
-        .skip((page - 1) * Number(size))
-        .limit(Number(size))
-        .exec();
-    console.log(page, size, decodetoken);
-    ctx.body = {
-        status: "0",
-        data: list,
-        msg: "",
-        total: total
-    };
+    // let decode = null;
+    // jwt.verify(token, "token", async (err, decode) => {
+    //     if (err) {
+    //         ctx.body = {
+    //             status: "-1",
+    //             data: [],
+    //             msg: "token失效"
+    //         };
+    //         await next();
+    //     } else {
+    //         if (decode.exp > Math.floor(Date.now() / 1000)) {
+    //             if (page < 1 || size < 1) {
+    //                 ctx.body = {
+    //                     status: "-1",
+    //                     data: [],
+    //                     msg: "参数错误"
+    //                 };
+    //             } else {
+    //                 const total = await ARTICLESCHEMA.countDocuments();
+    //                 const list = await ARTICLESCHEMA.find()
+    //                     .skip((page - 1) * Number(size))
+    //                     .limit(Number(size))
+    //                     .exec();
+    //                 console.log(page, size, total, decode);
+    //                 await next();
+    //                 ctx.body = {
+    //                     status: "0",
+    //                     data: list,
+    //                     msg: "",
+    //                     total: total
+    //                 };
+    //             }
+    //         } else {
+    //             ctx.body = {
+    //                 status: "-1",
+    //                 data: [],
+    //                 msg: "token过期"
+    //             };
+    //         }
+    //     }
+    // });
 };
 
 exports.artById = async (ctx, next) => {

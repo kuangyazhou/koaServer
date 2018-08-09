@@ -11,17 +11,18 @@ const userMysql = require("../mysql/query");
  * @returns {Promise}
  */
 exports.login = async (ctx, next) => {
-    // const { name, password } = ctx.query; //get获取参数
-    const { name, password } = ctx.request.body; //post获取参数
+    const { name, password } = ctx.query; //get获取参数
+    // const { name, password } = ctx.request.body; //post获取参数
     const result = await USERSCHEMA.find({ username: name });
 
     const token = jwt.sign(
         {
             name: name,
-            password: password,
-            exp: Math.floor(Date.now() / 1000) + 60 * 60 * 24 * 7
+            password: password
+            // exp: Math.floor(Date.now() / 1000) + 60 * 60 * 24 * 7
         },
-        "token"
+        "token",
+        { expiresIn: "2h" }
     );
     console.log(name, password, result, token);
     if (result.length == 0) {
@@ -29,8 +30,7 @@ exports.login = async (ctx, next) => {
         ctx.body = {
             status: "1",
             data: [],
-            msg: "用户名不存在",
-            token:token
+            msg: "用户名不存在"
         };
         // next();
         return;
@@ -39,7 +39,8 @@ exports.login = async (ctx, next) => {
         ctx.body = {
             status: "0",
             // data: result
-            data: []
+            data: [],
+            token: token
         };
     } else {
         ctx.body = {
@@ -69,7 +70,7 @@ exports.getlogin = async (ctx, next) => {
         ctx.body = {
             status: "0",
             // data: result
-            data: [],
+            data: []
         };
     } else {
         ctx.body = {
