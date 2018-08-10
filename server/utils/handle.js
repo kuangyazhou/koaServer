@@ -1,4 +1,4 @@
-const koa = require("koa");
+const { Context } = require("koa");
 
 // const ctx = koa.BaseContext;
 
