@@ -12,8 +12,8 @@ const userMysql = require("../mysql/query");
  * @returns {Promise}
  */
 exports.login = async (ctx, next) => {
-    const { name, password } = ctx.query; //get获取参数
-    // const { name, password } = ctx.request.body; //post获取参数
+    // const { name, password } = ctx.query; //get获取参数
+    const { name, password } = ctx.request.body; //post获取参数
     const result = await USERSCHEMA.find({ username: name });
 
     const token = jwt.sign(
