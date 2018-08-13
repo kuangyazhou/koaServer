@@ -15,7 +15,6 @@ export default class Header extends Component {
         }
     }
     handleClick = e => {
-        console.log("click ", e);
         this.setState({
             current: e.key
         });
@@ -24,7 +23,7 @@ export default class Header extends Component {
         if (localStorage.userId === '') {
             this.setState({ hasLogined: false });
         } else {
-            this.setState({ name: localStorage.name, userId: localStorage.userId });
+            this.setState({ name: "localStorage.name", userId: localStorage.userId });
             this.setState({ hasLogined: true });
         }
     }
@@ -35,10 +34,10 @@ export default class Header extends Component {
     render() {
         const userShow = this.state.hasLogined
             ? <div className="sign-container">
-                <a type="primary" href="/mine" target="_blank">{this.state.name}个人中心</a>
+                <a type="primary" href="/mine" target="_blank" className="person-center"><span>{this.state.name}</span> 个人中心</a>
                 &nbsp;&nbsp;&nbsp;
-				<Icon type="logout" onClick={this.logout.bind(this)} />退出
-                <a href="/writer" className="btn write-btn">写文章</a>
+				<Button onClick={this.logout.bind(this)} ><Icon type="logout"/>退出</Button>
+                <a href="/writer" className="btn write-btn"><Icon type="edit" /> 写文章</a>
             </div>
             : <div className="sign-container">
                 <a className="btn log-in" href="/signin">
@@ -86,7 +85,7 @@ export default class Header extends Component {
                         </Menu>
 
                     </Col>
-                    <Col span={10}>
+                    <Col span={7}>
                         <div className="search">
                             <Search
                                 placeholder="搜索"
@@ -95,9 +94,8 @@ export default class Header extends Component {
                             />
                         </div>
                     </Col>
-                    <Col span={6}>
+                    <Col span={9}>
                         {userShow}
-
                     </Col>
                 </Row>
             </header>

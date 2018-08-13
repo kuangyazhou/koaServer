@@ -77,7 +77,7 @@ class SignUp extends Component{
                     <h4 className="title">
                         <div className="normal-title">
                             <a href="/signin">登录</a>
-                            <b>.</b>
+                            <b> . </b>
                             <a  className="active" href="/signup">注册</a>
                         </div>
                     </h4>
