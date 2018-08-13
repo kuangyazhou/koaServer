@@ -7,6 +7,7 @@ import Culture from "@/pages/culture";
 import SignIn from "@/pages/signin";
 import SignUp from "@/pages/signup";
 import Page2 from "@/pages/page2";
+import Center from "@/pages/center";
 
 const routes = [
     {
@@ -36,6 +37,10 @@ const routes = [
     {
         path: "/page2",
         component: Page2
+    },
+    {
+        path: "/mine",
+        component: Center
     }
 ];
 
