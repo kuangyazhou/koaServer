@@ -21,7 +21,12 @@ export default class Center extends Component {
                             <img src={require("@/assets/img/head.jpeg")} />
                         </div>
                     </Col>
+                    <Col span={4}>Name</Col>
+                    <Row>
+                        <Col />
+                    </Row>
                 </Row>
+                <Row>文章 动态 最新评论 热门</Row>
             </div>
         );
     }
