@@ -1,6 +1,6 @@
+const ARTICLESCHEMA = require("../models/article");
 const jwt = require("jsonwebtoken");
 
-const ARTICLESCHEMA = require("../models/article");
 const { handleErr, handleSuccess } = require("../utils/handle");
 const { auth } = require("../utils/auth");
 
@@ -24,6 +24,12 @@ exports.artAdd = async (ctx, next) => {
 };
 
 exports.artList = async (ctx, next) => {
+    const list = await ARTICLESCHEMA.find().exec();
+    ctx.body = {
+        status: "0",
+        data: list,
+        msg: ""
+    };
     const { page = 1, size = 10 } = ctx.query;
     // const { token } = ctx.header;
     auth(ctx, next);

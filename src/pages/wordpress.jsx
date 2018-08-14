@@ -1,8 +1,8 @@
 import '@/style/pages/wordpress.less'
 import React, { Component } from "react";
 import { Row, Col, Carousel, List } from "antd";
-import Header from "@/commponents/header";
-import Footer from "@/commponents/footer";
+import Header from "@/components/header";
+import Footer from "@/components/footer";
 
 const data = [
     'Racing car sprays burning fuel into crowd.',
@@ -14,7 +14,7 @@ const data = [
 export default class WordPress extends Component {
     render() {
         return (
-            <div>
+            <div className="wordpress">
                 <Header current="wordpress"/>
                 <div className="content">
                     <Row>
