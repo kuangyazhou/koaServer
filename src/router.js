@@ -6,7 +6,10 @@ import Writer from "@/pages/writer";
 import Culture from "@/pages/culture";
 import SignIn from "@/pages/signin";
 import SignUp from "@/pages/signup";
+import Page1 from "@/pages/page1";
 import Page2 from "@/pages/page2";
+import Page3 from "@/pages/page3";
+import Editors from "@/components/editors";
 import Center from "@/pages/center";
 
 const routes = [
@@ -35,8 +38,20 @@ const routes = [
         component: Culture
     },
     {
+        path: "/page1",
+        component: Page1
+    },
+    {
         path: "/page2",
         component: Page2
+    },
+    {
+        path: "/page3",
+        component: Page3
+    },
+    {
+        path: "/editors",
+        component: Editors
     },
     {
         path: "/mine",

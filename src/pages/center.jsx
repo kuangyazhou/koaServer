@@ -1,8 +1,8 @@
+import "@/style/pages/center.less";
 import React, { Component } from "react";
-import Header from "@/commponents/header";
+import Header from "@/components/header";
 import { Row, Col, List, Avatar, Icon, Carousel, Spin, message } from "antd";
 
-import "@/style/pages/center.less";
 export default class Center extends Component {
     constructor(props) {
         super(props);
