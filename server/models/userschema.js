@@ -4,10 +4,13 @@ const Schema = mongoose.Schema;
 const userSchema = new Schema(
     {
         username: String,
-        password: String
+        password: String,
+        tel: Number,
+        time: Date
     },
     {
-        collection: "user"
+        collection: "user",
+        versionKey: false
     }
 );
 

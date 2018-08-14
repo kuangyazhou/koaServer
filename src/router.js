@@ -10,6 +10,7 @@ import Page1 from "@/pages/page1";
 import Page2 from "@/pages/page2";
 import Page3 from "@/pages/page3";
 import Editors from "@/components/editors";
+import Center from "@/pages/center";
 
 const routes = [
     {
@@ -51,6 +52,10 @@ const routes = [
     {
         path: "/editors",
         component: Editors
+    },
+    {
+        path: "/mine",
+        component: Center
     }
 ];
 

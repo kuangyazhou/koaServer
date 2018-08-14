@@ -1,5 +1,5 @@
 const router = require("koa-router")();
-const User=require('../api/user');
+const User = require("../api/user");
 
 router.prefix("/api/users");
 
@@ -11,6 +11,10 @@ router.post("/bar", function(ctx, next) {
     ctx.body = "this is a users/bar response";
 });
 
-router.post("/login",User.login);
+router.post("/login", User.login);
+
+router.get("/login", User.getlogin);
+
+router.get("/register", User.register);
 
 module.exports = router;

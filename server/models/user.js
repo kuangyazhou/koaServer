@@ -11,7 +11,7 @@ var userSchema = new Schema(
         tags: Array,
         likes: Number
     },
-    { collection: "admin" }
+    { collection: "admin", versionKey: false }
 );
 
 module.exports = mongoose.model("USER", userSchema);

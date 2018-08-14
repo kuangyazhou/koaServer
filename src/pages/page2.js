@@ -23,9 +23,9 @@ export default class Page2 extends Component {
             });
         const data = {
             name: "admin",
-            password: "123456"
+            password: "admin"
         };
-        // axios
+        // request
         //     .post("/api/users/login", data)
         //     .then(res => {
         //         console.log(res);
@@ -41,6 +41,14 @@ export default class Page2 extends Component {
             .catch(error => {
                 console.log(error);
             });
+        // request
+        //     .get("/api/users/login", { params: data })
+        //     .then(res => {
+        //         console.log(res);
+        //     })
+        //     .catch(error => {
+        //         console.log(error);
+        //     });
     }
     render() {
         return (
