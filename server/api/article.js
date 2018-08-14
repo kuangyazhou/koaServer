@@ -1,4 +1,8 @@
 const ARTICLESCHEMA = require("../models/article");
+const jwt = require("jsonwebtoken");
+
+const { handleErr, handleSuccess } = require("../utils/handle");
+const { auth } = require("../utils/auth");
 
 exports.artAdd = async (ctx, next) => {
     const { id, title, desc, author, content } = ctx.query;
@@ -26,6 +30,73 @@ exports.artList = async (ctx, next) => {
         data: list,
         msg: ""
     };
+    const { page = 1, size = 10 } = ctx.query;
+    // const { token } = ctx.header;
+    auth(ctx, next);
+    if (page < 1 || size < 1) {
+        // ctx.body = {
+        //     status: "-1",
+        //     data: [],
+        //     msg: "参数错误"
+        // };
+        handleErr({ msg: "参数错误" });
+    } else {
+        const total = await ARTICLESCHEMA.countDocuments();
+        const list = await ARTICLESCHEMA.find()
+            .skip((page - 1) * Number(size))
+            .limit(Number(size))
+            .exec();
+        console.log(page, size, total);
+        ctx.body = {
+            status: "0",
+            data: list,
+            msg: "",
+            total: total
+        };
+        // { data: list, ctx: ctx }
+        // handleSuccess({ data: list, ctx: ctx, total: total });
+    }
+    // let decode = null;
+    // jwt.verify(token, "token", async (err, decode) => {
+    //     if (err) {
+    //         ctx.body = {
+    //             status: "-1",
+    //             data: [],
+    //             msg: "token失效"
+    //         };
+    //         await next();
+    //     } else {
+    //         if (decode.exp > Math.floor(Date.now() / 1000)) {
+    //             if (page < 1 || size < 1) {
+    //                 ctx.body = {
+    //                     status: "-1",
+    //                     data: [],
+    //                     msg: "参数错误"
+    //                 };
+    //             } else {
+    //                 const total = await ARTICLESCHEMA.countDocuments();
+    //                 const list = await ARTICLESCHEMA.find()
+    //                     .skip((page - 1) * Number(size))
+    //                     .limit(Number(size))
+    //                     .exec();
+    //                 console.log(page, size, total, decode);
+    //                 await next();
+    //                 ctx.body = {
+    //                     status: "0",
+    //                     data: list,
+    //                     msg: "",
+    //                     total: total
+    //                 };
+    //             }
+    //         } else {
+    //             ctx.body = {
+    //                 status: "-1",
+    //                 data: [],
+    //                 msg: "token过期"
+    //             };
+    //         }
+    //     }
+    // });
 };
 
 exports.artById = async (ctx, next) => {

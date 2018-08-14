@@ -1,5 +1,19 @@
 @import '../common/mixin';
-
+@font-face {
+    font-family: 'iconfont';  /* project id 790368 */
+    src: url('//at.alicdn.com/t/font_790368_aagumf9rmyn.eot');
+    src: url('//at.alicdn.com/t/font_790368_aagumf9rmyn.eot?#iefix') format('embedded-opentype'),
+    url('//at.alicdn.com/t/font_790368_aagumf9rmyn.woff') format('woff'),
+    url('//at.alicdn.com/t/font_790368_aagumf9rmyn.ttf') format('truetype'),
+    url('//at.alicdn.com/t/font_790368_aagumf9rmyn.svg#iconfont') format('svg');
+}
+.iconfont {
+    font-family:"iconfont" !important;
+    font-size:16px;
+    font-style:normal;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
 .write{
     width: 100%;
     .left-item{
@@ -16,8 +30,8 @@
                 display: block;
                 font-size: 15px;
                 padding: 9px 0;
-                color: #ec7259;
-                border: 1px solid rgba(236,114,89,.8);
+                color: @mc;
+                border: 1px solid rgba(34, 166, 255, 0.8);
                 border-radius: 20px;
                 -webkit-transition: border-color .2s ease-in;
                 -o-transition: border-color .2s ease-in;
@@ -113,7 +127,7 @@
             }
             ._31PCv {
                 background-color: #666;
-                border-left: 3px solid #ec7259;
+                border-left: 3px solid @mc;
                 padding-left: 12px;
             }
         }
@@ -153,6 +167,117 @@
             color: #595959;
             &:hover{
                 color: #333232;
+            }
+        }
+    }
+    .right-item{
+        .artical-save{
+            position: absolute;
+            right: 5px;
+            top: 2px;
+        }
+        .artical{
+            height: 100%;
+            display: flex;
+            -webkit-box-orient: vertical;
+            -webkit-box-direction: normal;
+            flex-direction: column;
+            .artical-input{
+                width: 100%;
+                padding: 0 80px 10px 40px;
+                margin-bottom: 0;
+                border: none;
+                font-size: 30px;
+                font-weight: 400;
+                line-height: 30px;
+                box-shadow: none;
+                color: #595959;
+                background-color: transparent;
+                outline: none;
+                border-radius: 0;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                white-space: nowrap;
+            }
+            .RichEditor-root {
+                background: #fff;
+                border: 1px solid #ddd;
+                font-family: 'Georgia', serif;
+                font-size: 14px;
+                padding: 15px;
+            }
+            
+            .RichEditor-editor {
+                border-top: 1px solid #ddd;
+                cursor: text;
+                font-size: 16px;
+                margin-top: 10px;
+            }
+            
+            .RichEditor-editor .public-DraftEditorPlaceholder-root,
+            .RichEditor-editor .public-DraftEditor-content {
+                margin: 0 -15px -15px;
+                padding: 15px;
+            }
+            
+            .RichEditor-editor .public-DraftEditor-content {
+                min-height: 100px;
+            }
+            
+            .RichEditor-hidePlaceholder .public-DraftEditorPlaceholder-root {
+                display: none;
+            }
+            
+            .RichEditor-editor .RichEditor-blockquote {
+                border-left: 5px solid #eee;
+                color: #666;
+                font-family: 'Hoefler Text', 'Georgia', serif;
+                font-style: italic;
+                margin: 16px 0;
+                padding: 10px 20px;
+            }
+            
+            .RichEditor-editor .public-DraftStyleDefault-pre {
+                background-color: rgba(0, 0, 0, 0.05);
+                font-family: 'Inconsolata', 'Menlo', 'Consolas', monospace;
+                font-size: 16px;
+                padding: 20px;
+            }
+            
+            .RichEditor-controls {
+                font-family: 'Helvetica', sans-serif;
+                font-size: 14px;
+                margin-bottom: 5px;
+                user-select: none;
+            }
+            
+            .RichEditor-styleButton {
+                color: #999;
+                cursor: pointer;
+                margin-right: 16px;
+                padding: 2px 0;
+                display: inline-block;
+            }
+            
+            .RichEditor-activeButton {
+                color: #5890ff;
+            }
+            .operate{
+                border: 1px solid #d4d3d3;
+                background: #ebe9e9;
+                .block-controls{
+                    font-weight: 700;
+                    font-size: 22px;
+                }
+                .artical-header{
+                    display: inline-block;
+                    padding: 0 5px;
+                    text-align: center;
+                    height: 24px;
+                    line-height: 24px;
+                    border-right: 1px solid #d4d3d3;
+                }
+                  
             }
         }
     }

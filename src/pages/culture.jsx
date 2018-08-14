@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { Button } from "antd";
-import Header from "@/commponents/header";
-import Footer from "@/commponents/footer";
+import Header from "@/components/header";
+import Footer from "@/components/footer";
 
 export default class Culture extends Component {
     render() {

@@ -1,24 +1,21 @@
-import '@/style/pages/writer.less';
-import React, { Component } from "react";
-import { Button, Row, Col, Icon, Form, Input } from "antd";
+import '@/style/pages/page.less'
+import React, { Component } from 'react';
 import {
     Editor,
     EditorState,
     RichUtils,
-    // convertFromRaw,
+    // Entity,
     // convertToRaw,
     // CompositeDecorator,
-    // DefaultDraftBlockRenderMap,
     // ContentState,
-    // Entity,
+    // convertFromRaw,
+    // DefaultDraftBlockRenderMap,
     // getDefaultKeyBinding,
     // KeyBindingUtil,
     Modifier
 } from 'draft-js';
 
-const FormItem = Form.Item;
-
-class Writer extends Component {
+class RichEditor extends Component {
     constructor(props) {
         super(props);
         // 默认给一个empty的editorstate
@@ -98,117 +95,56 @@ class Writer extends Component {
         }
     }
     render() {
-        const { getFieldDecorator } = this.props.form;
-        const { editorState } = this.state;
-        let className = 'RichEditor-styleButton';
-        if (this.props.active) {
-            className += ' RichEditor-activeButton';
+      const { editorState } = this.state;
+      // If the user changes block type before entering any text, we can
+      // either style the placeholder or hide it. Let's just hide it now.
+      // 如果用户在输入任何字符之前，改变了block类型，我们可以使用改变placeholder的样式，
+      // 或者隐藏它。我们现在隐藏它。
+        let className = 'RichEditor-editor';
+        const contentState = editorState.getCurrentContent();
+        if (!contentState.hasText()) {
+            if (
+            contentState
+                .getBlockMap()
+                .first()
+                .getType() !== 'unstyled'
+            ) {
+            className += ' RichEditor-hidePlaceholder';
+            }
         }
         return (
-            <div className="write">
-                <Row className="_1gp6t">
-                    <Col span={4} className="left-item">
-                        <div className="back-btn">
-                            <a href="/">回首页</a>
-                        </div>
-                        <div className="news_wj_wrapper">
-                            <div className="news_wj">
-                                <Icon type="plus" />新建文集
-                            </div>
-                            <div className="_2G97m">
-                                <Form layout="inline" onSubmit={this.handleSubmit}>
-                                    <FormItem>
-                                        {getFieldDecorator('wjName', {
-                                            rules: [{ required: true, message: '请输入文集名!' }],
-                                        })(
-                                            <Input prefix={<Icon style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder="请输入文集名" />
-                                        )}
-                                    </FormItem>
-                                    <FormItem>
-                                        <Button htmlType="submit">
-                                            提交
-                                        </Button>
-                                        &nbsp;&nbsp;<a href="" className="cancel-btn">取消</a>
-                                    </FormItem>
-                                </Form>
-                            </div>
-                        </div>
-                        <ul className="_3MbJ4">
-                            <li className="_3DM7w _31PCv">
-                                <div className="_3P4JX">
-                                    <Icon type="setting" />
-                                    <span>
-                                        <ul className="_2V8zt">
-                                            <li className="_2po2r cRfUr">
-                                                <Icon type="edit" className="_22XWG" />修改文集
-                                            </li>
-                                            <li className="_2po2r cRfUr">
-                                                <Icon type="delete" className="_22XWG" />删除文集
-                                            </li>
-                                        </ul>
-                                    </span>
-                                </div>
-                                <span>日记本</span>
-                            </li>
-                            <li className="_3DM7w">
-                                <span>随笔</span>
-                            </li>
-                        </ul>
-                        <Col span={4} className="settings">
-                            <span className="ant-dropdown-trigger"><Icon type="setting" />设置</span>
-                            <span className="ant-dropdown-question">遇到问题<Icon type="question-circle-o" /></span>
-                        </Col>
-                    </Col>
-                    <Col span={20}>
-                        <Row>
-                            <Col span={6} className="center-item">
-                                <div className="add_art">
-                                    <Icon type="plus-circle-o" /> 新建文章
-                                </div>
-                            </Col>
-                            <Col span={18} className="right-item">
-                                <p className="artical-save">已保存</p>
-                                <div style={style.root}>
-                                    <div className="RichEditor-root">
-                                        <div>
-                                            <InlineStyleControls
-                                                editorState={editorState}
-                                                onToggle={this.toggleInlineStyle}
-                                            />
-                                            <BlockStyleControls
-                                                editorState={editorState}
-                                                onToggle={this.toggleBlockType}
-                                            />
-                                            <ColorControls
-                                                editorState={editorState}
-                                                onToggle={this.toggleColor}
-                                            />
-                                        </div>
-                                        <div className={className} onClick={this.focus}>
-                                            <Editor
-                                                blockStyleFn={this.getBlockStyle}
-                                                customStyleMap={styles}
-                                                editorState={editorState}
-                                                handleKeyCommand={this.handleKeyCommand}
-                                                onChange={this.onChange}
-                                                onTab={this.onTab}
-                                                placeholder="请输入"
-                                                ref="editor"
-                                                spellCheck={true}
-                                            />
-                                        </div>
-                                    </div>
-                                    <Button storehandle={this.storeHandle}>保存</Button>
-                                </div>
-                            </Col>
-                        </Row>
-                    </Col>
-                </Row>
+            <div style={style.root}>
+                <div className="RichEditor-root">
+                    <InlineStyleControls
+                        editorState={editorState}
+                        onToggle={this.toggleInlineStyle}
+                    />
+                    <BlockStyleControls
+                        editorState={editorState}
+                        onToggle={this.toggleBlockType}
+                    />
+                    <ColorControls
+                        editorState={editorState}
+                        onToggle={this.toggleColor}
+                    />
+                    <div className={className} onClick={this.focus}>
+                        <Editor
+                            blockStyleFn={this.getBlockStyle}
+                            customStyleMap={styles}
+                            editorState={editorState}
+                            handleKeyCommand={this.handleKeyCommand}
+                            onChange={this.onChange}
+                            onTab={this.onTab}
+                            placeholder="请输入"
+                            ref="editor"
+                            spellCheck={true}
+                        />
+                    </div>
+                </div>
             </div>
         );
     }
 }
-
 const styles = {
     CODE: {
         backgroundColor: 'rgba(0, 0, 0, 0.05)',
@@ -217,24 +153,33 @@ const styles = {
         padding: 2
     },
     red: {
+        padding: 2,
+
         color: 'rgba(255, 0, 0, 1.0)'
     },
     orange: {
+        padding: 2,
+
         color: 'rgba(255, 127, 0, 1.0)'
     },
     yellow: {
+        padding: 2,
         color: 'rgba(180, 180, 0, 1.0)'
     },
     green: {
+        padding: 2,
         color: 'rgba(0, 180, 0, 1.0)'
     },
     blue: {
+        padding: 2,
         color: 'rgba(0, 0, 255, 1.0)'
     },
     indigo: {
+        padding: 2,
         color: 'rgba(75, 0, 130, 1.0)'
     },
     violet: {
+        padding: 2,
         color: 'rgba(127, 0, 255, 1.0)'
     }
 };
@@ -385,5 +330,4 @@ const INLINE_STYLES = [
     { label: 'U', style: 'UNDERLINE' },
     { label: 'C', style: 'CODE' }
 ];
-
-export default Writer = Form.create({})(Writer)
+export default RichEditor
