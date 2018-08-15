@@ -37,8 +37,22 @@ export default class Home extends Component {
             "http://upload.jianshu.io/admin_banners/web_images/4374/0dd104568362dc168b15565132597b10134d9a1a.png?imageMogr2/auto-orient/strip|imageView2/1/w/1250/h/540",
             "http://upload.jianshu.io/admin_banners/web_images/4361/599ae85090db0f4a4cb3cca4d7aeb645f6cc91f0.jpg?imageMogr2/auto-orient/strip|imageView2/1/w/1250/h/540",
             "http://upload.jianshu.io/admin_banners/web_images/4368/c19f9350ef08c469f8fd461d25db7e8d8780f334.jpg?imageMogr2/auto-orient/strip|imageView2/1/w/1250/h/540"
-        ]
+        ],
+        view: 0, // 查看人数
+        like: 0, // 喜欢人数
+        message: 0, // 评论条数
     }
+    addView = () => {
+        this.setState({
+            view: this.state.view++,
+        })
+    }
+    // addLike = (callback) => {
+    //     request.get('/api/article')
+    //         .then(res => {
+    //             callback(res);
+    //         })
+    // }
     getData = (callback) => {
         request.get("https://randomuser.me/api/?results=5&inc=name,gender,email,nat&noinfo")
             .then(res => {
@@ -69,7 +83,15 @@ export default class Home extends Component {
                     ArtList: res.data
                 })
             }
-        })
+        });
+        // this.addLike((res) => {
+        //     if (res.data.name) {
+        //         console.log(res);
+        //         this.setState({
+        //             like: this.state.like++
+        //         })
+        //     }
+        // })
     }
     handleInfiniteOnLoad = () => {
         let data = this.state.data;
@@ -143,17 +165,13 @@ export default class Home extends Component {
                                     pageSize: 3
                                 }}
                                 dataSource={this.state.ArtList}
-                                // dataSource={listData}
-                                // footer={<div><b>ant design</b> footer part</div>}
                                 renderItem={item => (
                                     <List.Item
                                         key={item.title}
-                                        actions={[<span>{item.author}</span>, <IconText type="star-o" text="156" />, <IconText type="like-o" text="156" />, <IconText type="message" text="2" />]}
+                                        actions={[<IconText text={item.author}/>, <IconText type="eye-o" text={this.state.view}/>, <IconText type="like-o" text={this.state.like}/>, <IconText type="message" text={this.state.message} />]}
                                         extra={<img width={125} alt="logo" src="https://gw.alipayobjects.com/zos/rmsportal/mqaQswcyDLcXyDKnZfES.png" />}
                                     >
                                         <List.Item.Meta
-
-                                            avatar={<Avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />}
                                             title={<a href={item.href}>{item.title}</a>}
                                             description={item.desc}
                                         />
