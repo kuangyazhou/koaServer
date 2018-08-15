@@ -6,7 +6,7 @@ import Writer from "@/pages/writer";
 import Culture from "@/pages/culture";
 import SignIn from "@/pages/signin";
 import SignUp from "@/pages/signup";
-import Page1 from "@/pages/page1";
+import Artical from "@/pages/artical";
 import Page2 from "@/pages/page2";
 import Page3 from "@/pages/page3";
 import Editors from "@/components/editors";
@@ -38,8 +38,8 @@ const routes = [
         component: Culture
     },
     {
-        path: "/page1",
-        component: Page1
+        path: "/artical",
+        component: Artical
     },
     {
         path: "/page2",
