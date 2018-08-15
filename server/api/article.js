@@ -1,4 +1,6 @@
 const ARTICLESCHEMA = require("../models/article");
+const USERSCHEMA = require("../models/userschema");
+
 const jwt = require("jsonwebtoken");
 
 const { handleErr, handleSuccess } = require("../utils/handle");
@@ -215,4 +217,26 @@ exports.collectoperate = async (ctx, next) => {
             msg: "取消收藏"
         };
     }
+};
+
+exports.nums = async (ctx, next) => {
+    const { id } = ctx.query;
+    const auth = await USERSCHEMA.find({ _id: id });
+    const art = await ARTICLESCHEMA.find({ auth: "kyz" });
+    // console.log(art);
+    let like = 0;
+    art.forEach(item => {
+        console.log(item.content, item.like);
+        item.like ? (like += item.like) : "";
+    });
+    ctx.body = {
+        status: "0",
+        data: {
+            fans: 100,
+            art: art.length,
+            words: 0,
+            like: like
+        },
+        msg: ""
+    };
 };
