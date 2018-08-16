@@ -1,20 +1,15 @@
-import "@/style/pages/center.less";
 import React, { Component } from "react";
-import Header from "@/components/header";
-import { Row, Col, Tabs, List, Icon, Avatar } from "antd";
+import { Row, Col, Tabs, Icon } from "antd";
+
 import request from "@/utils/axios";
+import Header from "@/components/header";
+import ArtComponent from "@/components/artList";
+import "@/style/pages/center.less";
 
 const TabPane = Tabs.TabPane;
-const icon = (
+const ICON = ({ text, type = "bars" }) => (
     <span>
-        <Icon type="bars" />
-        文章
-    </span>
-);
-
-const IconText = ({ type, text }) => (
-    <span>
-        <Icon type={type} style={{ marginRight: 8 }} />
+        <Icon type={type} />
         {text}
     </span>
 );
@@ -51,7 +46,6 @@ export default class Center extends Component {
             .then(res => {
                 if (res.status === "0") {
                     this.setState({ nums: res.data });
-                    console.log(this.state);
                 }
             })
             .catch(error => {
@@ -60,50 +54,50 @@ export default class Center extends Component {
     }
 
     render() {
-        const CList = () => {
-            return (
-                <List
-                    itemLayout="vertical"
-                    size="large"
-                    pagination={{
-                        onChange: page => {
-                            console.log(page);
-                        },
-                        pageSize: 3
-                    }}
-                    dataSource={this.state.ArtList}
-                    // dataSource={listData}
-                    // footer={<div><b>ant design</b> footer part</div>}
-                    renderItem={item => (
-                        <List.Item
-                            key={item.title}
-                            actions={[
-                                <span>{item.author}</span>,
-                                <IconText type="star-o" text="156" />,
-                                <IconText type="like-o" text="156" />,
-                                <IconText type="message" text="2" />
-                            ]}
-                            extra={
-                                <img
-                                    width={125}
-                                    alt="logo"
-                                    src="https://gw.alipayobjects.com/zos/rmsportal/mqaQswcyDLcXyDKnZfES.png"
-                                />
-                            }
-                        >
-                            <List.Item.Meta
-                                avatar={
-                                    <Avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />
-                                }
-                                title={<a href={item.href}>{item.title}</a>}
-                                description={item.desc}
-                            />
-                            {item.content}
-                        </List.Item>
-                    )}
-                />
-            );
-        };
+        // const CList = () => {
+        //     return (
+        //         <List
+        //             itemLayout="vertical"
+        //             size="large"
+        //             pagination={{
+        //                 onChange: page => {
+        //                     console.log(page);
+        //                 },
+        //                 pageSize: 3
+        //             }}
+        //             dataSource={this.state.ArtList}
+        //             // dataSource={listData}
+        //             // footer={<div><b>ant design</b> footer part</div>}
+        //             renderItem={item => (
+        //                 <List.Item
+        //                     key={item.title}
+        //                     actions={[
+        //                         <span>{item.author}</span>,
+        //                         <IconText type="star-o" text="156" />,
+        //                         <IconText type="like-o" text="156" />,
+        //                         <IconText type="message" text="2" />
+        //                     ]}
+        //                     extra={
+        //                         <img
+        //                             width={125}
+        //                             alt="logo"
+        //                             src="https://gw.alipayobjects.com/zos/rmsportal/mqaQswcyDLcXyDKnZfES.png"
+        //                         />
+        //                     }
+        //                 >
+        //                     <List.Item.Meta
+        //                         avatar={
+        //                             <Avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />
+        //                         }
+        //                         title={<a href={item.href}>{item.title}</a>}
+        //                         description={item.desc}
+        //                     />
+        //                     {item.content}
+        //                 </List.Item>
+        //             )}
+        //         />
+        //     );
+        // };
         return (
             <div className="center-content">
                 <Header />
@@ -118,7 +112,8 @@ export default class Center extends Component {
                                 >
                                     <Col span={4}>
                                         <div className="center-img">
-                                            <img alt=""
+                                            <img
+                                                alt=""
                                                 src={require("@/assets/img/head.jpeg")}
                                             />
                                         </div>
@@ -191,17 +186,45 @@ export default class Center extends Component {
                                     defaultActiveKey="1"
                                     onChange={this.callback}
                                 >
-                                    <TabPane tab={icon} key="1">
-                                        <CList />
+                                    <TabPane
+                                        tab={<ICON text="文章" type="copy" />}
+                                        key="1"
+                                    >
+                                        {/* <CList /> */}
+                                        <ArtComponent
+                                            data={this.state.ArtList}
+                                        />
                                     </TabPane>
-                                    <TabPane tab={icon} key="2">
-                                        <CList />
+                                    <TabPane
+                                        tab={
+                                            <ICON text="动态" type="appstore" />
+                                        }
+                                        key="2"
+                                    >
+                                        <ArtComponent
+                                            data={this.state.ArtList}
+                                        />
                                     </TabPane>
-                                    <TabPane tab={icon} key="3">
-                                        <CList />
+                                    <TabPane
+                                        tab={
+                                            <ICON
+                                                text="最新评论"
+                                                type="apple"
+                                            />
+                                        }
+                                        key="3"
+                                    >
+                                        <ArtComponent
+                                            data={this.state.ArtList}
+                                        />
                                     </TabPane>
-                                    <TabPane tab={icon} key="4">
-                                        <CList />
+                                    <TabPane
+                                        tab={<ICON text="热门" type="github" />}
+                                        key="4"
+                                    >
+                                        <ArtComponent
+                                            data={this.state.ArtList}
+                                        />
                                     </TabPane>
                                 </Tabs>
                             </Col>
