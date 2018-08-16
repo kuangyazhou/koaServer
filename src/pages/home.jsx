@@ -43,8 +43,9 @@ export default class Home extends Component {
         message: 0, // 评论条数
     }
     addView = () => {
+      let T=this.state.view;
         this.setState({
-            view: this.state.view++,
+            view: T++,
         })
     }
     // addLike = (callback) => {

@@ -37,7 +37,7 @@ export default class Center extends Component {
             .get("/api/article")
             .then(res => {
                 // callback(res);
-                if (res.status == "0") {
+                if (res.status === "0") {
                     this.setState({
                         ArtList: res.data
                     });
@@ -49,7 +49,7 @@ export default class Center extends Component {
         request
             .get("/api/article/nums", { id: "5b6cfaaf3632f75a3b59164a" })
             .then(res => {
-                if (res.status == "0") {
+                if (res.status === "0") {
                     this.setState({ nums: res.data });
                     console.log(this.state);
                 }
@@ -118,7 +118,7 @@ export default class Center extends Component {
                                 >
                                     <Col span={4}>
                                         <div className="center-img">
-                                            <img
+                                            <img alt=""
                                                 src={require("@/assets/img/head.jpeg")}
                                             />
                                         </div>
