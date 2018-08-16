@@ -19,40 +19,50 @@ for (let i = 0; i < 13; i++) {
     });
 }
 
-const IconText = ({ type, text }) => (
-    <span>
-        <Icon type={type} style={{ marginRight: 8 }} />
-        {text}
-    </span>
-);
-export default class Home extends Component {
+class IconText extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {}
+    }
+    render() {
+        const {type, text, clickBtn} = this.props;
+        return (
+            <span onClick={clickBtn}>
+                <Icon type={type} style={{ marginRight: 8 }} />
+                {text}
+            </span>
+        )
+    }
+}
 
-    state = {
-        data: [],
-        ArtList: [],
-        loading: false,
-        hasMore: true,
-        imgList: [
-            "http://upload.jianshu.io/admin_banners/web_images/4358/a52cb0d0ef97a08087a234f4e25702b2471d49a4.jpg?imageMogr2/auto-orient/strip|imageView2/1/w/1250/h/540",
-            "http://upload.jianshu.io/admin_banners/web_images/4374/0dd104568362dc168b15565132597b10134d9a1a.png?imageMogr2/auto-orient/strip|imageView2/1/w/1250/h/540",
-            "http://upload.jianshu.io/admin_banners/web_images/4361/599ae85090db0f4a4cb3cca4d7aeb645f6cc91f0.jpg?imageMogr2/auto-orient/strip|imageView2/1/w/1250/h/540",
-            "http://upload.jianshu.io/admin_banners/web_images/4368/c19f9350ef08c469f8fd461d25db7e8d8780f334.jpg?imageMogr2/auto-orient/strip|imageView2/1/w/1250/h/540"
-        ],
-        view: 0, // 查看人数
-        like: 0, // 喜欢人数
-        message: 0, // 评论条数
+export default class Home extends Component {
+    constructor() {
+        super();
+        this.state = {
+            data: [],
+            ArtList: [],
+            loading: false,
+            hasMore: true,
+            imgList: [
+                "http://upload.jianshu.io/admin_banners/web_images/4358/a52cb0d0ef97a08087a234f4e25702b2471d49a4.jpg?imageMogr2/auto-orient/strip|imageView2/1/w/1250/h/540",
+                "http://upload.jianshu.io/admin_banners/web_images/4374/0dd104568362dc168b15565132597b10134d9a1a.png?imageMogr2/auto-orient/strip|imageView2/1/w/1250/h/540",
+                "http://upload.jianshu.io/admin_banners/web_images/4361/599ae85090db0f4a4cb3cca4d7aeb645f6cc91f0.jpg?imageMogr2/auto-orient/strip|imageView2/1/w/1250/h/540",
+                "http://upload.jianshu.io/admin_banners/web_images/4368/c19f9350ef08c469f8fd461d25db7e8d8780f334.jpg?imageMogr2/auto-orient/strip|imageView2/1/w/1250/h/540"
+            ],
+            view: 0, // 查看人数
+            like: 0, // 喜欢人数
+            message: 0, // 评论条数
+        }
+        this.clickBtn = this._clickBtn.bind(this);
     }
-    addView = () => {
-        this.setState({
-            view: this.state.view++,
-        })
+    _clickBtn() {
+        console.log(2222)
+        this.setState(prevState => (
+            {
+                view: prevState.view++,
+            }
+        ));
     }
-    // addLike = (callback) => {
-    //     request.get('/api/article')
-    //         .then(res => {
-    //             callback(res);
-    //         })
-    // }
     getData = (callback) => {
         request.get("https://randomuser.me/api/?results=5&inc=name,gender,email,nat&noinfo")
             .then(res => {
@@ -168,7 +178,7 @@ export default class Home extends Component {
                                 renderItem={item => (
                                     <List.Item
                                         key={item.title}
-                                        actions={[<IconText text={item.author}/>, <IconText type="eye-o" text={this.state.view}/>, <IconText type="like-o" text={this.state.like}/>, <IconText type="message" text={this.state.message} />]}
+                                        actions={[<IconText text={item.author}/>, <IconText type="eye-o" text={this.state.view} clickBtn={this.clickBtn}/>, <IconText type="like-o" text={this.state.like}/>, <IconText type="message" text={this.state.message} />]}
                                         extra={<img width={125} alt="logo" src="https://gw.alipayobjects.com/zos/rmsportal/mqaQswcyDLcXyDKnZfES.png" />}
                                     >
                                         <List.Item.Meta

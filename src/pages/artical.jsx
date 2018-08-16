@@ -2,7 +2,7 @@ import "@/style/pages/artical.less";
 import React, { Component } from "react";
 import Header from "@/components/header";
 import Footer from "@/components/footer";
-import { Button, Avatar, Row, Col, Icon, Form, Input } from "antd";
+import { Avatar, Row, Col, Icon } from "antd";
 
 export default class Artical extends Component {
     constructor(props) {
@@ -39,7 +39,7 @@ export default class Artical extends Component {
                                             <span className="views-count">阅读 6788</span>
                                             <span className="comments-count">评论 27</span>
                                             <span className="likes-count">喜欢 201</span>
-                                            <span className="rewards-count ">赞赏 1</span>
+                                            <span className="rewards-count">赞赏 1</span>
                                         </div>
                                     </div>
                                 </div>
