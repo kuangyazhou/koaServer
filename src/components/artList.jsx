@@ -11,17 +11,12 @@ export default class ArtComponent extends Component {
 
     componentDidMount() {}
 
-    star() {
-        console.log(1);
+    star(e) {
+        console.log(e);
     }
-    // star = e => {
-    //     console.log(e);
-    //     console.log("fuck the king!!!");
-    // };
 
     render() {
         const { data } = this.props;
-        // return <div>fuck the king!!!</div>;
         return (
             <List
                 itemLayout="vertical"
@@ -43,7 +38,7 @@ export default class ArtComponent extends Component {
                             <span>{item.author}</span>,
                             <IconText
                                 type="star-o"
-                                onClick={item => this.star(item)}
+                                onClick={() => this.star(item._id)}
                                 text="156"
                             />,
                             <IconText type="like-o" text="156" />,
