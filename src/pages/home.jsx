@@ -34,7 +34,7 @@ class IconText extends Component {
         )
     }
 }
-
+ 
 export default class Home extends Component {
     constructor() {
         super();
@@ -55,13 +55,11 @@ export default class Home extends Component {
         }
         this.clickBtn = this._clickBtn.bind(this);
     }
+    
     _clickBtn() {
-        console.log(2222)
-        this.setState(prevState => (
-            {
-                view: prevState.view++,
-            }
-        ));
+        this.setState(prevState => ({
+                view: ++prevState.view,
+        }));
     }
     getData = (callback) => {
         request.get("https://randomuser.me/api/?results=5&inc=name,gender,email,nat&noinfo")
@@ -219,3 +217,4 @@ export default class Home extends Component {
         );
     }
 }
+
