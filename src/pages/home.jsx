@@ -1,8 +1,8 @@
-import '@/style/pages/home.less';
+import "@/style/pages/home.less";
 import React, { Component } from "react";
-import InfiniteScroll from 'react-infinite-scroller';
+import InfiniteScroll from "react-infinite-scroller";
 import { Row, Col, List, Avatar, Icon, Carousel, Spin, message } from "antd";
-import request from '@/utils/axios'
+import request from "@/utils/axios";
 
 import Header from "@/components/header";
 import Footer from "@/components/footer";
@@ -11,27 +11,30 @@ import Sider from "@/components/sider";
 const listData = [];
 for (let i = 0; i < 13; i++) {
     listData.push({
-        href: 'http://ant.design',
+        href: "http://ant.design",
         title: `ant design part ${i}`,
-        avatar: 'https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png',
-        description: 'Ant Design, a design language for background applications, is refined by Ant UED Team.',
-        content: 'We supply a series of design principles, practical patterns and high quality design resources (Sketch and Axure), to help people create their product prototypes beautifully and efficiently.',
+        avatar:
+            "https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png",
+        description:
+            "Ant Design, a design language for background applications, is refined by Ant UED Team.",
+        content:
+            "We supply a series of design principles, practical patterns and high quality design resources (Sketch and Axure), to help people create their product prototypes beautifully and efficiently."
     });
 }
 
 class IconText extends Component {
     constructor(props) {
         super(props);
-        this.state = {}
+        this.state = {};
     }
     render() {
-        const {type, text, clickBtn} = this.props;
+        const { type, text, clickBtn } = this.props;
         return (
             <span onClick={clickBtn}>
                 <Icon type={type} style={{ marginRight: 8 }} />
                 {text}
             </span>
-        )
+        );
     }
 }
 
@@ -51,47 +54,49 @@ export default class Home extends Component {
             ],
             view: 0, // 查看人数
             like: 0, // 喜欢人数
-            message: 0, // 评论条数
-        }
+            message: 0 // 评论条数
+        };
         this.clickBtn = this._clickBtn.bind(this);
     }
     _clickBtn() {
-        console.log(2222)
-        this.setState(prevState => (
-            {
-                view: prevState.view++,
-            }
-        ));
+        console.log(2222);
+        this.setState(prevState => ({
+            view: prevState.view + 1
+        }));
     }
-    getData = (callback) => {
-        request.get("https://randomuser.me/api/?results=5&inc=name,gender,email,nat&noinfo")
+    getData = callback => {
+        request
+            .get(
+                "https://randomuser.me/api/?results=5&inc=name,gender,email,nat&noinfo"
+            )
             .then(res => {
                 callback(res);
             })
             .catch(error => {
                 console.log(error);
             });
-    }
-    getArt = (callback) => {
-        request.get("/api/article")
+    };
+    getArt = callback => {
+        request
+            .get("/api/article")
             .then(res => {
                 callback(res);
             })
             .catch(error => {
                 console.log(error);
             });
-    }
+    };
     componentDidMount() {
-        this.getData((res) => {
+        this.getData(res => {
             this.setState({
-                data: res.results,
+                data: res.results
             });
         });
-        this.getArt((res) => {
-            if (res.status === '0') {
+        this.getArt(res => {
+            if (res.status === "0") {
                 this.setState({
                     ArtList: res.data
-                })
+                });
             }
         });
         // this.addLike((res) => {
@@ -106,24 +111,24 @@ export default class Home extends Component {
     handleInfiniteOnLoad = () => {
         let data = this.state.data;
         this.setState({
-            loading: true,
+            loading: true
         });
         if (data.length > 14) {
-            message.warning('循环列表已全部加载完');
+            message.warning("循环列表已全部加载完");
             this.setState({
                 hasMore: false,
-                loading: false,
+                loading: false
             });
             return;
         }
-        this.getData((res) => {
+        this.getData(res => {
             data = data.concat(res.results);
             this.setState({
                 data: data,
-                loading: false,
+                loading: false
             });
         });
-    }
+    };
     render() {
         return (
             <div className="home">
@@ -133,7 +138,11 @@ export default class Home extends Component {
                         <Col span={16}>
                             <Carousel autoplay>
                                 {this.state.imgList.map((item, index) => {
-                                        return <div key={index} ><img src={item} alt="img" /></div>
+                                    return (
+                                        <div key={index}>
+                                            <img src={item} alt="img" />
+                                        </div>
+                                    );
                                 })}
                             </Carousel>
                             <div className="demo-infinite-container">
@@ -141,7 +150,10 @@ export default class Home extends Component {
                                     initialLoad={false}
                                     pageStart={0}
                                     loadMore={this.handleInfiniteOnLoad}
-                                    hasMore={!this.state.loading && this.state.hasMore}
+                                    hasMore={
+                                        !this.state.loading &&
+                                        this.state.hasMore
+                                    }
                                     useWindow={false}
                                 >
                                     <List
@@ -149,19 +161,26 @@ export default class Home extends Component {
                                         renderItem={item => (
                                             <List.Item key={item.id}>
                                                 <List.Item.Meta
-                                                    avatar={<Avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />}
-                                                    title={<a href="https://ant.design">{item.name.last}</a>}
+                                                    avatar={
+                                                        <Avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />
+                                                    }
+                                                    title={
+                                                        <a href="https://ant.design">
+                                                            {item.name.last}
+                                                        </a>
+                                                    }
                                                     description={item.email}
                                                 />
                                                 <div>Content</div>
                                             </List.Item>
                                         )}
                                     >
-                                        {this.state.loading && this.state.hasMore && (
-                                            <div className="demo-loading-container">
-                                                <Spin />
-                                            </div>
-                                        )}
+                                        {this.state.loading &&
+                                            this.state.hasMore && (
+                                                <div className="demo-loading-container">
+                                                    <Spin />
+                                                </div>
+                                            )}
                                     </List>
                                 </InfiniteScroll>
                             </div>
@@ -169,7 +188,7 @@ export default class Home extends Component {
                                 itemLayout="vertical"
                                 size="large"
                                 pagination={{
-                                    onChange: (page) => {
+                                    onChange: page => {
                                         console.log(page);
                                     },
                                     pageSize: 3
@@ -178,11 +197,36 @@ export default class Home extends Component {
                                 renderItem={item => (
                                     <List.Item
                                         key={item.title}
-                                        actions={[<IconText text={item.author}/>, <IconText type="eye-o" text={this.state.view} clickBtn={this.clickBtn}/>, <IconText type="like-o" text={this.state.like}/>, <IconText type="message" text={this.state.message} />]}
-                                        extra={<img width={125} alt="logo" src="https://gw.alipayobjects.com/zos/rmsportal/mqaQswcyDLcXyDKnZfES.png" />}
+                                        actions={[
+                                            <IconText text={item.author} />,
+                                            <IconText
+                                                type="eye-o"
+                                                text={this.state.view}
+                                                clickBtn={this.clickBtn}
+                                            />,
+                                            <IconText
+                                                type="like-o"
+                                                text={this.state.like}
+                                            />,
+                                            <IconText
+                                                type="message"
+                                                text={this.state.message}
+                                            />
+                                        ]}
+                                        extra={
+                                            <img
+                                                width={125}
+                                                alt="logo"
+                                                src="https://gw.alipayobjects.com/zos/rmsportal/mqaQswcyDLcXyDKnZfES.png"
+                                            />
+                                        }
                                     >
                                         <List.Item.Meta
-                                            title={<a href={item.href}>{item.title}</a>}
+                                            title={
+                                                <a href={item.href}>
+                                                    {item.title}
+                                                </a>
+                                            }
                                             description={item.desc}
                                         />
                                         {item.content}
@@ -190,27 +234,41 @@ export default class Home extends Component {
                                 )}
                             />
                         </Col>
-                        <Col span={1}></Col>
+                        <Col span={1} />
                         <Col span={7}>
                             <div className="list-container">
                                 <a href="">
-                                    <img src={require("@/images/banner-s-3-7123fd94750759acf7eca05b871e9d17.png")} alt="Banner s 3" />
+                                    <img
+                                        src={require("@/images/banner-s-3-7123fd94750759acf7eca05b871e9d17.png")}
+                                        alt="Banner s 3"
+                                    />
                                 </a>
                                 <a href="">
-                                    <img src={require("@/images/banner-s-4-b70da70d679593510ac93a172dfbaeaa.png")} alt="Banner s 4" />
+                                    <img
+                                        src={require("@/images/banner-s-4-b70da70d679593510ac93a172dfbaeaa.png")}
+                                        alt="Banner s 4"
+                                    />
                                 </a>
                                 <a href="">
-                                    <img src={require("@/images/banner-s-5-4ba25cf5041931a0ed2062828b4064cb.png")} alt="Banner s 5" />
+                                    <img
+                                        src={require("@/images/banner-s-5-4ba25cf5041931a0ed2062828b4064cb.png")}
+                                        alt="Banner s 5"
+                                    />
                                 </a>
                                 <a href="">
-                                    <img src={require("@/images/banner-s-6-c4d6335bfd688f2ca1115b42b04c28a7.png")} alt="Banner s 6" />
+                                    <img
+                                        src={require("@/images/banner-s-6-c4d6335bfd688f2ca1115b42b04c28a7.png")}
+                                        alt="Banner s 6"
+                                    />
                                 </a>
                                 <a href="">
-                                    <img src={require("@/images/banner-s-7-1a0222c91694a1f38e610be4bf9669be.png")} alt="Banner s 7" />
+                                    <img
+                                        src={require("@/images/banner-s-7-1a0222c91694a1f38e610be4bf9669be.png")}
+                                        alt="Banner s 7"
+                                    />
                                 </a>
                             </div>
                             <Sider />
-
                         </Col>
                     </Row>
                 </div>
