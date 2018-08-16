@@ -51,12 +51,12 @@ export default class Header extends Component {
         return (
             <header className="header">
                 <Row>
-                    <Col span={3}>
+                    <Col span={4}>
                         <a href="/" className="logo">
                             <img src={require('../images/logo.png')} alt="logo" />
                         </a>
                     </Col>
-                    <Col span={5}>
+                    <Col span={12}>
                         <Menu
                             onClick={this.handleClick}
                             selectedKeys={[this.state.current]}
@@ -72,29 +72,22 @@ export default class Header extends Component {
                                     <Icon type="team" />技术交流
                                 </a>
                             </Menu.Item>
-                            {/* <Menu.Item key="life">
-                                <a href="/life">
-                                    <Icon type="instagram"/>生活
-                                </a>
+                            <Menu.Item>
+                                <Search
+                                    placeholder="搜索"
+                                    onSearch={value => console.log(value)}
+                                    style={{ width: 200 }}
+                                />
                             </Menu.Item>
                             <Menu.Item key="culture">
                                 <a href="/culture">
                                     <Icon type="book"/>文化
                                 </a>
-                            </Menu.Item> */}
+                            </Menu.Item>
                         </Menu>
 
                     </Col>
-                    <Col span={7}>
-                        <div className="search">
-                            <Search
-                                placeholder="搜索"
-                                onSearch={value => console.log(value)}
-                                style={{ width: 200 }}
-                            />
-                        </div>
-                    </Col>
-                    <Col span={9}>
+                    <Col span={8}>
                         {userShow}
                     </Col>
                 </Row>

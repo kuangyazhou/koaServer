@@ -21,9 +21,10 @@ class SignIn extends Component {
                     .then(res => {
                         if (res.status === '0') {
                             // console.log(res)
-                            window.location.href = '/';
                             localStorage.userId = res.data.name;
+                            localStorage.token = res.token;
                             Message.success("登录成功！");
+                            window.location.href = '/';
                         }
                     })
                     .catch(error => {
