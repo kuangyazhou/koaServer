@@ -3,6 +3,8 @@ import { List, Avatar } from "antd";
 
 import IconText from "@/components/iconText";
 
+import request from "@/utils/axios";
+
 export default class ArtComponent extends Component {
     constructor(props) {
         super(props);
@@ -12,7 +14,15 @@ export default class ArtComponent extends Component {
     componentDidMount() {}
 
     star(e) {
-        console.log(e);
+        // console.log(e);
+        request
+            .get("/api/article/like", { params: { id: e, num: 1 } })
+            .then(res => {
+                console.log(res);
+            })
+            .catch(err => {
+                console.log(err);
+            });
     }
 
     render() {

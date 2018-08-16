@@ -177,6 +177,7 @@ exports.comment = async (ctx, next) => {
 
 exports.likeoperate = async (ctx, next) => {
     const { id, num } = ctx.query;
+    console.log(id, num);
     //mongonse 修改器
     const res = await ARTICLESCHEMA.update(
         { _id: id },
