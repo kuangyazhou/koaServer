@@ -24,4 +24,6 @@ router.get("/collect", article.collectoperate);
 
 router.get("/nums", article.nums);
 
+router.get("/view", article.view);
+
 module.exports = router;

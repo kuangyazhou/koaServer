@@ -185,12 +185,21 @@ exports.likeoperate = async (ctx, next) => {
     );
     console.log(res);
     if (num > 0) {
+        const list = await ARTICLESCHEMA.update(
+            { _id: id },
+            { $push: { likeUser: id } }
+        );
         ctx.body = {
             status: "0",
             data: res,
             msg: "点赞成功"
         };
     } else {
+        const list = await ARTICLESCHEMA.update(
+            { _id: id },
+            { $pull: { likeUser: id } }
+        );
+        console.log(list);
         ctx.body = {
             status: "0",
             data: res,
@@ -240,4 +249,23 @@ exports.nums = async (ctx, next) => {
         },
         msg: ""
     };
+};
+
+exports.view = async (ctx, next) => {
+    const { id } = ctx.query;
+    const res = await ARTICLESCHEMA.update(
+        {
+            _id: id
+        },
+        {
+            $inc: { view: 1 }
+        }
+    );
+    if (res.n === 1) {
+        ctx.body = {
+            status: "0",
+            data: [],
+            msg: ""
+        };
+    }
 };

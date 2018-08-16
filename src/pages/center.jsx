@@ -54,50 +54,6 @@ export default class Center extends Component {
     }
 
     render() {
-        // const CList = () => {
-        //     return (
-        //         <List
-        //             itemLayout="vertical"
-        //             size="large"
-        //             pagination={{
-        //                 onChange: page => {
-        //                     console.log(page);
-        //                 },
-        //                 pageSize: 3
-        //             }}
-        //             dataSource={this.state.ArtList}
-        //             // dataSource={listData}
-        //             // footer={<div><b>ant design</b> footer part</div>}
-        //             renderItem={item => (
-        //                 <List.Item
-        //                     key={item.title}
-        //                     actions={[
-        //                         <span>{item.author}</span>,
-        //                         <IconText type="star-o" text="156" />,
-        //                         <IconText type="like-o" text="156" />,
-        //                         <IconText type="message" text="2" />
-        //                     ]}
-        //                     extra={
-        //                         <img
-        //                             width={125}
-        //                             alt="logo"
-        //                             src="https://gw.alipayobjects.com/zos/rmsportal/mqaQswcyDLcXyDKnZfES.png"
-        //                         />
-        //                     }
-        //                 >
-        //                     <List.Item.Meta
-        //                         avatar={
-        //                             <Avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />
-        //                         }
-        //                         title={<a href={item.href}>{item.title}</a>}
-        //                         description={item.desc}
-        //                     />
-        //                     {item.content}
-        //                 </List.Item>
-        //             )}
-        //         />
-        //     );
-        // };
         return (
             <div className="center-content">
                 <Header />

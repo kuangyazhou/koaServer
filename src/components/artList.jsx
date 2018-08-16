@@ -13,10 +13,10 @@ export default class ArtComponent extends Component {
 
     componentDidMount() {}
 
-    star(e) {
+    star(e, num) {
         // console.log(e);
         request
-            .get("/api/article/like", { params: { id: e, num: 1 } })
+            .get("/api/article/like", { params: { id: e, num: num } })
             .then(res => {
                 console.log(res);
             })
@@ -24,6 +24,19 @@ export default class ArtComponent extends Component {
                 console.log(err);
             });
     }
+
+    // unstar(e, num) {
+    //     request
+    //         .get("/api/article/like", { params: { id: e, num: num } })
+    //         .then(res => {
+    //             console.log(res);
+    //         })
+    //         .catch(err => {
+    //             console.log(err);
+    //         });
+
+    //     // request.get()
+    // }
 
     render() {
         const { data } = this.props;
@@ -38,27 +51,27 @@ export default class ArtComponent extends Component {
                     pageSize: 3
                 }}
                 dataSource={data}
-                // dataSource={listData}
-                // footer={<div><b>ant design</b> footer part</div>}
                 renderItem={item => (
-                    // console.log(item);
                     <List.Item
                         key={item.title}
                         actions={[
                             <span>{item.author}</span>,
-                            <IconText
-                                type="star-o"
-                                onClick={() => this.star(item._id)}
-                                text="156"
-                            />,
+                            item.likeUser.indexOf("5b6d5bccd7d48e6144059899") >
+                            -1 ? (
+                                <IconText
+                                    type="dislike-o"
+                                    onClick={() => this.star(item._id, -1)}
+                                    text="156"
+                                />
+                            ) : (
+                                <IconText
+                                    type="star-o"
+                                    onClick={() => this.star(item._id, 1)}
+                                    text="156"
+                                />
+                            ),
                             <IconText type="like-o" text="156" />,
                             <IconText type="message" text="2" />
-                            // <Icon
-                            //     type="star-o"
-                            //     onClick={() => {
-                            //         console.log(111);
-                            //     }}
-                            // />
                         ]}
                         extra={
                             <img
