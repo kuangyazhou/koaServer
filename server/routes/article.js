@@ -22,4 +22,6 @@ router.get("/like", article.likeoperate);
 
 router.get("/collect", article.collectoperate);
 
+router.get("/nums", article.nums);
+
 module.exports = router;

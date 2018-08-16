@@ -25,6 +25,8 @@ export default class Page2 extends Component {
             name: "admin",
             password: "admin"
         };
+        // axios
+        // axios
         // request
         //     .post("/api/users/login", data)
         //     .then(res => {

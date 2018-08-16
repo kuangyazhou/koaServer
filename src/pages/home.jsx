@@ -61,6 +61,12 @@ export default class Home extends Component {
                 view: ++prevState.view,
         }));
     }
+    addView = () => {
+      let T=this.state.view;
+        this.setState({
+            view: T++,
+        })
+    }
     getData = (callback) => {
         request.get("https://randomuser.me/api/?results=5&inc=name,gender,email,nat&noinfo")
             .then(res => {
@@ -79,7 +85,7 @@ export default class Home extends Component {
                 console.log(error);
             });
     }
-    componentDidMount() {
+    componentDidMount(){
         this.getData((res) => {
             this.setState({
                 data: res.results,
@@ -92,14 +98,6 @@ export default class Home extends Component {
                 })
             }
         });
-        // this.addLike((res) => {
-        //     if (res.data.name) {
-        //         console.log(res);
-        //         this.setState({
-        //             like: this.state.like++
-        //         })
-        //     }
-        // })
     }
     handleInfiniteOnLoad = () => {
         let data = this.state.data;

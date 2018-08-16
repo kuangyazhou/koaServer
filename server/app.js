@@ -59,13 +59,13 @@ app.use(async (ctx, next) => {
     await next();
     const ms = new Date() - start;
     console.log(`${ctx.method} ${ctx.url} - ${ms}ms`);
-    console.log(
-        ctx.req.url,
-        ctx.request.originalUrl,
-        ctx.request.href,
-        ctx.request.path,
-        ctx.request.host
-    );
+    // console.log(
+    //     ctx.req.url,
+    //     ctx.request.originalUrl,
+    //     ctx.request.href,
+    //     ctx.request.path,
+    //     ctx.request.host
+    // );
 });
 
 // routes
