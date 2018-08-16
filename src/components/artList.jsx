@@ -1,14 +1,7 @@
 import React, { Component } from "react";
-import { List, Avatar, Icon } from "antd";
+import { List, Avatar } from "antd";
 
 import IconText from "@/components/iconText";
-
-// const IconText = ({ type, text }) => (
-//     <span onClick={this.props.onClick}>
-//         <Icon type={type} style={{ marginRight: 8 }} />
-//         {text}
-//     </span>
-// );
 
 export default class ArtComponent extends Component {
     constructor(props) {
@@ -50,9 +43,7 @@ export default class ArtComponent extends Component {
                             <span>{item.author}</span>,
                             <IconText
                                 type="star-o"
-                                onClick={() => {
-                                    console.log(1111);
-                                }}
+                                onClick={item => this.star(item)}
                                 text="156"
                             />,
                             <IconText type="like-o" text="156" />,
