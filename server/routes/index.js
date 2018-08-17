@@ -17,6 +17,7 @@ mongoose.connection.on("disconnected", function() {
     console.log("MongoDB connected disconnected.");
 });
 
+
 router.get("/", async (ctx, next) => {
     await ctx.render("index", {
         title: "Hello Koa 2!"

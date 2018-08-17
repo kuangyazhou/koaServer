@@ -1,10 +1,7 @@
 const ARTICLESCHEMA = require("../models/article");
 const USERSCHEMA = require("../models/userschema");
 
-const jwt = require("jsonwebtoken");
-
 const { handleErr, handleSuccess } = require("../utils/handle");
-const { auth } = require("../utils/auth");
 
 exports.artAdd = async (ctx, next) => {
     const { id, title, desc, author, content } = ctx.query;
@@ -34,7 +31,6 @@ exports.artList = async (ctx, next) => {
     };
     const { page = 1, size = 10 } = ctx.query;
     // const { token } = ctx.header;
-    auth(ctx, next);
     if (page < 1 || size < 1) {
         // ctx.body = {
         //     status: "-1",
@@ -236,7 +232,7 @@ exports.nums = async (ctx, next) => {
     // console.log(art);
     let like = 0;
     art.forEach(item => {
-        console.log(item.content, item.like);
+        // console.log(item.content, item.like);
         item.like ? (like += item.like) : "";
     });
     ctx.body = {
