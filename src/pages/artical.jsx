@@ -57,7 +57,7 @@ export default class Artical extends Component {
                                             <span className="likes-count">
                                                 喜欢 201
                                             </span>
-                                            <span className="rewards-count ">
+                                            <span className="rewards-count">
                                                 赞赏 1
                                             </span>
                                         </div>

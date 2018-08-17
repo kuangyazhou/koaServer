@@ -1,6 +1,15 @@
 import React, { Component } from "react";
-import { Row, Col, Tabs, Icon } from "antd";
-
+import {
+    Row,
+    Col,
+    Tabs,
+    List,
+    Avatar,
+    Icon,
+    Carousel,
+    Spin,
+    message
+} from "antd";
 import request from "@/utils/axios";
 import Header from "@/components/header";
 import ArtComponent from "@/components/artList";
@@ -13,6 +22,7 @@ const ICON = ({ text, type = "bars" }) => (
         {text}
     </span>
 );
+
 export default class Center extends Component {
     constructor(props) {
         super(props);

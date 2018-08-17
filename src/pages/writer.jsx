@@ -23,7 +23,9 @@ class Writer extends Component {
         super(props);
         // 默认给一个empty的editorstate
         this.state = {
-            editorState: EditorState.createEmpty()
+            editorState: EditorState.createEmpty(),
+            changeWj: false,
+            changeSet: false,
         };
         // 获取焦点的方法
         this.focus = () => this.refs.editor.focus();
@@ -37,6 +39,21 @@ class Writer extends Component {
         this.toggleBlockType = this._toggleBlockType.bind(this);
         this.toggleInlineStyle = this._toggleInlineStyle.bind(this);
         this.toggleColor = toggledColor => this._toggleColor(toggledColor);
+        this.changeWenji = this._changeWenji.bind(this);
+        this.changeSetting = this._changeSetting.bind(this);
+    }
+    _changeWenji() {
+        this.setState(prevState => ({
+            changeWj: !prevState.changeWj
+        }));
+    }
+    _changeSetting() {
+        this.setState(prevState => ({
+            changeSet: !prevState.changeSet
+        }));
+    }
+    componentDidMount() {
+    
     }
     _handleKeyCommand(command, editorState) {
         const newState = RichUtils.handleKeyCommand(editorState, command);
@@ -64,7 +81,7 @@ class Writer extends Component {
         // Let's just allow one color at a time. Turn off all active colors.
         const nextContentState = Object.keys(styles).reduce(
             (contentState, color) => {
-            return Modifier.removeInlineStyle(contentState, selection, color);
+                return Modifier.removeInlineStyle(contentState, selection, color);
             },
             editorState.getCurrentContent()
         );
@@ -77,14 +94,14 @@ class Writer extends Component {
         // Unset style override for current color.
         if (selection.isCollapsed()) {
             nextEditorState = currentStyle.reduce((state, color) => {
-            return RichUtils.toggleInlineStyle(state, color);
+                return RichUtils.toggleInlineStyle(state, color);
             }, nextEditorState);
         }
         // If the color is being toggled on, apply it.
         if (!currentStyle.has(toggledColor)) {
             nextEditorState = RichUtils.toggleInlineStyle(
-            nextEditorState,
-            toggledColor
+                nextEditorState,
+                toggledColor
             );
         }
         this.onChange(nextEditorState);
@@ -133,29 +150,47 @@ class Writer extends Component {
                                 </Form>
                             </div>
                         </div>
-                        <ul className="_3MbJ4">
-                            <li className="_3DM7w _31PCv">
-                                <div className="_3P4JX">
-                                    <Icon type="setting" />
+                        <ul className="write_ul">
+                            <li className="write_list _31PCv" alt="日记本">
+                                <div className="write_list_set">
+                                    <Icon type="setting" onClick={this.changeWenji}/>
                                     <span>
-                                        <ul className="_2V8zt">
+                                        <ul className={this.state.changeWj?'write_list_change active': 'write_list_change'}>
                                             <li className="_2po2r cRfUr">
-                                                <Icon type="edit" className="_22XWG" />修改文集
+                                                <Icon type="edit" />修改文集
                                             </li>
                                             <li className="_2po2r cRfUr">
-                                                <Icon type="delete" className="_22XWG" />删除文集
+                                                <Icon type="delete" />删除文集
                                             </li>
                                         </ul>
                                     </span>
                                 </div>
                                 <span>日记本</span>
                             </li>
-                            <li className="_3DM7w">
+                            <li className="write_list" alt="随笔">
                                 <span>随笔</span>
                             </li>
                         </ul>
                         <Col span={4} className="settings">
-                            <span className="ant-dropdown-trigger"><Icon type="setting" />设置</span>
+                            <span className="ant-dropdown-trigger" onClick={this.changeSetting}>
+                                <Icon type="setting"/>设置
+                                <span>
+                                    <ul className={this.state.changeSet?'set_list_change active': 'set_list_change'}>
+                                        <li className="_2po2r">
+                                            <Icon type="edit" />默认编辑器
+                                        </li>
+                                        <li className="_2po2r">
+                                            <Icon type="delete" />设置显示模式
+                                        </li>
+                                        <li className="_2po2r">
+                                            <Icon type="delete" />回收站
+                                        </li>
+                                        <li className="_2po2r">
+                                            <Icon type="question-circle-o" />帮助与反馈
+                                        </li>
+                                    </ul>
+                                </span>
+                            </span>
                             <span className="ant-dropdown-question">遇到问题<Icon type="question-circle-o" /></span>
                         </Col>
                     </Col>
