@@ -27,9 +27,10 @@ service.interceptors.response.use(response => {
         console.log("旧的:" + old, "新的:" + response.data.token, "更新token");
     }
     if (!response.data.status) {
-        setTimeout(() => {
-            window.location.replace("/signin");
-        }, 3000);
+        // setTimeout(() => {
+        //     window.location.replace("/signin");
+        // }, 3000);
+        console.log(response.data);
     }
     return response.data;
 });
