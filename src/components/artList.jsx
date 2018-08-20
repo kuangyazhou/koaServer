@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { List, Avatar, Icon } from "antd";
+import { List, Avatar } from "antd";
 
 import IconText from "@/components/iconText";
 
@@ -50,12 +50,16 @@ export default class ArtComponent extends Component {
                             <span>{item.author}</span>,
                             <IconText
                                 type="star-o"
+                                
+                                text="156"
+                            />,
+                            <IconText
+                                type="like-o" 
                                 onClick={() => {
                                     console.log(1111);
                                 }}
                                 text="156"
                             />,
-                            <IconText type="like-o" text="156" />,
                             <IconText type="message" text="2" />
                             // <Icon
                             //     type="star-o"

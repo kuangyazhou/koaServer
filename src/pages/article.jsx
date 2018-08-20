@@ -1,34 +1,38 @@
-import "@/style/pages/artical.less";
+import "@/style/pages/article.less";
 import React, { Component } from "react";
 import Header from "@/components/header";
 import Footer from "@/components/footer";
 import { Avatar, Row, Col, Icon } from "antd";
+import request from "@/utils/axios";
 
-export default class Artical extends Component {
+export default class Article extends Component {
     constructor(props) {
         super(props);
         this.state = {
             name: ""
         };
     }
-
+    viewNum(){
+        request.get('/api/view')
+            .then(res => {
+                console.log(res)
+            })
+    }
     render() {
         return (
-            <div className="artical">
-                <Header current="artical" />
+            <div className="article">
+                <Header current="article" />
                 <div className="content">
                     <Row>
                         <Col span={2} />
                         <Col span={20}>
-                            <div className="artical-main">
-                                <h1 className="artical-title">
+                            <div className="article-main">
+                                <h1 className="article-title">
                                     都说自律很难，但你知道做到自律后有多爽吗
                                 </h1>
-                                <div className="artical-author">
-                                    <Avatar
-                                        src={require("@/images/1151.jpg")}
-                                    />
-                                    <div className="artical-info">
+                                <div className="article-author">
+                                    <Avatar src={require("@/images/1151.jpg")} />
+                                    <div className="article-info">
                                         <span className="name">
                                             <a href="">{this.state.name}</a>
                                         </span>
@@ -38,8 +42,7 @@ export default class Artical extends Component {
                                             alt="94d76265"
                                         />
                                         <a className="btn btn-success follow">
-                                            <Icon type="plus" />
-                                            关注
+                                            <Icon type="plus" /> 关注
                                         </a>
                                         <div className="meta">
                                             <span className="publish-time">
@@ -65,9 +68,7 @@ export default class Artical extends Component {
                                 </div>
                                 <div className="show-content">
                                     <div className="show-content-free">
-                                        <p>
-                                            所以，真正能给你带来幸福感和快乐的事情，唯有自律。
-                                        </p>
+                                        <p>所以，真正能给你带来幸福感和快乐的事情，唯有自律。</p>
                                     </div>
                                 </div>
                                 <div className="support-author">
@@ -76,17 +77,14 @@ export default class Artical extends Component {
                                     <div className="supporter">
                                         <ul className="support-list">
                                             <li>
-                                                <Avatar
-                                                    src={require("@/images/1151.jpg")}
-                                                />
+                                                <Avatar src={require("@/images/1151.jpg")} />
                                             </li>
                                         </ul>
                                     </div>
                                 </div>
                                 <div className="show-foot">
                                     <a className="notebook" href="/nb/26427609">
-                                        <Icon type="copy" />
-                                        杂论
+                                        <Icon type="copy" /> 杂论
                                     </a>
                                     <div className="copyright">
                                         © 著作权归作者所有
@@ -97,24 +95,14 @@ export default class Artical extends Component {
                                 </div>
                                 <div className="follow-detail">
                                     <div className="info">
-                                        <Avatar
-                                            src={require("@/images/1151.jpg")}
-                                        />
+                                        <Avatar src={require("@/images/1151.jpg")} />
                                         <a className="btn btn-success follow">
-                                            <Icon type="plus" />
-                                            关注
+                                            <Icon type="plus" /> 关注
                                         </a>
-                                        <a
-                                            className="title"
-                                            href="/u/64b88ecc71b6"
-                                        >
+                                        <a className="title" href="/u/64b88ecc71b6">
                                             西风漂流David
                                         </a>
-                                        <img
-                                            className="badge-icon"
-                                            src="//upload.jianshu.io/user_badge/94d76265-aab1-4559-8d12-1da9f6be21ce"
-                                            alt="94d76265"
-                                        />
+                                        <img className="badge-icon" src="//upload.jianshu.io/user_badge/94d76265-aab1-4559-8d12-1da9f6be21ce" alt="94d76265" />
                                         <p>
                                             写了 454502 字，被 41699
                                             人关注，获得了 16630 个喜欢

@@ -54,7 +54,8 @@ export default class Home extends Component {
             ],
             view: 0, // 查看人数
             like: 0, // 喜欢人数
-            message: 0 // 评论条数
+            message: 0, // 评论条数
+            token: null
         };
         this.clickBtn = this._clickBtn.bind(this);
     }
