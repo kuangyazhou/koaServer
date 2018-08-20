@@ -22,7 +22,7 @@ exports.login = async (ctx, next) => {
             // exp: Math.floor(Date.now() / 1000) + 60 * 60 * 24 * 7
         },
         "token",
-        { expiresIn: "2h" }
+        { expiresIn: "1 days" }
     );
     // console.log(name, password, result, token);
     if (result.length == 0) {
