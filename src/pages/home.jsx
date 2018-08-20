@@ -58,10 +58,10 @@ export default class Home extends Component {
         };
         this.clickBtn = this._clickBtn.bind(this);
     }
+
     _clickBtn() {
-        console.log(2222);
         this.setState(prevState => ({
-            view: prevState.view + 1
+            view: ++prevState.view
         }));
     }
     getData = callback => {
@@ -99,14 +99,6 @@ export default class Home extends Component {
                 });
             }
         });
-        // this.addLike((res) => {
-        //     if (res.data.name) {
-        //         console.log(res);
-        //         this.setState({
-        //             like: this.state.like++
-        //         })
-        //     }
-        // })
     }
     handleInfiniteOnLoad = () => {
         let data = this.state.data;
