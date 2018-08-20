@@ -3,12 +3,7 @@ import { List, Avatar } from "antd";
 
 import IconText from "@/components/iconText";
 
-// const IconText = ({ type, text }) => (
-//     <span onClick={this.props.onClick}>
-//         <Icon type={type} style={{ marginRight: 8 }} />
-//         {text}
-//     </span>
-// );
+import request from "@/utils/axios";
 
 export default class ArtComponent extends Component {
     constructor(props) {
@@ -18,17 +13,33 @@ export default class ArtComponent extends Component {
 
     componentDidMount() {}
 
-    star() {
-        console.log(1);
+    star(e, num) {
+        // console.log(e);
+        request
+            .get("/api/article/like", { params: { id: e, num: num } })
+            .then(res => {
+                console.log(res);
+            })
+            .catch(err => {
+                console.log(err);
+            });
     }
-    // star = e => {
-    //     console.log(e);
-    //     console.log("fuck the king!!!");
-    // };
+
+    // unstar(e, num) {
+    //     request
+    //         .get("/api/article/like", { params: { id: e, num: num } })
+    //         .then(res => {
+    //             console.log(res);
+    //         })
+    //         .catch(err => {
+    //             console.log(err);
+    //         });
+
+    //     // request.get()
+    // }
 
     render() {
         const { data } = this.props;
-        // return <div>fuck the king!!!</div>;
         return (
             <List
                 itemLayout="vertical"
@@ -40,33 +51,27 @@ export default class ArtComponent extends Component {
                     pageSize: 3
                 }}
                 dataSource={data}
-                // dataSource={listData}
-                // footer={<div><b>ant design</b> footer part</div>}
                 renderItem={item => (
-                    // console.log(item);
                     <List.Item
                         key={item.title}
                         actions={[
                             <span>{item.author}</span>,
-                            <IconText
-                                type="star-o"
-                                
-                                text="156"
-                            />,
-                            <IconText
-                                type="like-o" 
-                                onClick={() => {
-                                    console.log(1111);
-                                }}
-                                text="156"
-                            />,
+                            item.likeUser.indexOf("5b6d5bccd7d48e6144059899") >
+                            -1 ? (
+                                <IconText
+                                    type="dislike-o"
+                                    onClick={() => this.star(item._id, -1)}
+                                    text="156"
+                                />
+                            ) : (
+                                <IconText
+                                    type="star-o"
+                                    onClick={() => this.star(item._id, 1)}
+                                    text="156"
+                                />
+                            ),
+                            <IconText type="like-o" text="156" />,
                             <IconText type="message" text="2" />
-                            // <Icon
-                            //     type="star-o"
-                            //     onClick={() => {
-                            //         console.log(111);
-                            //     }}
-                            // />
                         ]}
                         extra={
                             <img

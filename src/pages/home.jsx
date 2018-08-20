@@ -1,12 +1,13 @@
 import "@/style/pages/home.less";
 import React, { Component } from "react";
 import InfiniteScroll from "react-infinite-scroller";
-import { Row, Col, List, Avatar, Icon, Carousel, Spin, message } from "antd";
+import { Row, Col, List, Avatar, Carousel, Spin, message } from "antd";
 import request from "@/utils/axios";
 
 import Header from "@/components/header";
 import Footer from "@/components/footer";
 import Sider from "@/components/sider";
+import IconText from '@/components/iconText';
 
 const listData = [];
 for (let i = 0; i < 13; i++) {
@@ -22,22 +23,6 @@ for (let i = 0; i < 13; i++) {
     });
 }
 
-class IconText extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {};
-    }
-    render() {
-        const { type, text, clickBtn } = this.props;
-        return (
-            <span onClick={clickBtn}>
-                <Icon type={type} style={{ marginRight: 8 }} />
-                {text}
-            </span>
-        );
-    }
-}
- 
 export default class Home extends Component {
     constructor() {
         super();
@@ -59,10 +44,10 @@ export default class Home extends Component {
         };
         this.clickBtn = this._clickBtn.bind(this);
     }
-    
+
     _clickBtn() {
         this.setState(prevState => ({
-                view: ++prevState.view,
+            view: ++prevState.view
         }));
     }
     getData = callback => {
@@ -184,7 +169,8 @@ export default class Home extends Component {
                                     onChange: page => {
                                         console.log(page);
                                     },
-                                    pageSize: 3
+                                    pageSize: 10,
+                                    hideOnSinglePage: true
                                 }}
                                 dataSource={this.state.ArtList}
                                 renderItem={item => (
@@ -270,4 +256,3 @@ export default class Home extends Component {
         );
     }
 }
-

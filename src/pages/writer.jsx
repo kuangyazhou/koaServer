@@ -1,8 +1,8 @@
 import '@/style/pages/writer.less';
 import React, { Component } from "react";
-import { Button, Row, Col, Icon, Form, Input } from "antd";
+import { Button, Row, Modal, List, Col, Icon, Form, Input } from "antd";
 import Editors from "./editors";
-
+import request from "@/utils/axios";
 const FormItem = Form.Item;
 
 class Writer extends Component {
@@ -12,9 +12,15 @@ class Writer extends Component {
         this.state = {
             changeWj: false,
             changeSet: false,
+            ModalText1: '如果你在使用编辑器的过程中遇到问题，可以尝试以下方案解决：',
+            ModalText2: '1. Windows用户尽量将浏览器设置为极速模式，不要使用兼容模式写作',
+            ModalText3: '2.推荐使用chrome浏览器，创作体验更加流畅',
+            ModalText4: '3.浏览器插件可能与编辑器功能冲突，可以在使用编辑器时禁用插件',
+            visible: false,
         };
         this.changeWenji = this._changeWenji.bind(this);
         this.changeSetting = this._changeSetting.bind(this);
+        this.newArtical = this._newArtical.bind(this);
     }
     _changeWenji() {
         this.setState(prevState => ({
@@ -26,11 +32,30 @@ class Writer extends Component {
             changeSet: !prevState.changeSet
         }));
     }
+    _newArtical() {
+        request
+            .get('/api/article/', localStorage.userId)
+            .then(res => {
+                if (res.status === '0'){
+
+                }
+            })
+    }
+    showModal = () => {
+        this.setState({
+            visible: true,
+        });
+    }
+    hideModal = () => {
+        this.setState({
+            visible: false,
+        });
+    }
     componentDidMount() {}
     
     render() {
         const { getFieldDecorator } = this.props.form;
-        
+        const { visible, ModalText1, ModalText2, ModalText3, ModalText4} = this.state;
         return (
             <div className="write">
                 <Row className="_1gp6t">
@@ -101,7 +126,21 @@ class Writer extends Component {
                                     </ul>
                                 </span>
                             </span>
-                            <span className="ant-dropdown-question">遇到问题<Icon type="question-circle-o" /></span>
+                            <span className="ant-dropdown-question" onClick={this.showModal}>
+                                遇到问题<Icon type="question-circle-o" />
+                                <Modal
+                                    title={<span>常见问题 绑定遇到问题？<a href="https://www.jianshu.com/p/794b92192f62">点击查看帮助</a></span>}
+                                    centered
+                                    visible={visible}
+                                    onOk={this.hideModal}
+                                    onCancel={this.hideModal}
+                                >
+                                    <p>{ModalText1}</p>
+                                    <p>{ModalText2}</p>
+                                    <p>{ModalText3}</p>
+                                    <p>{ModalText4}</p>
+                                </Modal>
+                            </span>
                         </Col>
                     </Col>
                     <Col span={20}>
@@ -110,6 +149,9 @@ class Writer extends Component {
                                 <div className="add_art" onClick={this.newArtical}>
                                     <Icon type="plus-circle-o" /> 新建文章  
                                 </div>
+                                <List>
+
+                                </List>
                             </Col>
                             <Col span={18} className="right-item">
                                 <Editors />

@@ -1,10 +1,7 @@
 const ARTICLESCHEMA = require("../models/article");
 const USERSCHEMA = require("../models/userschema");
 
-const jwt = require("jsonwebtoken");
-
 const { handleErr, handleSuccess } = require("../utils/handle");
-const { auth } = require("../utils/auth");
 
 exports.artAdd = async (ctx, next) => {
     const { id, title, desc, author, content } = ctx.query;
@@ -34,7 +31,6 @@ exports.artList = async (ctx, next) => {
     };
     const { page = 1, size = 10 } = ctx.query;
     // const { token } = ctx.header;
-    auth(ctx, next);
     if (page < 1 || size < 1) {
         // ctx.body = {
         //     status: "-1",
@@ -177,6 +173,7 @@ exports.comment = async (ctx, next) => {
 
 exports.likeoperate = async (ctx, next) => {
     const { id, num } = ctx.query;
+    console.log(id, num);
     //mongonse 修改器
     const res = await ARTICLESCHEMA.update(
         { _id: id },
@@ -184,12 +181,21 @@ exports.likeoperate = async (ctx, next) => {
     );
     console.log(res);
     if (num > 0) {
+        const list = await ARTICLESCHEMA.update(
+            { _id: id },
+            { $push: { likeUser: id } }
+        );
         ctx.body = {
             status: "0",
             data: res,
             msg: "点赞成功"
         };
     } else {
+        const list = await ARTICLESCHEMA.update(
+            { _id: id },
+            { $pull: { likeUser: id } }
+        );
+        console.log(list);
         ctx.body = {
             status: "0",
             data: res,
@@ -226,7 +232,7 @@ exports.nums = async (ctx, next) => {
     // console.log(art);
     let like = 0;
     art.forEach(item => {
-        console.log(item.content, item.like);
+        // console.log(item.content, item.like);
         item.like ? (like += item.like) : "";
     });
     ctx.body = {
@@ -239,4 +245,23 @@ exports.nums = async (ctx, next) => {
         },
         msg: ""
     };
+};
+
+exports.view = async (ctx, next) => {
+    const { id } = ctx.query;
+    const res = await ARTICLESCHEMA.update(
+        {
+            _id: id
+        },
+        {
+            $inc: { view: 1 }
+        }
+    );
+    if (res.n === 1) {
+        ctx.body = {
+            status: "0",
+            data: [],
+            msg: ""
+        };
+    }
 };
