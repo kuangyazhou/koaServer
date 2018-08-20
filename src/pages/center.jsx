@@ -1,15 +1,5 @@
 import React, { Component } from "react";
-import {
-    Row,
-    Col,
-    Tabs,
-    List,
-    Avatar,
-    Icon,
-    Carousel,
-    Spin,
-    message
-} from "antd";
+import { Row, Col, Tabs, Icon } from "antd";
 import request from "@/utils/axios";
 import Header from "@/components/header";
 import ArtComponent from "@/components/artList";

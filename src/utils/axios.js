@@ -1,5 +1,5 @@
 import axios from "axios";
-// import loadToken, { setToken } from "./token";
+import { loadToken, setToken } from "./token";
 
 const service = axios.create({
     // baseURL: process.env.BASE_API,
@@ -9,8 +9,9 @@ const service = axios.create({
 
 service.interceptors.request.use(
     config => {
-        // let token = loadToken();
-        // config.headers["Authorization"] = token;
+        let token = loadToken();
+        // console.log(token);
+        config.headers["token"] = token;
         return config;
     },
     err => {
@@ -20,15 +21,12 @@ service.interceptors.request.use(
 );
 
 service.interceptors.response.use(response => {
-    // const old = loadToken();
-    // if (response.headers.authorization) {
-    //   setToken(response.headers.authorization);
-    //     console.log(
-    //         "旧的" + old,
-    //         "新的" + response.headers.authorization,
-    //         "更新token"
-    //     );
-    // }
+    const old = loadToken();
+    console.log(response);
+    if (response.data.token) {
+        setToken(response.data.token);
+        console.log("旧的:" + old, "新的:" + response.data.token, "更新token");
+    }
     return response.data;
 });
 

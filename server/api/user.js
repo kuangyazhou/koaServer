@@ -24,7 +24,7 @@ exports.login = async (ctx, next) => {
         "token",
         { expiresIn: "2h" }
     );
-    console.log(name, password, result, token);
+    // console.log(name, password, result, token);
     if (result.length == 0) {
         // if (!result || result.length == 0) {
         ctx.body = {
@@ -36,6 +36,7 @@ exports.login = async (ctx, next) => {
         return;
     }
     if (result && result[0].password === password) {
+        // ctx.headers.authorization = token;
         ctx.body = {
             status: "0",
             // data: result
