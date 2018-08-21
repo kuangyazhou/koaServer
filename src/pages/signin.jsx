@@ -21,9 +21,9 @@ class SignIn extends Component {
                     .post("/api/users/login", values)
                     .then(res => {
                         if (res.status === "0") {
-                            // console.log(res)
-                            localStorage.userId = res.data.name;
-                            // localStorage.token = res.token;
+                            console.log(values)
+                            localStorage.name = values.name;
+                            localStorage.userId = res.token;
                             Message.success("登录成功！");
                             window.location.href = "/";
                         }

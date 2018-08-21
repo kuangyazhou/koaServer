@@ -1,4 +1,4 @@
-const TOKEN_ID = "user_id_token";
+const TOKEN_ID = "token";
 
 export const setToken = function(data) {
     localStorage.setItem(TOKEN_ID, data);

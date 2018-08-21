@@ -1,5 +1,5 @@
 import axios from "axios";
-import { loadToken, setToken } from "./token";
+import { setToken, loadToken } from "./token";
 
 const service = axios.create({
     // baseURL: process.env.BASE_API,
