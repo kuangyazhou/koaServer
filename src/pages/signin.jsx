@@ -24,8 +24,9 @@ class SignIn extends Component {
                             // console.log(res)
                             localStorage.userId = res.data.name;
                             // localStorage.token = res.token;
-                            Message.success("登录成功！");
-                            window.location.href = "/";
+                            Message.success("登录成功！", () => {
+                                window.location.href = "/";
+                            });
                         }
                     })
                     .catch(error => {
