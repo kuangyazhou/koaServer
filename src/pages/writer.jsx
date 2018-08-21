@@ -1,10 +1,23 @@
 import '@/style/pages/writer.less';
 import React, { Component } from "react";
 import { Button, Row, Modal, List, Col, Icon, Form, Input } from "antd";
-import Editors from "./editors";
+import Editors from "@/components/editors";
 import request from "@/utils/axios";
 const FormItem = Form.Item;
-
+const data = [
+    {
+      title: 'Ant Design Title 1',
+    },
+    {
+      title: 'Ant Design Title 2',
+    },
+    {
+      title: 'Ant Design Title 3',
+    },
+    {
+      title: 'Ant Design Title 4',
+    },
+];
 class Writer extends Component {
     constructor(props) {
         super(props);
@@ -34,7 +47,6 @@ class Writer extends Component {
             ]
         };
         this.changeWenji = this._changeWenji.bind(this);
-        this.changeList = this._changeList.bind(this);
         this.changeSetting = this._changeSetting.bind(this);
         this.newArtical = this._newArtical.bind(this);
     }
@@ -43,7 +55,7 @@ class Writer extends Component {
             changeWj: !prevState.changeWj
         }));
     }
-    _changeList(index) {
+    changeList(index) {
         this.setState({ listDefaultIndex: index });
     }
     _changeSetting() {
@@ -60,11 +72,6 @@ class Writer extends Component {
                 }
             })
     }
-    // showModal = () => {
-    //     this.setState({
-    //         visible: true,
-    //     });
-    // }
     showModal(visible) {
         this.setState({ visible });
     }
@@ -106,17 +113,17 @@ class Writer extends Component {
                         {
                             listContainer.map((item, index) => {
                                 return(
-                                    <li className={listDefaultIndex === index ?'write_list _31PCv': 'write_list'} alt={item.text} key={index} onClick={this.changeList(index)}>
+                                    <li className={listDefaultIndex === index ?'write_list _31PCv': 'write_list'} alt={item.text} key={index} onClick={() => this.changeList(index)}>
                                         {listDefaultIndex === index 
                                         ?<div className="write_list_set">
-                                            <Icon type="setting" onClick={this.changeWenji}/>
+                                            <Icon type={item.settings} onClick={this.changeWenji}/>
                                             <span>
                                                 <ul className={this.state.changeWj?'write_list_change active': 'write_list_change'}>
                                                     <li className="_2po2r cRfUr">
-                                                        <Icon type="edit" />修改文集
+                                                        <Icon type="edit" />{item.edit}
                                                     </li>
                                                     <li className="_2po2r cRfUr">
-                                                        <Icon type="delete" />删除文集
+                                                        <Icon type="delete" />{item.delete}
                                                     </li>
                                                 </ul>
                                             </span>
@@ -126,38 +133,6 @@ class Writer extends Component {
                                 )
                             })
                         }
-                            {/* <li className="write_list _31PCv" alt="日记本" >
-                                <div className="write_list_set">
-                                    <Icon type="setting" onClick={this.changeWenji}/>
-                                    <span>
-                                        <ul className={this.state.changeWj?'write_list_change active': 'write_list_change'}>
-                                            <li className="_2po2r cRfUr">
-                                                <Icon type="edit" />修改文集
-                                            </li>
-                                            <li className="_2po2r cRfUr">
-                                                <Icon type="delete" />删除文集
-                                            </li>
-                                        </ul>
-                                    </span>
-                                </div>
-                                <span>日记本</span>
-                            </li>
-                            <li className="write_list" alt="随笔">
-                                <div className="write_list_set">
-                                    <Icon type="setting" onClick={this.changeWenji}/>
-                                    <span>
-                                        <ul className={this.state.changeWj?'write_list_change active': 'write_list_change'}>
-                                            <li className="_2po2r cRfUr">
-                                                <Icon type="edit" />修改文集
-                                            </li>
-                                            <li className="_2po2r cRfUr">
-                                                <Icon type="delete" />删除文集
-                                            </li>
-                                        </ul>
-                                    </span>
-                                </div>
-                                <span>随笔</span>
-                            </li> */}
                         </ul>
                         <Col span={4} className="settings">
                             <span className="ant-dropdown-trigger" onClick={this.changeSetting}>
@@ -203,9 +178,22 @@ class Writer extends Component {
                                 <div className="add_art" onClick={this.newArtical}>
                                     <Icon type="plus-circle-o" /> 新建文章
                                 </div>
-                                <List>
-
-                                </List>
+                                <List
+                                    itemLayout="horizontal"
+                                    dataSource={data}
+                                    renderItem={item => (
+                                        <List.Item
+                                            actions={<span>字数：</span>}
+                                        >
+                                            <List.Item.Meta
+                                            avatar={<span><Icon type="check-square" /></span>}
+                                            title={<a href="https://ant.design">{item.title}</a>}
+                                            description="a design language for bg applications"
+                                            
+                                            />
+                                        </List.Item>
+                                    )}
+                                />
                             </Col>
                             <Col span={18} className="right-item">
                                 <Editors />
