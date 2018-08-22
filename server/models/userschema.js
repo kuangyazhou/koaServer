@@ -6,7 +6,8 @@ const userSchema = new Schema(
         username: String,
         password: String,
         tel: Number,
-        time: Date
+        time: Date,
+        arts: Array //文章id
     },
     {
         collection: "user",

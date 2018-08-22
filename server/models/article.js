@@ -7,7 +7,8 @@ const articleSchema = new Schema(
         time: Date,
         title: String, //标题
         desc: String, //描述
-        author: String, //作者
+        author: String, //作者,
+        authorId: String, //作者id
         content: String, //内容
         view: Number, //浏览次数
         collect: Number, //收藏次数

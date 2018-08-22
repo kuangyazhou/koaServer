@@ -14,8 +14,15 @@ module.exports = async (ctx, next) => {
                     msg: "登录失效"
                 };
                 console.log(err);
+                return;
+            }
+            if (decode.exp <= Math.floor(Date.now / 1000)) {
+                ctx.body = {
+                    status: "-1",
+                    msg: "token过期"
+                };
+                return;
             } else {
-                console.log(decode);
                 return next();
             }
         });
