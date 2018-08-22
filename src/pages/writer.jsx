@@ -1,10 +1,23 @@
 import '@/style/pages/writer.less';
 import React, { Component } from "react";
 import { Button, Row, Modal, List, Col, Icon, Form, Input } from "antd";
-import Editors from "./editors";
+import Editors from "@/components/editors";
 import request from "@/utils/axios";
 const FormItem = Form.Item;
-
+const data = [
+    {
+      title: 'Ant Design Title 1',
+    },
+    {
+      title: 'Ant Design Title 2',
+    },
+    {
+      title: 'Ant Design Title 3',
+    },
+    {
+      title: 'Ant Design Title 4',
+    },
+];
 class Writer extends Component {
     constructor(props) {
         super(props);
@@ -17,6 +30,21 @@ class Writer extends Component {
             ModalText3: '2.推荐使用chrome浏览器，创作体验更加流畅',
             ModalText4: '3.浏览器插件可能与编辑器功能冲突，可以在使用编辑器时禁用插件',
             visible: false,
+            listDefaultIndex: 0,
+            listContainer: [
+                {
+                    text: '日记本',
+                    settings: 'setting',
+                    edit: '修改文集',
+                    delete: '删除文集',
+                },
+                {
+                    text: '随笔',
+                    settings: 'setting',
+                    edit: '修改文集',
+                    delete: '删除文集',
+                }
+            ]
         };
         this.changeWenji = this._changeWenji.bind(this);
         this.changeSetting = this._changeSetting.bind(this);
@@ -26,6 +54,9 @@ class Writer extends Component {
         this.setState(prevState => ({
             changeWj: !prevState.changeWj
         }));
+    }
+    changeList(index) {
+        this.setState({ listDefaultIndex: index });
     }
     _changeSetting() {
         this.setState(prevState => ({
@@ -41,21 +72,14 @@ class Writer extends Component {
                 }
             })
     }
-    showModal = () => {
-        this.setState({
-            visible: true,
-        });
-    }
-    hideModal = () => {
-        this.setState({
-            visible: false,
-        });
+    showModal(visible) {
+        this.setState({ visible });
     }
     componentDidMount() {}
     
     render() {
         const { getFieldDecorator } = this.props.form;
-        const { visible, ModalText1, ModalText2, ModalText3, ModalText4} = this.state;
+        const { visible, ModalText1, ModalText2, ModalText3, ModalText4, listContainer, listDefaultIndex} = this.state;
         return (
             <div className="write">
                 <Row className="_1gp6t">
@@ -86,25 +110,29 @@ class Writer extends Component {
                             </div>
                         </div>
                         <ul className="write_ul">
-                            <li className="write_list _31PCv" alt="日记本">
-                                <div className="write_list_set">
-                                    <Icon type="setting" onClick={this.changeWenji}/>
-                                    <span>
-                                        <ul className={this.state.changeWj?'write_list_change active': 'write_list_change'}>
-                                            <li className="_2po2r cRfUr">
-                                                <Icon type="edit" />修改文集
-                                            </li>
-                                            <li className="_2po2r cRfUr">
-                                                <Icon type="delete" />删除文集
-                                            </li>
-                                        </ul>
-                                    </span>
-                                </div>
-                                <span>日记本</span>
-                            </li>
-                            <li className="write_list" alt="随笔">
-                                <span>随笔</span>
-                            </li>
+                        {
+                            listContainer.map((item, index) => {
+                                return(
+                                    <li className={listDefaultIndex === index ?'write_list _31PCv': 'write_list'} alt={item.text} key={index} onClick={() => this.changeList(index)}>
+                                        {listDefaultIndex === index 
+                                        ?<div className="write_list_set">
+                                            <Icon type={item.settings} onClick={this.changeWenji}/>
+                                            <span>
+                                                <ul className={this.state.changeWj?'write_list_change active': 'write_list_change'}>
+                                                    <li className="_2po2r cRfUr">
+                                                        <Icon type="edit" />{item.edit}
+                                                    </li>
+                                                    <li className="_2po2r cRfUr">
+                                                        <Icon type="delete" />{item.delete}
+                                                    </li>
+                                                </ul>
+                                            </span>
+                                        </div>: ''}
+                                        <span>{item.text}</span>
+                                    </li>
+                                )
+                            })
+                        }
                         </ul>
                         <Col span={4} className="settings">
                             <span className="ant-dropdown-trigger" onClick={this.changeSetting}>
@@ -126,14 +154,15 @@ class Writer extends Component {
                                     </ul>
                                 </span>
                             </span>
-                            <span className="ant-dropdown-question" onClick={this.showModal}>
-                                遇到问题<Icon type="question-circle-o" />
+                            <span className="ant-dropdown-question">
+                                <span onClick={() => this.showModal(true)}>遇到问题<Icon type="question-circle-o" /></span>
                                 <Modal
                                     title={<span>常见问题 绑定遇到问题？<a href="https://www.jianshu.com/p/794b92192f62">点击查看帮助</a></span>}
                                     centered
                                     visible={visible}
-                                    onOk={this.hideModal}
-                                    onCancel={this.hideModal}
+                                    onOk={() => this.showModal(false)}
+                                    onCancel={() => this.showModal(false)}
+                                    footer={null}
                                 >
                                     <p>{ModalText1}</p>
                                     <p>{ModalText2}</p>
@@ -147,11 +176,24 @@ class Writer extends Component {
                         <Row>
                             <Col span={6} className="center-item">
                                 <div className="add_art" onClick={this.newArtical}>
-                                    <Icon type="plus-circle-o" /> 新建文章  
+                                    <Icon type="plus-circle-o" /> 新建文章
                                 </div>
-                                <List>
-
-                                </List>
+                                <List
+                                    itemLayout="horizontal"
+                                    dataSource={data}
+                                    renderItem={item => (
+                                        <List.Item
+                                            actions={<span>字数：</span>}
+                                        >
+                                            <List.Item.Meta
+                                            avatar={<span><Icon type="check-square" /></span>}
+                                            title={<a href="https://ant.design">{item.title}</a>}
+                                            description="a design language for bg applications"
+                                            
+                                            />
+                                        </List.Item>
+                                    )}
+                                />
                             </Col>
                             <Col span={18} className="right-item">
                                 <Editors />
