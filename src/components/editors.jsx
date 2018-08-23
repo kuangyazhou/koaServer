@@ -219,7 +219,7 @@ class Editors extends Component {
 					addVideo={this.addVideo}
 				/>
                 {urlInput}
-				<Button className="" onClick={this.saveArticle}>保存</Button>
+				<Button onClick={this.saveArticle}>保存</Button>
 				<div className={className} onClick={this.focus}>
 					<Editor
 						blockStyleFn={this.getBlockStyle}
@@ -265,13 +265,13 @@ const Media = props => {
 };
 
 const Audio = props => {
-    return <audio controls src={props.src} style={style.media} />;
+    return <audio controls src={props.src} className="media" />;
 };
 const Image = props => {
-    return <img src={props.src} style={style.media} alt=""/>;
+    return <img src={props.src} className="media" alt=""/>;
 };
 const Video = props => {
-    return <video controls src={props.src} style={style.media} />;
+    return <video controls src={props.src} className="media" />;
 };
 
 const style = {
@@ -290,13 +290,7 @@ const style = {
 		fontStyle: 'italic',
 		fontSize: '24',
 		color: '#00f'
-	},
-	media: {
-        width: '100%',
-        // Fix an issue with Firefox rendering video controls
-        // with 'pre-wrap' white-space
-        whiteSpace: 'initial'
-    }
+	}
 };
 
 export default Editors;

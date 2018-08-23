@@ -1,29 +1,17 @@
 import '@/style/pages/writer.less';
 import React, { Component } from "react";
-import { Button, Row, Modal, List, Avatar, Col, Icon, Form, Input } from "antd";
+import { Button, Row, Modal, Col, Icon, Form, Input } from "antd";
 import Editors from "@/components/editors";
 import request from "@/utils/axios";
 const FormItem = Form.Item;
-const data = [
-    {
-      title: 'Ant Design Title 1',
-    },
-    {
-      title: 'Ant Design Title 2',
-    },
-    {
-      title: 'Ant Design Title 3',
-    },
-    {
-      title: 'Ant Design Title 4',
-    },
-];
+
 class Writer extends Component {
     constructor(props) {
         super(props);
         // 默认给一个empty的editorstate
         this.state = {
             changeWj: false,
+            changeWz: false,
             changeSet: false,
             ModalText1: '如果你在使用编辑器的过程中遇到问题，可以尝试以下方案解决：',
             ModalText2: '1. Windows用户尽量将浏览器设置为极速模式，不要使用兼容模式写作',
@@ -31,6 +19,7 @@ class Writer extends Component {
             ModalText4: '3.浏览器插件可能与编辑器功能冲突，可以在使用编辑器时禁用插件',
             visible: false,
             listDefaultIndex: 0,
+            artDefaultIndex: 0,
             listContainer: [
                 {
                     text: '日记本',
@@ -44,9 +33,26 @@ class Writer extends Component {
                     edit: '修改文集',
                     delete: '删除文集',
                 }
+            ],
+            artList: [
+                {
+                    letter: '16',
+                    desc: '冬枣的营养成分表 榴莲的营养成分表',
+                    title: '营养成分截图',
+                    settings: 'setting',
+                    isConfirm: false,
+                },
+                {
+                    letter: '16',
+                    desc: '冬枣的营养成分表 榴莲的营养成分表',
+                    title: '营养成分截图',
+                    settings: 'setting',
+                    isConfirm: true,
+                }
             ]
         };
         this.changeWenji = this._changeWenji.bind(this);
+        this.changeWenzhang = this._changeWenzhang.bind(this);
         this.changeSetting = this._changeSetting.bind(this);
         this.newArtical = this._newArtical.bind(this);
     }
@@ -55,8 +61,16 @@ class Writer extends Component {
             changeWj: !prevState.changeWj
         }));
     }
+    _changeWenzhang() {
+        this.setState(prevState => ({
+            changeWz: !prevState.changeWz
+        }));
+    }
     changeList(index) {
         this.setState({ listDefaultIndex: index });
+    }
+    changeArt(index) {
+        this.setState({ artDefaultIndex: index });
     }
     _changeSetting() {
         this.setState(prevState => ({
@@ -79,126 +93,145 @@ class Writer extends Component {
     
     render() {
         const { getFieldDecorator } = this.props.form;
-        const { visible, ModalText1, ModalText2, ModalText3, ModalText4, listContainer, listDefaultIndex} = this.state;
+        const { visible, ModalText1, ModalText2, ModalText3, ModalText4, listContainer, listDefaultIndex, artDefaultIndex, artList} = this.state;
         return (
-            <div className="write">
-                <Row className="_1gp6t">
-                    <Col span={4} className="left-item">
-                        <div className="back-btn">
-                            <a href="/">回首页</a>
+            <Row className="write">
+                <Col span={4} className="left-item">
+                    <div className="back-btn">
+                        <a href="/">回首页</a>
+                    </div>
+                    <div className="news_wj_wrapper">
+                        <div className="news_wj">
+                            <Icon type="plus" />新建文集
                         </div>
-                        <div className="news_wj_wrapper">
-                            <div className="news_wj">
-                                <Icon type="plus" />新建文集
-                            </div>
-                            <div className="_2G97m">
-                                <Form layout="inline" onSubmit={this.handleSubmit}>
-                                    <FormItem>
-                                        {getFieldDecorator('wjName', {
-                                            rules: [{ required: true, message: '请输入文集名!' }],
-                                        })(
-                                            <Input prefix={<Icon style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder="请输入文集名" />
-                                        )}
-                                    </FormItem>
-                                    <FormItem>
-                                        <Button htmlType="submit">
-                                            提交
-                                        </Button>
-                                        &nbsp;&nbsp;<a href="" className="cancel-btn">取消</a>
-                                    </FormItem>
-                                </Form>
-                            </div>
-                        </div>
-                        <ul className="write_ul">
-                        {
-                            listContainer.map((item, index) => {
-                                return(
-                                    <li className={listDefaultIndex === index ?'write_list _31PCv': 'write_list'} alt={item.text} key={index} onClick={() => this.changeList(index)}>
-                                        {listDefaultIndex === index 
-                                        ?<div className="write_list_set">
-                                            <Icon type={item.settings} onClick={this.changeWenji}/>
-                                            <span>
-                                                <ul className={this.state.changeWj?'write_list_change active': 'write_list_change'}>
-                                                    <li className="_2po2r cRfUr">
-                                                        <Icon type="edit" />{item.edit}
-                                                    </li>
-                                                    <li className="_2po2r cRfUr">
-                                                        <Icon type="delete" />{item.delete}
-                                                    </li>
-                                                </ul>
-                                            </span>
-                                        </div>: ''}
-                                        <span>{item.text}</span>
-                                    </li>
-                                )
-                            })
-                        }
-                        </ul>
-                        <Col span={4} className="settings">
-                            <span className="ant-dropdown-trigger" onClick={this.changeSetting}>
-                                <Icon type="setting"/>设置
-                                <span>
-                                    <ul className={this.state.changeSet?'set_list_change active': 'set_list_change'}>
-                                        <li className="_2po2r">
-                                            <Icon type="edit" />默认编辑器
-                                        </li>
-                                        <li className="_2po2r">
-                                            <Icon type="delete" />设置显示模式
-                                        </li>
-                                        <li className="_2po2r">
-                                            <Icon type="delete" />回收站
-                                        </li>
-                                        <li className="_2po2r">
-                                            <Icon type="question-circle-o" />帮助与反馈
-                                        </li>
-                                    </ul>
-                                </span>
-                            </span>
-                            <span className="ant-dropdown-question">
-                                <span onClick={() => this.showModal(true)}>遇到问题<Icon type="question-circle-o" /></span>
-                                <Modal
-                                    title={<span>常见问题 绑定遇到问题？<a href="https://www.jianshu.com/p/794b92192f62">点击查看帮助</a></span>}
-                                    centered
-                                    visible={visible}
-                                    onOk={() => this.showModal(false)}
-                                    onCancel={() => this.showModal(false)}
-                                    footer={null}
-                                >
-                                    <p>{ModalText1}</p>
-                                    <p>{ModalText2}</p>
-                                    <p>{ModalText3}</p>
-                                    <p>{ModalText4}</p>
-                                </Modal>
-                            </span>
-                        </Col>
-                    </Col>
-                    <Col span={20}>
-                        <Row>
-                            <Col span={6} className="center-item">
-                                <div className="add_art" onClick={this.newArtical}>
-                                    <Icon type="plus-circle-o" /> 新建文章
-                                </div>
-                                <List
-                                    itemLayout="horizontal"
-                                    dataSource={data}
-                                    renderItem={item => (
-                                    <List.Item>
-                                        <List.Item.Meta
-                                        avatar={<Avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />}
-                                        title={<a href="https://ant.design">{item.title}</a>}
-                                        description="Ant Design, a design language for background applications, is refined by Ant UED Team"
-                                        />
-                                    </List.Item>
+                        <div className="_2G97m">
+                            <Form layout="inline" onSubmit={this.handleSubmit}>
+                                <FormItem>
+                                    {getFieldDecorator('wjName', {
+                                        rules: [{ required: true, message: '请输入文集名!' }],
+                                    })(
+                                        <Input prefix={<Icon style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder="请输入文集名" />
                                     )}
-                                />
-                            </Col>
-                            <Col span={18} className="right-item">
-                                <Editors />
-                            </Col>
-                        </Row>
+                                </FormItem>
+                                <FormItem>
+                                    <Button htmlType="submit">
+                                        提交
+                                    </Button>
+                                    &nbsp;&nbsp;<a href="" className="cancel-btn">取消</a>
+                                </FormItem>
+                            </Form>
+                        </div>
+                    </div>
+                    <ul className="write_ul write_ac">
+                    {
+                        listContainer.map((item, index) => {
+                            return(
+                                <li className={listDefaultIndex === index ?'write_list _31PCv': 'write_list'} alt={item.text} key={index} onClick={() => this.changeList(index)}>
+                                    {listDefaultIndex === index 
+                                    ?<div className="write_list_set">
+                                        <Icon type={item.settings} onClick={this.changeWenji}/>
+                                        <span>
+                                            <ul className={this.state.changeWj?'write_list_change active': 'write_list_change'}>
+                                                <li className="_2po2r cRfUr">
+                                                    <Icon type="edit" />{item.edit}
+                                                </li>
+                                                <li className="_2po2r cRfUr">
+                                                    <Icon type="delete" />{item.delete}
+                                                </li>
+                                            </ul>
+                                        </span>
+                                    </div>: ''}
+                                    <span>{item.text}</span>
+                                </li>
+                            )
+                        })
+                    }
+                    </ul>
+                    <Col span={4} className="settings">
+                        <span className="ant-dropdown-trigger" onClick={this.changeSetting}>
+                            <Icon type="setting"/>设置
+                            <span>
+                                <ul className={this.state.changeSet?'set_list_change active': 'set_list_change'}>
+                                    <li className="_2po2r">
+                                        <Icon type="edit" />默认编辑器
+                                    </li>
+                                    <li className="_2po2r">
+                                        <Icon type="delete" />设置显示模式
+                                    </li>
+                                    <li className="_2po2r">
+                                        <Icon type="delete" />回收站
+                                    </li>
+                                    <li className="_2po2r">
+                                        <Icon type="question-circle-o" />帮助与反馈
+                                    </li>
+                                </ul>
+                            </span>
+                        </span>
+                        <span className="ant-dropdown-question">
+                            <span onClick={() => this.showModal(true)}>遇到问题<Icon type="question-circle-o" /></span>
+                            <Modal
+                                title={<span>常见问题 绑定遇到问题？<a href="https://www.jianshu.com/p/794b92192f62">点击查看帮助</a></span>}
+                                centered
+                                visible={visible}
+                                onOk={() => this.showModal(false)}
+                                onCancel={() => this.showModal(false)}
+                                footer={null}
+                            >
+                                <p>{ModalText1}</p>
+                                <p>{ModalText2}</p>
+                                <p>{ModalText3}</p>
+                                <p>{ModalText4}</p>
+                            </Modal>
+                        </span>
                     </Col>
-                </Row>
-            </div>
+                </Col>
+                <Col span={20} className="right-container">
+                    <Row>
+                        <Col span={6} className="center-item">
+                            <div className="add_art" onClick={this.newArtical}>
+                                <Icon type="plus-circle-o" /> 新建文章
+                            </div>
+                            <ul className="art-list-ul">
+                            {
+                                artList.map((item, index) => {
+                                    return(
+                                        <li className={artDefaultIndex === index ?'write_list _33nt7': 'write_list'} alt={item.text} key={index} onClick={() => this.changeArt(index)}>
+                                            {item.isConfirm? <i className="unconfirm  confirm"></i>: <i className="unconfirm"></i>}
+                                            {artDefaultIndex === index 
+                                            ?<div className="write_list_set">
+                                                <Icon type={item.settings} onClick={this.changeWenzhang}/>
+                                                <span>
+                                                    <ul className={this.state.changeWz?'write_list_change active': 'write_list_change'}>
+                                                        <li className="_2po2r cRfUr">
+                                                            <Icon type="edit" />{item.edit}
+                                                        </li>
+                                                        <li className="_2po2r cRfUr">
+                                                            <Icon type="delete" />{item.delete}
+                                                        </li>
+                                                    </ul>
+                                                </span>
+                                            </div>: ''}
+                                            <span className="art-title">{item.title}</span>
+                                            {artDefaultIndex === index
+                                            ?<span className="art-desc">{item.desc}</span>
+                                            :''}
+                                            {artDefaultIndex === index
+                                            ?<span className="art-letter">字数：{item.letter}</span>
+                                            :''}
+                                            
+                                            
+                                        </li>
+                                    )
+                                })
+                            }
+                            </ul>
+                        </Col>
+                        <Col span={18} className="right-item">
+                            <Editors />
+                        </Col>
+                    </Row>
+                </Col>
+            </Row>
         );
     }
 }
