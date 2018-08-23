@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
-import { Editor, EditorState, RichUtils, Modifier } from 'draft-js';
+import { Editor, EditorState, RichUtils, Modifier, AtomicBlockUtils } from 'draft-js';
 import { BlockStyleControls, InlineStyleControls } from './StyleControls';
 import ColorEditor from './ColorEditor';
-import {Button} from 'antd';
+import MediaEditor from './MediaEditor';
+import { Button, Input } from 'antd';
 import request from "@/utils/axios";
 import '@/style/editors.less';
 
@@ -12,7 +13,11 @@ class Editors extends Component {
 		// 默认给一个empty的editorstate
 		this.state = {
 			editorState: EditorState.createEmpty(),
-			logState: null
+			logState: null,
+			showURLInput: false,
+			url: '',
+			urlType: '',
+
 		};
 		// 获取焦点的方法
 		this.focus = () => this.refs.editor.focus();
@@ -26,6 +31,14 @@ class Editors extends Component {
 		this.toggleBlockType = this._toggleBlockType.bind(this);
 		this.toggleInlineStyle = this._toggleInlineStyle.bind(this);
 		this.toggleColor = toggledColor => this._toggleColor(toggledColor);
+		// 媒体文件添加部分
+		this.onURLChange = e => this.setState({ urlValue: e.target.value });
+        this.onURLInputKeyDown = this._onURLInputKeyDown.bind(this);
+        this.confirmMedia = this._confirmMedia.bind(this);
+		this.addAudio = this._addAudio.bind(this);
+        this.addImage = this._addImage.bind(this);
+		this.addVideo = this._addVideo.bind(this);
+		
 		this.saveArticle = () => {
 			let values = this.state.editorState.toJS()
 			request
@@ -90,6 +103,62 @@ class Editors extends Component {
 		}
 		this.onChange(nextEditorState);
 	}
+	// 媒体文件添加部分
+	_onURLInputKeyDown(e) {
+        if (e.which === 13) {
+            this._confirmMedia(e);
+        }
+	}
+	_confirmMedia(e) {
+        e.preventDefault();
+        const { urlValue, urlType, editorState} = this.state;
+        const contentState = editorState.getCurrentContent();
+        const contentStateWithEntity = contentState.createEntity(
+            urlType,
+            'IMMUTABLE',
+            { src: urlValue }
+        );
+        const entityKey = contentStateWithEntity.getLastCreatedEntityKey();
+        const newEditorState = EditorState.set(editorState, {
+            currentContent: contentStateWithEntity
+        });
+        this.setState(
+            {
+                editorState: AtomicBlockUtils.insertAtomicBlock(
+                    newEditorState,
+                    entityKey,
+                    ' '
+                ),
+                showURLInput: false,
+                urlValue: ''
+            },
+            () => {
+                setTimeout(() => this.focus(), 0);
+            }
+        );
+	}
+	_promptForMedia(type) {
+        this.setState(
+            {
+                showURLInput: true,
+                urlValue: '',
+                urlType: type
+            },
+            () => {
+                setTimeout(() => this.refs.url.focus(), 0);
+            }
+        );
+    }
+    _addAudio() {
+        this._promptForMedia('audio');
+    }
+    _addImage() {
+        this._promptForMedia('image');
+    }
+    _addVideo() {
+        this._promptForMedia('video');
+	}
+	
 	getBlockStyle(block) {
 		switch (block.getType()) {
 			case 'blockquote':
@@ -114,6 +183,21 @@ class Editors extends Component {
 				className += ' RichEditor-hidePlaceholder';
 			}
 		}
+		let urlInput;
+        if (this.state.showURLInput) {
+            urlInput = (
+                <div className="url-container">
+                    <Input
+                        onChange={this.onURLChange}
+                        ref="url"
+                        type="text"
+                        value={this.state.urlValue}
+                        onKeyDown={this.onURLInputKeyDown}
+                    />
+                    <Button onMouseDown={this.confirmMedia}>确认</Button>
+                </div>
+            );
+        }
 		return (
 			<div className="RichEditor-root">
 				<BlockStyleControls
@@ -127,13 +211,21 @@ class Editors extends Component {
 				<ColorEditor
 					editorState={editorState}
 					onToggle={this.toggleColor}
+					/>
+				<MediaEditor
+					editorState={editorState}
+					addAudio={this.addAudio}
+					addImage={this.addImage}
+					addVideo={this.addVideo}
 				/>
+                {urlInput}
 				<Button className="" onClick={this.saveArticle}>保存</Button>
 				<div className={className} onClick={this.focus}>
 					<Editor
 						blockStyleFn={this.getBlockStyle}
 						customStyleMap={style}
 						editorState={editorState}
+						blockRendererFn={mediaBlockRenderer}
 						handleKeyCommand={this.handleKeyCommand}
 						onChange={this.onChange}
 						onTab={this.onTab}
@@ -147,6 +239,41 @@ class Editors extends Component {
 	}
 }
 
+function mediaBlockRenderer(block) {
+    if (block.getType() === 'atomic') {
+        return {
+            component: Media,
+            editable: false
+        };
+    }
+    return null;
+}
+
+const Media = props => {
+    const entity = props.contentState.getEntity(props.block.getEntityAt(0));
+    const { src } = entity.getData();
+    const type = entity.getType();
+    let media;
+    if (type === 'audio') {
+        media = <Audio src={src} />;
+    } else if (type === 'image') {
+        media = <Image src={src} />;
+    } else if (type === 'video') {
+        media = <Video src={src} />;
+    }
+    return media;
+};
+
+const Audio = props => {
+    return <audio controls src={props.src} style={style.media} />;
+};
+const Image = props => {
+    return <img src={props.src} style={style.media} alt=""/>;
+};
+const Video = props => {
+    return <video controls src={props.src} style={style.media} />;
+};
+
 const style = {
 	CODE: {
 		backgroundColor: 'rgba(0, 0, 0, 0.05)',
@@ -154,27 +281,22 @@ const style = {
 		fontSize: 16,
 		padding: 2
 	},
-	red: {
-		color: 'rgba(255, 0, 0, 1.0)'
+	BOLD: {
+		fontWeight: 'bold',
+		fontSize: 16,
+		color: '#f0f'
 	},
-	orange: {
-		color: 'rgba(255, 127, 0, 1.0)'
+	ITALIC: {
+		fontStyle: 'italic',
+		fontSize: '24',
+		color: '#00f'
 	},
-	yellow: {
-		color: 'rgba(180, 180, 0, 1.0)'
-	},
-	green: {
-		color: 'rgba(0, 180, 0, 1.0)'
-	},
-	blue: {
-		color: 'rgba(0, 0, 255, 1.0)'
-	},
-	indigo: {
-		color: 'rgba(75, 0, 130, 1.0)'
-	},
-	violet: {
-		color: 'rgba(127, 0, 255, 1.0)'
-	}
+	media: {
+        width: '100%',
+        // Fix an issue with Firefox rendering video controls
+        // with 'pre-wrap' white-space
+        whiteSpace: 'initial'
+    }
 };
 
 export default Editors;

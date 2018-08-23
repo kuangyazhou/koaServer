@@ -1,6 +1,6 @@
 import '@/style/pages/writer.less';
 import React, { Component } from "react";
-import { Button, Row, Modal, List, Col, Icon, Form, Input } from "antd";
+import { Button, Row, Modal, List, Avatar, Col, Icon, Form, Input } from "antd";
 import Editors from "@/components/editors";
 import request from "@/utils/axios";
 const FormItem = Form.Item;
@@ -182,16 +182,13 @@ class Writer extends Component {
                                     itemLayout="horizontal"
                                     dataSource={data}
                                     renderItem={item => (
-                                        <List.Item
-                                            actions={<span>字数：</span>}
-                                        >
-                                            <List.Item.Meta
-                                            avatar={<span><Icon type="check-square" /></span>}
-                                            title={<a href="https://ant.design">{item.title}</a>}
-                                            description="a design language for bg applications"
-                                            
-                                            />
-                                        </List.Item>
+                                    <List.Item>
+                                        <List.Item.Meta
+                                        avatar={<Avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />}
+                                        title={<a href="https://ant.design">{item.title}</a>}
+                                        description="Ant Design, a design language for background applications, is refined by Ant UED Team"
+                                        />
+                                    </List.Item>
                                     )}
                                 />
                             </Col>

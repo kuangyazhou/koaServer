@@ -128,10 +128,7 @@ export default class Home extends Component {
                                     initialLoad={false}
                                     pageStart={0}
                                     loadMore={this.handleInfiniteOnLoad}
-                                    hasMore={
-                                        !this.state.loading &&
-                                        this.state.hasMore
-                                    }
+                                    hasMore={ !this.state.loading && this.state.hasMore }
                                     useWindow={false}
                                 >
                                     <List
