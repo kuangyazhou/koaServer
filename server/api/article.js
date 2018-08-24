@@ -12,6 +12,7 @@ exports.artAdd = async (ctx, next) => {
         title: title,
         desc: desc,
         author: author,
+        authorId: id,
         content: content
     });
     console.log(result);

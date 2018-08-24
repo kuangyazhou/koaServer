@@ -10,6 +10,8 @@ var cors = require("koa-cors");
 const index = require("./routes/index");
 const users = require("./routes/users");
 const article = require("./routes/article");
+const mock = require("./routes/mock");
+
 // error handler
 onerror(app);
 
@@ -72,6 +74,7 @@ app.use(async (ctx, next) => {
 app.use(index.routes(), index.allowedMethods());
 app.use(users.routes(), users.allowedMethods());
 app.use(article.routes(), article.allowedMethods());
+app.use(mock.routes(), mock.allowedMethods());
 
 // error-handling
 app.on("error", (err, ctx) => {
