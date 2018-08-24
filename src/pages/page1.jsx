@@ -40,9 +40,11 @@ class C extends Component {
 class User extends Component {
     
     render() {
-        const {getUser} = this.props;
+        console.log(this.props)
+        const {user, getUser} = this.props;
         return (
             <div>
+                <p>{user.email}</p>
                 <button onClick={() => getUser()}>get user</button>
             </div>
         )
@@ -56,6 +58,7 @@ class Hello extends Component{
         updateCityName: PropTypes.func.isRequired,
         increment: PropTypes.func.isRequired,
         decrement: PropTypes.func.isRequired,
+        // user: PropTypes.object.isRequired
     }
     componentDidMount() {
         this.props.login({
@@ -64,6 +67,7 @@ class Hello extends Component{
         })
     }
     render() {
+        console.log(this.props)
         return (
             <div>
                 <p>{this.props.counter}</p>
@@ -72,7 +76,7 @@ class Hello extends Component{
                 <A userinfo={this.props.userinfo}/>
                 <B userinfo={this.props.userinfo}/>
                 <C actions={this.props.login}/>
-                <User getUser={this.props.getUser}/>
+                <User getUser={this.props.getUser} user={this.props.user.user}/>
             </div>
         )
     }
@@ -80,7 +84,8 @@ class Hello extends Component{
 function mapStateToProps(state) {
     return {
         userinfo: state.userinfo,
-        counter: state.counter
+        counter: state.counter,
+        user: state.user
     }
 }
 function mapDispatchToProps(dispatch) {
