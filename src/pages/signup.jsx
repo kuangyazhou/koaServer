@@ -1,6 +1,6 @@
 import "@/style/sign.less";
 import React, { Component } from "react";
-import { Form, Icon, Input, Button } from "antd";
+import { Form, Icon, Input, Button, Message } from "antd";
 import request from "@/utils/axios";
 
 const FormItem = Form.Item;
@@ -20,7 +20,9 @@ class SignUp extends Component {
                     .get("api/users/register", { params: values })
                     .then(res => {
                         if (res.status === "0") {
-                            window.location.href = "/signin";
+                            Message.success("注册成功", () => {
+                                window.location.href = "/signin";
+                            });
                         }
                     })
                     .catch(error => {
