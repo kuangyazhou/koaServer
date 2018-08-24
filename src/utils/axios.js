@@ -30,7 +30,7 @@ service.interceptors.response.use(response => {
         // setTimeout(() => {
         //     window.location.replace("/signin");
         // }, 3000);
-        console.log(response.data);
+        // console.log(response.data);
     }
     return response.data;
 });

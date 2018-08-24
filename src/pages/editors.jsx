@@ -119,7 +119,6 @@ export default class Editors extends Component{
                         />
                     </div>
                     <div className={className} onClick={this.focus}>
-                        
                         <Editor
                             blockStyleFn={this.getBlockStyle}
                             customStyleMap={styles}
