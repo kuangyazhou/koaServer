@@ -1,4 +1,5 @@
 import '@/style/pages/writer.less';
+import './iconfont.css'
 import React, { Component } from "react";
 import { Button, Row, Modal, Col, Icon, Form, Input } from "antd";
 import Editors from "@/components/editors";
@@ -41,6 +42,25 @@ class Writer extends Component {
                     title: '营养成分截图',
                     settings: 'setting',
                     isConfirm: false,
+                    icons: [
+                        {
+                            type: 'icon-fabu',
+                            font: 'iconfont icon-fabu',
+                            text: '直接发布'
+                        },
+                        {
+                            type: 'folder-open',
+                            text: '移动文章'
+                        },
+                        {
+                            type: 'clock-circle-o',
+                            text: '历史版本'
+                        },
+                        {
+                            type: 'delete',
+                            text: '删除文章'
+                        }
+                    ]
                 },
                 {
                     letter: '16',
@@ -48,6 +68,25 @@ class Writer extends Component {
                     title: '营养成分截图',
                     settings: 'setting',
                     isConfirm: true,
+                    icons: [
+                        {
+                            type: 'icon-fabu',
+                            font: 'iconfont icon-fabu',
+                            text: '直接发布'
+                        },
+                        {
+                            type: 'folder-open',
+                            text: '移动文章'
+                        },
+                        {
+                            type: 'clock-circle-o',
+                            text: '历史版本'
+                        },
+                        {
+                            type: 'delete',
+                            text: '删除文章'
+                        }
+                    ]
                 }
             ]
         };
@@ -202,24 +241,25 @@ class Writer extends Component {
                                                 <Icon type={item.settings} onClick={this.changeWenzhang}/>
                                                 <span>
                                                     <ul className={this.state.changeWz?'write_list_change active': 'write_list_change'}>
-                                                        <li className="_2po2r cRfUr">
-                                                            <Icon type="edit" />{item.edit}
-                                                        </li>
-                                                        <li className="_2po2r cRfUr">
-                                                            <Icon type="delete" />{item.delete}
-                                                        </li>
+                                                    {
+                                                        item.icons.map((icon, idx) => {
+                                                            return(
+                                                                <li className="_2po2r cRfUr" key={idx}>
+                                                                    {icon.font?
+                                                                    <i className={icon.font}></i>:
+                                                                    <Icon type={icon.type} />
+                                                                    }
+                                                                    {icon.text}
+                                                                </li>
+                                                            )
+                                                        })
+                                                    }
                                                     </ul>
                                                 </span>
                                             </div>: ''}
                                             <span className="art-title">{item.title}</span>
-                                            {artDefaultIndex === index
-                                            ?<span className="art-desc">{item.desc}</span>
-                                            :''}
-                                            {artDefaultIndex === index
-                                            ?<span className="art-letter">字数：{item.letter}</span>
-                                            :''}
-                                            
-                                            
+                                            {artDefaultIndex === index?<span className="art-desc">{item.desc}</span>:''}
+                                            {artDefaultIndex === index?<span className="art-letter">字数：{item.letter}</span>:''}
                                         </li>
                                     )
                                 })

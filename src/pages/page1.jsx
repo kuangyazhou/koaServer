@@ -71,7 +71,7 @@ class Hello extends Component{
         return (
             <div>
                 <p>{this.props.counter}</p>
-                <button onClick={this.props.increment}>increment</button>
+                <button onClick={this.props.increment}>increment </button>
                 <button onClick={this.props.decrement}>decrement</button>
                 <A userinfo={this.props.userinfo}/>
                 <B userinfo={this.props.userinfo}/>

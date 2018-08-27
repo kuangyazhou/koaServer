@@ -56,7 +56,7 @@ export default class Header extends Component {
                             <img src={require('../images/logo.png')} alt="logo" />
                         </a>
                     </Col>
-                    <Col span={12}>
+                    <Col span={6}>
                         <Menu
                             onClick={this.handleClick}
                             selectedKeys={[this.state.current]}
@@ -72,20 +72,18 @@ export default class Header extends Component {
                                     <Icon type="team" />技术交流
                                 </a>
                             </Menu.Item>
-                            <Menu.Item>
-                                <Search
-                                    placeholder="搜索"
-                                    onSearch={value => console.log(value)}
-                                    style={{ width: 200 }}
-                                />
-                            </Menu.Item>
                             <Menu.Item key="culture">
                                 <a href="/culture">
                                     <Icon type="book"/>文化
                                 </a>
                             </Menu.Item>
                         </Menu>
-
+                    </Col>
+                    <Col span={6}>
+                        <Search
+                            placeholder="搜索"
+                            onSearch={value => console.log(value)}
+                        />
                     </Col>
                     <Col span={8}>
                         {userShow}
