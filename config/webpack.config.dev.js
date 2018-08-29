@@ -84,7 +84,6 @@ module.exports = {
     // for React Native Web.
     extensions: ['.web.js', '.mjs', '.js', '.json', '.web.jsx', '.jsx'],
     alias: {
-      
       // Support React Native Web
       // https://www.smashingmagazine.com/2016/08/a-glimpse-into-the-future-with-react-native-for-web/
       'react-native': 'react-native-web',
@@ -111,16 +110,14 @@ module.exports = {
       {
         test: /\.(js|jsx|mjs)$/,
         enforce: 'pre',
-        use: [
-          {
-            options: {
-              formatter: eslintFormatter,
-              eslintPath: require.resolve('eslint'),
-              
-            },
-            loader: require.resolve('eslint-loader'),
+        use: [{
+          options: {
+            formatter: eslintFormatter,
+            eslintPath: require.resolve('eslint'),
+
           },
-        ],
+          loader: require.resolve('eslint-loader'),
+        }],
         include: paths.appSrc,
       },
       {
@@ -145,7 +142,7 @@ module.exports = {
             include: paths.appSrc,
             loader: require.resolve('babel-loader'),
             options: {
-              
+
               // This is a feature of `babel-loader` for webpack (not Babel itself).
               // It enables caching results in ./node_modules/.cache/babel-loader/
               // directory for faster rebuilds.
@@ -195,55 +192,37 @@ module.exports = {
           {
             test: /\.css$/i,
             exclude: [/src/],
-            use: [
-              {
-                  loader: "style-loader"
+            use: [{
+                loader: "style-loader"
               },
               {
-                  loader: "css-loader",
-                  options: {
-                      importLoaders: 1,
-                      // modules: true,
-                      // localIdentName: "[name]__[local]--[hash:base64:5]"
-                  }
+                loader: "css-loader",
+                options: {
+                  importLoaders: 1,
+                  // modules: true,
+                  // localIdentName: "[name]__[local]--[hash:base64:5]"
+                }
               }
-          ]
+            ]
           },
-          // {
-          //   test: /\.less$/,
-          //   include: [/src/],
-          //   use: [
-          //   require.resolve('style-loader'),
-          //   {
-          //           loader: require.resolve('css-loader'),
-          //           options: {
-          //                   modules: true,
-          //                   localIndexName:"[name]__[local]___[hash:base64:5]"
-          //           },
-          //   },
-          //   {
-          //           loader: require.resolve('less-loader'), // compiles Less to CSS
-          //   },
-          //   ],
-          // },
           {
             test: /\.less$/,
             exclude: [/src/],
             use: [
               require.resolve('style-loader'),
-                 {
-                  loader: require.resolve('css-loader'),
-                  options: {
-                    importLoaders: 1,
-                    modules: true,
-                    localIndexName:"[name]__[local]___[hash:base64:5]"
-                  },
-                  },
-                  {
-                    loader: require.resolve('less-loader'), // compiles Less to CSS
-                  },
+              {
+                loader: require.resolve('css-loader'),
+                options: {
+                  importLoaders: 1,
+                  modules: true,
+                  localIndexName: "[name]__[local]___[hash:base64:5]"
+                },
+              },
+              {
+                loader: require.resolve('less-loader'), // compiles Less to CSS
+              },
             ],
-        },
+          },
           {
             test: /\.less$/,
             include: [/src/],
@@ -254,7 +233,7 @@ module.exports = {
                 loader: require.resolve('postcss-loader'),
                 options: {
                   modules: true,
-                  localIndexName:"[name]__[local]___[hash:base64:5]",
+                  localIndexName: "[name]__[local]___[hash:base64:5]",
                   ident: 'postcss', // https://webpack.js.org/guides/migrating/#complex-options              
                   plugins: () => [
                     require('postcss-flexbugs-fixes'),
@@ -275,7 +254,7 @@ module.exports = {
                 options: {
                   //modifyVars: { "@primary-color": "#1DA57A" },
                   modules: true,
-                  localIndexName:"[name]__[local]___[hash:base64:5]",
+                  localIndexName: "[name]__[local]___[hash:base64:5]",
                 },
               },
             ],
