@@ -9,7 +9,7 @@ export const BlockStyleControls = props => {
         .getBlockForKey(selection.getStartKey())
         .getType();
     return (
-        <div className="RichEditor-controls">
+        <span className="RichEditor-controls">
             {BLOCK_TYPES.map(type => (
                 <StyleButton
                     key={type.label}
@@ -19,7 +19,7 @@ export const BlockStyleControls = props => {
                     style={type.style}
                 />
             ))}
-        </div>
+        </span>
     );
 };
 
@@ -31,7 +31,6 @@ export const InlineStyleControls = props => {
                 <StyleButton
                     key={type.label}
                     active={currentStyle.has(type.style)}
-                    label={type.label}
                     onToggle={props.onToggle}
                     style={type.style}
                 />
@@ -41,21 +40,16 @@ export const InlineStyleControls = props => {
 };
 
 const INLINE_STYLES = [
-    { label: '加粗', style: 'BOLD' },
-    { label: '斜体', style: 'ITALIC' },
-    { label: '下划线', style: 'UNDERLINE' },
-    { label: '代码片段', style: 'CODE' }
+    { label: '加粗', style: 'iconfont icon-bold' },
+    { label: '斜体', style: 'iconfont icon-italic' },
+    { label: '下划线', style: 'iconfont icon-underline' },
+    { label: '代码片段', style: 'iconfont icon-code' },
+    { label: '引用', style: 'iconfont icon-quoteleft' }
 ];
 
 const BLOCK_TYPES = [
     { label: 'H1', style: 'header-one' },
     { label: 'H2', style: 'header-two' },
     { label: 'H3', style: 'header-three' },
-    { label: 'H4', style: 'header-four' },
-    { label: 'H5', style: 'header-five' },
-    { label: 'H6', style: 'header-six' },
-    { label: '引用', style: 'blockquote' },
-    { label: '无序列表', style: 'unordered-list-item' },
-    { label: '有序列表', style: 'ordered-list-item' },
-    { label: '代码块', style: 'code-block' }
+    { label: 'H4', style: 'header-four' }
 ];
