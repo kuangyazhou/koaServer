@@ -10,3 +10,4 @@ SELECT a.runoob_id, a.runoob_author, b.runoob_count FROM runoob_tbl a INNER JOIN
 
 从tcount_tbl表中查找所有与runoob_tbl表中runoob_author相等的runoob_count值;
 
+SElECT * from data;
