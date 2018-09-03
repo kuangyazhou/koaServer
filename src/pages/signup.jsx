@@ -73,7 +73,7 @@ class SignUp extends Component {
             <div className="sign">
                 <div className="logo">
                     <a href="/">
-                        <img src={require("../images/logo.png")} alt="logo" />
+                        <img src={require("../assets/images/logo.png")} alt="logo" />
                     </a>
                 </div>
                 <div className="main">

@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import {Button} from 'antd';
 
 import {
     convertToRaw
@@ -15,21 +14,29 @@ class MediaEditor extends Component {
     }
     
     render() {
+        let className = 'RichEditor-styleButton';
         const {addAudio, addImage, addVideo} =this.props;
         return (
             <span className="media-container">
-                <Button onMouseDown={addAudio} style={{ marginRight: 10 }}>
-                    添加音频
-                </Button>
-                <Button onMouseDown={addImage} style={{ marginRight: 10 }}>
-                    添加图片
-                </Button>
-                <Button onMouseDown={addVideo} style={{ marginRight: 10 }}>
-                    添加视频
-                </Button>
+                {MEDIA_STYLES.map(type => {
+                    return(
+                        <span 
+                            key={type.label}
+                            className={`${className} ${type.style}`}
+                            onMouseDown={type.event}
+                            style={{ marginRight: 10 }}>
+                        </span>
+                    )
+                })}
             </span>
         );
     }
 }
+
+const MEDIA_STYLES = [
+    { label: '添加音频', style: 'iconfont icon-music', event: 'addAudio' },
+    { label: '添加图片', style: 'iconfont icon-pictureo', event: 'addImage' },
+    { label: '添加视频', style: 'iconfont icon-youtubeplay', event: 'addVideo' }
+];
 
 export default MediaEditor;

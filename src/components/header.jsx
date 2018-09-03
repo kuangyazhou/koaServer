@@ -53,7 +53,7 @@ export default class Header extends Component {
                 <Row>
                     <Col span={4}>
                         <a href="/" className="logo">
-                            <img src={require('../images/logo.png')} alt="logo" />
+                            <img src={require('../assets/images/logo.png')} alt="logo" />
                         </a>
                     </Col>
                     <Col span={6}>
