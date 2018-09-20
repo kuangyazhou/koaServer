@@ -15,7 +15,6 @@ class MediaEditor extends Component {
     
     render() {
         let className = 'RichEditor-styleButton';
-        const {addAudio, addImage, addVideo} =this.props;
         return (
             <span className="media-container">
                 {MEDIA_STYLES.map(type => {
@@ -23,8 +22,8 @@ class MediaEditor extends Component {
                         <span 
                             key={type.label}
                             className={`${className} ${type.style}`}
-                            onMouseDown={type.event}
-                            style={{ marginRight: 10 }}>
+                            onMouseDown={() => this.props.addEvents(type.event)}
+                            style={{ marginRight: 5 }}>
                         </span>
                     )
                 })}
@@ -34,9 +33,9 @@ class MediaEditor extends Component {
 }
 
 const MEDIA_STYLES = [
-    { label: '添加音频', style: 'iconfont icon-music', event: 'addAudio' },
-    { label: '添加图片', style: 'iconfont icon-pictureo', event: 'addImage' },
-    { label: '添加视频', style: 'iconfont icon-youtubeplay', event: 'addVideo' }
+    { label: '添加音频', style: 'iconfont icon-music', event: 'audio' },
+    { label: '添加图片', style: 'iconfont icon-pictureo', event: 'image' },
+    { label: '添加视频', style: 'iconfont icon-youtubeplay', event: 'video' }
 ];
 
 export default MediaEditor;

@@ -35,9 +35,7 @@ class Editors extends Component {
 		this.onURLChange = e => this.setState({ urlValue: e.target.value });
         this.onURLInputKeyDown = this._onURLInputKeyDown.bind(this);
         this.confirmMedia = this._confirmMedia.bind(this);
-		this.addAudio = this._addAudio.bind(this);
-        this.addImage = this._addImage.bind(this);
-		this.addVideo = this._addVideo.bind(this);
+		this.addEvents = this._addEvents.bind(this);
 		
 		this.saveArticle = () => {
 			let values = this.state.editorState.toJS()
@@ -148,15 +146,9 @@ class Editors extends Component {
                 setTimeout(() => this.refs.url.focus(), 0);
             }
         );
-    }
-    _addAudio() {
-        this._promptForMedia('audio');
-    }
-    _addImage() {
-        this._promptForMedia('image');
-    }
-    _addVideo() {
-        this._promptForMedia('video');
+	}
+	_addEvents(val) {
+		this._promptForMedia(val);
 	}
 	
 	getBlockStyle(block) {
@@ -210,9 +202,7 @@ class Editors extends Component {
 				/>
 				<MediaEditor
 					editorState={editorState}
-					addAudio={this.addAudio}
-					addImage={this.addImage}
-					addVideo={this.addVideo}
+					addEvents={this.addEvents}
 				/>
 				<ColorEditor
 					editorState={editorState}
