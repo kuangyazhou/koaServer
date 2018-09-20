@@ -9,7 +9,7 @@ import {
   RichUtils
 } from 'draft-js';
 
-class LinkEditor extends React.Component {
+class LinkEditor extends Component {
   constructor(props) {
     super(props);
     const decorator = new CompositeDecorator([

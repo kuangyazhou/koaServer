@@ -3,7 +3,8 @@ import * as actionTypes from '../constants';
 const initialState = {
     isFetching: false,
     error: null,
-    user: {}
+    user: {},
+    token: ''
 };
 
 export default function user(state = initialState, action) {
@@ -26,6 +27,13 @@ export default function user(state = initialState, action) {
                 isFetching: false,
                 error: action.error,
                 user: {}
+            }
+        case actionTypes.TOKEN:
+            return {
+                isFetching: false,
+                error: action.error,
+                user: {},
+                token: action.token
             }
         default:
             return state
