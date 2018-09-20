@@ -31,7 +31,7 @@ export default class Article extends Component {
                                     都说自律很难，但你知道做到自律后有多爽吗
                                 </h1>
                                 <div className="article-author">
-                                    <Avatar src={require("@/images/1151.jpg")} />
+                                    <Avatar src={require("../assets/images/1151.jpg")} />
                                     <div className="article-info">
                                         <span className="name">
                                             <a href="">{this.state.name}</a>
@@ -77,7 +77,7 @@ export default class Article extends Component {
                                     <div className="supporter">
                                         <ul className="support-list">
                                             <li>
-                                                <Avatar src={require("@/images/1151.jpg")} />
+                                                <Avatar src={require("../assets/images/1151.jpg")} />
                                             </li>
                                         </ul>
                                     </div>
@@ -95,7 +95,7 @@ export default class Article extends Component {
                                 </div>
                                 <div className="follow-detail">
                                     <div className="info">
-                                        <Avatar src={require("@/images/1151.jpg")} />
+                                        <Avatar src={require("../assets/images/1151.jpg")} />
                                         <a className="btn btn-success follow">
                                             <Icon type="plus" /> 关注
                                         </a>

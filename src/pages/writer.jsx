@@ -1,5 +1,4 @@
 import '@/style/pages/writer.less';
-import './iconfont.css'
 import React, { Component } from "react";
 import { Button, Row, Modal, Col, Icon, Form, Input } from "antd";
 import Editors from "@/components/editors";

@@ -208,15 +208,15 @@ class Editors extends Component {
 					editorState={editorState}
 					onToggle={this.toggleInlineStyle}
 				/>
-				<ColorEditor
-					editorState={editorState}
-					onToggle={this.toggleColor}
-					/>
 				<MediaEditor
 					editorState={editorState}
 					addAudio={this.addAudio}
 					addImage={this.addImage}
 					addVideo={this.addVideo}
+				/>
+				<ColorEditor
+					editorState={editorState}
+					onToggle={this.toggleColor}
 				/>
                 {urlInput}
 				<Button onClick={this.saveArticle}>保存</Button>
