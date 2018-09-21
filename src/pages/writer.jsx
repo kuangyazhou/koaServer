@@ -1,7 +1,7 @@
 import '@/style/pages/writer.less';
 import React, { Component } from "react";
 import { Button, Row, Modal, Col, Icon, Form, Input } from "antd";
-import Editors from "@/components/editors";
+import PublicEditors from "@/components/editors";
 import request from "@/utils/axios";
 const FormItem = Form.Item;
 
@@ -266,7 +266,7 @@ class Writer extends Component {
                             </ul>
                         </Col>
                         <Col span={18} className="right-item">
-                            <Editors />
+                            <PublicEditors />
                         </Col>
                     </Row>
                 </Col>
@@ -274,6 +274,7 @@ class Writer extends Component {
         );
     }
 }
+
 
 
 

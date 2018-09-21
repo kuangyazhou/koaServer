@@ -33,6 +33,7 @@ export const InlineStyleControls = props => {
                     active={currentStyle.has(type.style)}
                     onToggle={props.onToggle}
                     style={type.style}
+                    class={type.class}
                 />
             ))}
         </span>
@@ -40,16 +41,16 @@ export const InlineStyleControls = props => {
 };
 
 const INLINE_STYLES = [
-    { label: '加粗', style: 'iconfont icon-bold' },
-    { label: '斜体', style: 'iconfont icon-italic' },
-    { label: '下划线', style: 'iconfont icon-underline' },
-    { label: '代码片段', style: 'iconfont icon-code' },
-    { label: '引用', style: 'iconfont icon-quoteleft' }
+    { label: '加粗', class: 'iconfont icon-bold', style: 'BOLD' },
+    { label: '斜体', class: 'iconfont icon-italic', style: 'ITALIC' },
+    { label: '下划线', class: 'iconfont icon-underline', style: 'UNDERLINE' },
+    { label: '代码片段', class: 'iconfont icon-code', style: 'CODE' },
 ];
 
 const BLOCK_TYPES = [
     { label: 'H1', style: 'header-one' },
     { label: 'H2', style: 'header-two' },
     { label: 'H3', style: 'header-three' },
-    { label: 'H4', style: 'header-four' }
+    { label: 'H4', style: 'header-four' },
+    { label: '引用', class: 'iconfont icon-quoteleft', style: 'blockquote' }
 ];

@@ -14,8 +14,9 @@ class StyleButton extends Component {
     if (this.props.active) {
       className += ' RichEditor-activeButton';
     }
+    let cls = this.props.class? this.props.class: '';
     return (
-      <span className={`${className} ${this.props.style}`} onMouseDown={this.onToggle}>
+      <span className={`${className} ${cls}`} onMouseDown={this.onToggle}>
         {this.props.label?this.props.label: ' '}
       </span>
     );

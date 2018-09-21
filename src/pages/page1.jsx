@@ -40,7 +40,6 @@ class C extends Component {
 class User extends Component {
     
     render() {
-        console.log(this.props)
         const {user, getUser} = this.props;
         return (
             <div>
@@ -67,7 +66,6 @@ class Hello extends Component{
         })
     }
     render() {
-        console.log(this.props)
         return (
             <div>
                 <p>{this.props.counter}</p>

@@ -3,8 +3,12 @@ import { Editor, EditorState, RichUtils, Modifier, AtomicBlockUtils } from 'draf
 import { BlockStyleControls, InlineStyleControls } from './styleControls';
 import ColorEditor from './colorEditor';
 import MediaEditor from './mediaEditor';
+import {is, fromJS} from 'immutable';
 import { Button, Input } from 'antd';
 import request from "@/utils/axios";
+import { connect } from 'react-redux';
+import { bindActionCreators } from "redux";
+import * as types from '../store/actions';
 import '@/style/editors.less';
 
 class Editors extends Component {
@@ -12,7 +16,7 @@ class Editors extends Component {
 		super(props);
 		// 默认给一个empty的editorstate
 		this.state = {
-			editorState: EditorState.createEmpty(),
+			editorState: this.props.editor.editorState? this.props.editor.editorState: EditorState.createEmpty(),
 			logState: null,
 			showURLInput: false,
 			url: '',
@@ -39,19 +43,20 @@ class Editors extends Component {
 		
 		this.saveArticle = () => {
 			let values = this.state.editorState.toJS()
-			request
-				.get('/api/article/add', {values: values, userid: localStorage.userId})
+			request.get('/api/article/add', {values: values, userid: localStorage.userId})
 				.then(res => {
+					
+					console.log(this.props.editor)
 					console.log(res)
 				})
-				.catch(error => {
-					console.error();
+				.catch(err => {
+					console.error(err);
 				})
 
 		};
 	}
-	_handleKeyCommand(command, editorState) {
-		const newState = RichUtils.handleKeyCommand(editorState, command);
+	_handleKeyCommand(command) {
+		const newState = RichUtils.handleKeyCommand(this.state.editorState, command);
 		if (newState) {
 			this.onChange(newState);
 			return true;
@@ -66,9 +71,7 @@ class Editors extends Component {
 		this.onChange(RichUtils.toggleBlockType(this.state.editorState, blockType));
 	}
 	_toggleInlineStyle(inlineStyle) {
-		this.onChange(
-			RichUtils.toggleInlineStyle(this.state.editorState, inlineStyle)
-		);
+		this.onChange(RichUtils.toggleInlineStyle(this.state.editorState, inlineStyle));
 	}
 	_toggleColor(toggledColor) {
 		const { editorState } = this.state;
@@ -152,12 +155,17 @@ class Editors extends Component {
 	}
 	
 	getBlockStyle(block) {
+		console.log(block.getType())
 		switch (block.getType()) {
 			case 'blockquote':
 				return 'RichEditor-blockquote';
 			default:
 				return null;
 		}
+	}
+
+	shouldComponentUpdate(nextProps, nextState) {
+		return !is(fromJS(this.props), fromJS(nextProps)) || !is(fromJS(this.state), fromJS(nextState));
 	}
 	render() {
 		const { editorState } = this.state;
@@ -208,7 +216,7 @@ class Editors extends Component {
 					editorState={editorState}
 					onToggle={this.toggleColor}
 				/>
-                {urlInput}
+				{urlInput}
 				<Button onClick={this.saveArticle}>保存</Button>
 				<div className={className} onClick={this.focus}>
 					<Editor
@@ -283,4 +291,14 @@ const style = {
 	}
 };
 
-export default Editors;
+function mapStateToProps(state) {
+    return {
+        editor: state.editor
+    }
+}
+function mapDispatchToProps(dispatch) {
+    return bindActionCreators(types, dispatch);
+}
+
+
+export default connect(mapStateToProps, mapDispatchToProps)(Editors);

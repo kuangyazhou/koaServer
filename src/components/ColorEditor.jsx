@@ -22,7 +22,7 @@ class ColorEditor extends Component {
 class StyleButton extends Component {
 	constructor(props) {
 		super(props);
-		this.onToggle = e => {
+		this.onToggle = (e) => {
 		  e.preventDefault();
 		  this.props.onToggle(this.props.style);
 		};

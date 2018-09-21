@@ -36,6 +36,13 @@ export function setToken(data) {
     }
 }
 
+export function setEditor(data) {
+    return {
+        type: actionTypes.SETEDITORSTATE,
+        data
+    }
+}
+
 export function getUser() {
     return dispatch => {
         dispatch(fetchUserRequest())
