@@ -52,5 +52,5 @@ const BLOCK_TYPES = [
     { label: 'H2', style: 'header-two' },
     { label: 'H3', style: 'header-three' },
     { label: 'H4', style: 'header-four' },
-    { label: '引用', class: 'iconfont icon-quoteleft', style: 'blockquote' }
+    { label: '""', style: 'blockquote' }
 ];
