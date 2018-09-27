@@ -5,3 +5,5 @@ export const DECREMENT = 'DECREMENT';
 export const USER = 'USER';
 export const FETCHLOADING = 'FETCHLOADING';
 export const FETCHUSERFAILURE = 'FETCHUSERFAILURE';
+export const TOKEN = 'TOKEN'; // 设置用户token
+export const SETEDITORSTATE = 'SETEDITORSTATE';

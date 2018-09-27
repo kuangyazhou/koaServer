@@ -29,6 +29,20 @@ export function decrement(data) {
     }
 }
 
+export function setToken(data) {
+    return {
+        type: actionTypes.TOKEN,
+        data
+    }
+}
+
+export function setEditor(data) {
+    return {
+        type: actionTypes.SETEDITORSTATE,
+        data
+    }
+}
+
 export function getUser() {
     return dispatch => {
         dispatch(fetchUserRequest())

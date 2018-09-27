@@ -1,10 +1,14 @@
 import React, { Component } from 'react';
-import { Editor, EditorState, RichUtils, Modifier, AtomicBlockUtils } from 'draft-js';
-import { BlockStyleControls, InlineStyleControls } from './StyleControls';
-import ColorEditor from './ColorEditor';
-import MediaEditor from './MediaEditor';
+import { Editor, EditorState, RichUtils, Modifier, AtomicBlockUtils, getDefaultKeyBinding } from 'draft-js';
+import { BlockStyleControls, InlineStyleControls } from './styleControls';
+import ColorEditor from './colorEditor';
+import MediaEditor from './mediaEditor';
+import {is, fromJS} from 'immutable';
 import { Button, Input } from 'antd';
 import request from "@/utils/axios";
+import { connect } from 'react-redux';
+import { bindActionCreators } from "redux";
+import * as types from '../store/actions';
 import '@/style/editors.less';
 
 class Editors extends Component {
@@ -12,7 +16,7 @@ class Editors extends Component {
 		super(props);
 		// 默认给一个empty的editorstate
 		this.state = {
-			editorState: EditorState.createEmpty(),
+			editorState: this.props.editor.editorState? this.props.editor.editorState: EditorState.createEmpty(),
 			logState: null,
 			showURLInput: false,
 			url: '',
@@ -34,25 +38,25 @@ class Editors extends Component {
 		// 媒体文件添加部分
 		this.onURLChange = e => this.setState({ urlValue: e.target.value });
         this.onURLInputKeyDown = this._onURLInputKeyDown.bind(this);
-        this.confirmMedia = this._confirmMedia.bind(this);
-		this.addAudio = this._addAudio.bind(this);
-        this.addImage = this._addImage.bind(this);
-		this.addVideo = this._addVideo.bind(this);
+		this.confirmMedia = this._confirmMedia.bind(this);
+		this.mapKeyToEditorCommand = this._mapKeyToEditorCommand.bind(this);
+		this.addEvents = this._addEvents.bind(this);
 		
 		this.saveArticle = () => {
 			let values = this.state.editorState.toJS()
-			request
-				.get('/api/article/add', {values: values, userid: localStorage.userId})
+			request.get('/api/article/add', {values: values, userid: localStorage.userId})
 				.then(res => {
+					
+					console.log(this.props.editor)
 					console.log(res)
 				})
-				.catch(error => {
-					console.error();
+				.catch(err => {
+					console.error(err);
 				})
 
 		};
 	}
-	_handleKeyCommand(command, editorState) {
+	_handleKeyCommand(editorState, command) {
 		const newState = RichUtils.handleKeyCommand(editorState, command);
 		if (newState) {
 			this.onChange(newState);
@@ -68,15 +72,13 @@ class Editors extends Component {
 		this.onChange(RichUtils.toggleBlockType(this.state.editorState, blockType));
 	}
 	_toggleInlineStyle(inlineStyle) {
-		this.onChange(
-			RichUtils.toggleInlineStyle(this.state.editorState, inlineStyle)
-		);
+		this.onChange(RichUtils.toggleInlineStyle(this.state.editorState, inlineStyle));
 	}
 	_toggleColor(toggledColor) {
 		const { editorState } = this.state;
 		const selection = editorState.getSelection();
 		// Let's just allow one color at a time. Turn off all active colors.
-		const nextContentState = Object.keys(style).reduce(
+		const nextContentState = Object.keys(colorStyleMap).reduce(
 			(contentState, color) => {
 				return Modifier.removeInlineStyle(contentState, selection, color);
 			},
@@ -148,24 +150,36 @@ class Editors extends Component {
                 setTimeout(() => this.refs.url.focus(), 0);
             }
         );
-    }
-    _addAudio() {
-        this._promptForMedia('audio');
-    }
-    _addImage() {
-        this._promptForMedia('image');
-    }
-    _addVideo() {
-        this._promptForMedia('video');
+	}
+	_addEvents(val) {
+		this._promptForMedia(val);
 	}
 	
 	getBlockStyle(block) {
+		console.log(block.getType())
 		switch (block.getType()) {
 			case 'blockquote':
 				return 'RichEditor-blockquote';
 			default:
 				return null;
 		}
+	}
+	_mapKeyToEditorCommand(e) {
+		if (e.keyCode === 9 /* TAB */) {
+			const newEditorState = RichUtils.onTab(
+				e,
+				this.state.editorState,
+				4 /* maxDepth */,
+			);
+			if (newEditorState !== this.state.editorState) {
+				this.onChange(newEditorState);
+			}
+			return false;
+		}
+		return getDefaultKeyBinding(e);
+	}
+	shouldComponentUpdate(nextProps, nextState) {
+		return !is(fromJS(this.props), fromJS(nextProps)) || !is(fromJS(this.state), fromJS(nextState));
 	}
 	render() {
 		const { editorState } = this.state;
@@ -210,23 +224,22 @@ class Editors extends Component {
 				/>
 				<MediaEditor
 					editorState={editorState}
-					addAudio={this.addAudio}
-					addImage={this.addImage}
-					addVideo={this.addVideo}
+					addEvents={this.addEvents}
 				/>
 				<ColorEditor
 					editorState={editorState}
 					onToggle={this.toggleColor}
 				/>
-                {urlInput}
+				{urlInput}
 				<Button onClick={this.saveArticle}>保存</Button>
 				<div className={className} onClick={this.focus}>
 					<Editor
 						blockStyleFn={this.getBlockStyle}
-						customStyleMap={style}
+						customStyleMap={colorStyleMap}
 						editorState={editorState}
 						blockRendererFn={mediaBlockRenderer}
 						handleKeyCommand={this.handleKeyCommand}
+						keyBindingFn={this.mapKeyToEditorCommand}
 						onChange={this.onChange}
 						onTab={this.onTab}
 						placeholder="请输入"
@@ -274,7 +287,7 @@ const Video = props => {
     return <video controls src={props.src} className="media" />;
 };
 
-const style = {
+const colorStyleMap = {
 	CODE: {
 		backgroundColor: 'rgba(0, 0, 0, 0.05)',
 		fontFamily: '"Inconsolata", "Menlo", "Consolas", monospace',
@@ -290,7 +303,38 @@ const style = {
 		fontStyle: 'italic',
 		fontSize: '24',
 		color: '#00f'
-	}
+	},
+	red: {
+		color: 'rgba(255, 0, 0, 1.0)',
+	},
+	orange: {
+		color: 'rgba(255, 127, 0, 1.0)',
+	},
+	yellow: {
+		color: 'rgba(180, 180, 0, 1.0)',
+	},
+	green: {
+		color: 'rgba(0, 180, 0, 1.0)',
+	},
+	blue: {
+		color: 'rgba(0, 0, 255, 1.0)',
+	},
+	indigo: {
+		color: 'rgba(75, 0, 130, 1.0)',
+	},
+	violet: {
+		color: 'rgba(127, 0, 255, 1.0)',
+	},
 };
 
-export default Editors;
+function mapStateToProps(state) {
+    return {
+        editor: state.editor
+    }
+}
+function mapDispatchToProps(dispatch) {
+    return bindActionCreators(types, dispatch);
+}
+
+
+export default connect(mapStateToProps, mapDispatchToProps)(Editors);
