@@ -3,7 +3,7 @@ const jwt = require("jsonwebtoken");
 
 const USER = require("../models/user");
 const USERSCHEMA = require("../models/userschema");
-const userMysql = require("../mysql/query");
+// const userMysql = require("../mysql/query");
 
 /**
  *  分红列表
@@ -174,27 +174,27 @@ exports.userDB = async ctx => {
     };
 };
 
-exports.mysql = async ctx => {
-    const data = await userMysql.getUser();
-    console.log(data);
-    ctx.body = {
-        status: "0",
-        data: data
-    };
-};
+// exports.mysql = async ctx => {
+//     const data = await userMysql.getUser();
+//     console.log(data);
+//     ctx.body = {
+//         status: "0",
+//         data: data
+//     };
+// };
 
-exports.insert = async ctx => {
-    const data = await userMysql.setUser();
-    ctx.body = {
-        status: "0",
-        data: data
-    };
-};
+// exports.insert = async ctx => {
+//     const data = await userMysql.setUser();
+//     ctx.body = {
+//         status: "0",
+//         data: data
+//     };
+// };
 
-exports.del = async ctx => {
-    const data = await userMysql.del();
-    ctx.body = {
-        status: "0",
-        data: data
-    };
-};
+// exports.del = async ctx => {
+//     const data = await userMysql.del();
+//     ctx.body = {
+//         status: "0",
+//         data: data
+//     };
+// };
