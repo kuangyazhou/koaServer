@@ -3,7 +3,7 @@ import { setToken, loadToken } from "./token";
 
 const service = axios.create({
     // baseURL: process.env.BASE_API,
-    baseURL: "http://10.103.1.110:2333",
+    baseURL: "http://10.103.1.1:2333",
     timeout: 10000
 });
 
