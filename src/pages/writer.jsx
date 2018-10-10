@@ -128,7 +128,7 @@ class Writer extends Component {
         this.setState({ visible });
     }
     componentDidMount() {}
-    
+  
     render() {
         const { getFieldDecorator } = this.props.form;
         const { visible, ModalText1, ModalText2, ModalText3, ModalText4, listContainer, listDefaultIndex, artDefaultIndex, artList} = this.state;
