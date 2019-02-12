@@ -13,6 +13,7 @@ import Page3 from "@/pages/page3";
 import Editors from "@/components/editors";
 import Center from "@/pages/center";
 
+import CTable from '@/components/table';
 const routes = [
     {
         path: "/",
@@ -61,6 +62,10 @@ const routes = [
     {
         path: "/mine",
         component: Center
+    },
+    {
+      path:'/table',
+      component:CTable,
     }
 ];
 

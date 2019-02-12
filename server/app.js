@@ -12,6 +12,7 @@ const index = require("./routes/index");
 const users = require("./routes/users");
 const article = require("./routes/article");
 const mock = require("./routes/mock");
+const three=require('./routes/three');
 
 // error handler
 onerror(app);
@@ -135,7 +136,7 @@ app.use(index.routes(), index.allowedMethods());
 app.use(users.routes(), users.allowedMethods());
 app.use(article.routes(), article.allowedMethods());
 app.use(mock.routes(), mock.allowedMethods());
-
+app.use(three.routes(),three.allowedMethods())
 // error-handling
 app.on("error", (err, ctx) => {
   console.error("server error", err, ctx);
