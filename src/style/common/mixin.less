@@ -120,6 +120,24 @@
 	user-select: none;
 }
 
+.container{
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    .main{
+		width: 960px;
+		margin: 0 auto;
+        position: absolute;
+        top: 58px;
+        left: 0;
+        right: 0;
+        bottom: 160px;
+        overflow-y: scroll;
+	}
+}
+
 //字体大小、行高、字体
 .font(@size, @line-height, @family: 'Microsoft YaHei') {
   font: @size/@line-height @family;

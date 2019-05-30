@@ -83,6 +83,7 @@ export default class Header extends Component {
                         <Search
                             placeholder="搜索"
                             onSearch={value => console.log(value)}
+                            className="search"
                         />
                     </Col>
                     <Col span={8}>

@@ -1,5 +1,5 @@
 import React from 'react';
-import StyleButton from './styleButton';
+import StyleButton from './StyleButton';
 
 export const BlockStyleControls = props => {
     const { editorState } = props;

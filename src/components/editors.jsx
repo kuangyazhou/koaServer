@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { Editor, EditorState, RichUtils, Modifier, AtomicBlockUtils, getDefaultKeyBinding } from 'draft-js';
-import { BlockStyleControls, InlineStyleControls } from './styleControls';
-import ColorEditor from './colorEditor';
-import MediaEditor from './mediaEditor';
+import { BlockStyleControls, InlineStyleControls } from './StyleControls';
+import ColorEditor from './ColorEditor';
+import MediaEditor from './MediaEditor';
 import {is, fromJS} from 'immutable';
 import { Button, Input } from 'antd';
 import request from "@/utils/axios";

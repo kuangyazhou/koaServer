@@ -13,24 +13,18 @@
         margin: 0 auto;
         
     }
-    // .ant-menu{
-    //     display: inline-block;
-    // }
     .ant-menu-horizontal{
         border-bottom: none;
     }
-    .ant-input-search{
+    .ant-input-affix-wrapper{
         line-height: 47px;
         width: 200px;
+        transition: .2s;
         input{
-        //     width: 200px;
             &:focus{
-        //         transition-delay: 0s;
-        //         -moz-transition-delay: 0s;
-        //         -webkit-transition-delay: 0s;
-        //         -o-transition-delay: 0s;
-        //         width: 240px;
                 outline: none;
+                width: 300px;
+                transition: .2s;
             }
         }
     }
@@ -46,12 +40,10 @@
             padding-left: 5px;
         }
     }
-    .search,.sign-container{
+    .sign-container{
         height: 48px;
         line-height: 48px;
         align-items: center;
-    }
-    .sign-container{
         .person-center{
             color: #333;
             span{
